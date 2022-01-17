@@ -1,0 +1,197 @@
+import { Component, OnInit } from '@angular/core';
+import { PomsService } from '../../../poms.service';
+import Swal from 'sweetalert2';
+import { ActivatedRoute } from '@angular/router';
+import * as XLSX from 'xlsx';
+const EXCEL_TYPE = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8';
+const EXCEL_EXTENSION = '.xlsx';
+import * as FileSaver from 'file-saver';
+import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
+@Component({
+  selector: 'app-add-tender-bid',
+  templateUrl: './add-tender-bid.component.html',
+  styleUrls: ['./add-tender-bid.component.css']
+})
+export class AddTenderBidComponent implements OnInit {
+ public Editor = ClassicEditor;
+
+  constructor(public pomservice: PomsService, private activatedroute: ActivatedRoute) { }
+public tenderslist:any;
+public tenderid:any;
+public tenderno:any;
+public tenderssslist:any;
+
+public contactpersonname:any;
+public contactpersonphno:any;
+public email:any;
+public tenderopeningdate:any;
+public tenderclosingdate:any;
+public tenderdeposiamount:any;
+public sitelocation:any;
+public tenderopeningplace:any;
+public tendersubmissionplace:any;
+  public attachments = [];
+  public attachmentsurl = [];
+  public showphoto:any;
+  public bidamount:any;
+  public phno:any;
+  public vendorname:any;
+  public companyname:any;
+  public bidresponse:any;
+  public biddescription:any;
+  public vendoremail:any;
+  public vendorid:any;
+  public companyid:any;
+  public vendorslist:any;
+  public tendername:any;
+
+  ngOnInit() {
+      this.pomservice.GetTenderName().subscribe(data => {
+        debugger
+      this.tenderslist = data;
+    }, error => {
+
+    })
+      this.pomservice.GetTender().subscribe(data => {
+        debugger
+      this.tenderssslist = data;
+    }, error => {
+
+    })
+    this.bidresponse=""
+    this.biddescription=""
+
+    this.vendorid=localStorage.getItem('VendorID');
+    this.companyid=localStorage.getItem('Companyid');
+    this.tenderid=localStorage.getItem('TenderID');
+
+
+
+ this.pomservice.GetTender().subscribe(data => {
+        debugger
+      this.tenderssslist = data;
+      
+var list=this.tenderssslist.filter(x=>x.id==this.tenderid)
+this.tenderno=list[0].tenderNo,
+this.tendername=list[0].tenderName,
+this.contactpersonname=list[0].tenderContactPersonName,
+this.contactpersonphno=list[0].tenderContactPersonPhNo,
+this.email=list[0].tenderContactPersonEmail,
+this.tenderopeningdate=list[0].tenderOpeningDate,
+this.tenderclosingdate=list[0].tenderClosingDate,
+this.tenderdeposiamount=list[0].tenderDepositAmount,
+this.sitelocation=list[0].siteLocation,
+this.tenderopeningplace=list[0].tenderOpeningPlace,
+this.tendersubmissionplace=list[0].tenderSubmissionPlace
+    }, error => {
+
+    })
+
+
+      this.pomservice.GetVendorsRegistration().subscribe(data => {
+        debugger
+      this.vendorslist = data;
+var list=this.vendorslist.filter(x=>x.id==this.vendorid)
+this.companyname=list[0].companyName,
+this.vendorname=list[0].vendorName,
+this.vendoremail=list[0].email,
+this.phno=list[0].phoneNo
+    }, error => {
+
+    })
+   
+  }
+  
+
+public GetTenderID(even)
+{
+  debugger
+  this.tenderid=even.target.value;
+
+var list=this.tenderssslist.filter(x=>x.id==this.tenderid)
+this.tenderno=list[0].tenderNo,
+this.contactpersonname=list[0].tenderContactPersonName,
+this.contactpersonphno=list[0].tenderContactPersonPhNo,
+this.email=list[0].tenderContactPersonEmail,
+this.tenderopeningdate=list[0].tenderOpeningDate,
+this.tenderclosingdate=list[0].tenderClosingDate,
+this.tenderdeposiamount=list[0].tenderDepositAmount,
+this.sitelocation=list[0].siteLocation,
+this.tenderopeningplace=list[0].tenderOpeningPlace,
+this.tendersubmissionplace=list[0].tenderSubmissionPlace
+
+}
+
+  public onattachmentUpload(abcd) {
+    debugger;
+    this.attachments.push(abcd.addedFiles[0]);
+    this.uploadattachments();
+    abcd.length = 0;
+  }
+  public uploadattachments() {
+    this.pomservice.UploadTenderAttachments(this.attachments).subscribe(res => {
+      debugger;
+      this.attachmentsurl.push(res);
+      this.attachments.length = 0;
+      Swal.fire("Added Successfully");
+      debugger;
+    });
+  }
+
+
+
+
+//  public onattachmentUpload(abcd) {
+//     debugger
+//     for (let i = 0; i < abcd.length; i++) {
+//       this.attachments.push(abcd[i]);
+//       this.uploadattachments();
+//       debugger
+//     }
+//     Swal.fire('Added Successfully');
+//     abcd.length = 0;
+//   }
+
+//   public uploadattachments() {
+//       debugger
+//     this.pomservice.UploadTenderAttachments(this.attachments).subscribe(res => {
+//       debugger
+//       this.attachmentsurl.push(res);
+//       let a = this.attachmentsurl[0].slice(2);
+//       debugger
+//       let b = 'http://23.101.22.93' + a;
+
+//       this.showphoto.push(b)
+//       this.attachments.length = 0;
+//       debugger
+//     })
+//     // this.sendattachment();
+//   }
+
+
+public insertdetails()
+{
+  debugger
+  var entity={
+    'VendorCompanyName':this.companyname,
+    'ContactPersonName':this.vendorname,
+    'ContactPersonPhNo':this.phno,
+    'Email':this.vendoremail,
+    'BidResponce':this.bidresponse,
+    'BidDescription':this.biddescription,
+    'BidAttchments':this.attachmentsurl[0],
+    'TenderID':this.tenderid,
+    'BidAmount':this.bidamount,
+    'VendorID':this.vendorid,
+    'CompanyID':this.companyid
+  }
+  this.pomservice.InsertTenderBids(entity).subscribe(data=>{
+    if(data!=0)
+    {
+      Swal.fire('Success','Details Saved Successfully')
+      location.href="#/AllTenders"
+    }
+  })
+}
+
+}

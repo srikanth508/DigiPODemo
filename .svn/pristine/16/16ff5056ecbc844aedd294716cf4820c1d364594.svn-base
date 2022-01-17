@@ -1,0 +1,80 @@
+<br>
+<div class="container-fluid maindiv">
+       <form #CategotyForm="ngForm">
+       <div class="row headdiv">
+              <div class="col-lg-12">
+                     <h4 style="float: left;">Project Contacts</h4>
+              </div>
+       </div>
+       <br>
+       <div class="row">
+              <div class="col-lg-2">
+                     <label>Project</label>
+              </div>
+              <div class="col-lg-4">
+                 <select class="form-control" (change)="GetProjectID($event)">
+                 <option>Select</option>
+                 <option *ngFor="let pro of projetclist" value="{{pro.tenderID}}">{{pro.tenderName}}</option>
+                 </select>
+              </div>
+       </div>
+       <br>
+       <div class="row">
+              <div class="col-lg-2">
+                     <label>First Name</label>
+              </div>
+              <div class="col-lg-4">
+                     <input type="text" class="form-control" required name="firstname" [(ngModel)]="firstname" placeholder="First Name">
+              </div>
+       </div>
+       <br>
+       <div class="row">
+              <div class="col-lg-2">
+                     <label>Last Name</label>
+              </div>
+              <div class="col-lg-4">
+                      <input type="text" class="form-control" required name="lastname" [(ngModel)]="lastname" placeholder="Last Name">
+              </div>
+       </div>
+       <br>
+         <div class="row">
+              <div class="col-lg-2">
+                     <label>Email</label>
+              </div>
+              <div class="col-lg-4">
+                      <input type="text" class="form-control" required name="email" [(ngModel)]="email" placeholder="Email">
+              </div>
+       </div>
+       <br>
+        <div class="row">
+              <div class="col-lg-2">
+                     <label>Phone No</label>
+              </div>
+              <div class="col-lg-4">       
+           <input type="text" class="form-control" required name="phoneno" [(ngModel)]="phoneno" placeholder="Phone No">
+              </div>
+       </div>
+       <br>
+        <div class="row">
+              <div class="col-lg-2">
+                     <label>Role </label>
+              </div>
+              <div class="col-lg-4">
+                  
+                 <input type="text" class="form-control" required name="role" [(ngModel)]="role" placeholder="Role">
+                     
+              </div>
+       </div>
+       <br>
+
+       <div class="row">
+              <div class="col-lg-5"></div>
+              <div class="col-lg-2">
+                     <button type="button"  (click)="insertdetails()" class="addnewbtns"
+                            style="width: 100%;" [disabled]="CategotyForm.form.invalid">Save</button>
+              </div>
+              <div class="col-lg-5"></div>
+       </div>
+</form>
+</div>
+<br>

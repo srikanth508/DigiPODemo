@@ -1,0 +1,274 @@
+import { Component, OnInit } from '@angular/core';
+import { PomsService } from '../../poms.service';
+import Swal from 'sweetalert2';
+import { ActivatedRoute } from '@angular/router';
+import { deepStrictEqual } from 'assert';
+import * as XLSX from 'xlsx';
+const EXCEL_TYPE = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8';
+const EXCEL_EXTENSION = '.xlsx';
+import * as FileSaver from 'file-saver';
+import { NgDateRangePickerOptions } from 'ng-daterangepicker';
+import { formatDate } from "@angular/common";
+
+@Component({
+  selector: 'app-cancelled-pos',
+  templateUrl: './cancelled-pos.component.html',
+  styleUrls: ['./cancelled-pos.component.css']
+})
+export class CancelledPosComponent implements OnInit {
+
+  constructor(public pomservice: PomsService) { }
+  options: NgDateRangePickerOptions;
+
+  public polist: any;
+  public authorizationid: any;
+  public orderslist: any;
+  public approveorderid: any;
+  public authostage: any;
+  public remarks: any;
+  public rejectid: any;
+  public rejectstage: any;
+
+  SDate = new Date();
+  EDate = new Date();
+  value: any;
+  public startdate: any;
+  public enddate: any;
+  public todaydate: any;
+  public suppliername: any;
+  public supplierlist: any;
+  public companylist: any;
+  public requisioner: any;
+  public count: any;
+  public grandtotal: any;
+  public term: any;
+  public dummpolist: any;
+
+  ngOnInit() {
+
+
+    this.authorizationid = localStorage.getItem('authorizatioid');
+
+    this.options = {
+      theme: 'default',
+      range: 'tm',
+      dayNames: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+      presetNames: ['This Month', 'Last Month', 'This Week', 'Last Week', 'This Year', 'Last Year', 'Start', 'End'],
+      dateFormat: 'yyyy/MM/dd',
+      outputFormat: 'YYYY/MM/DD',
+      startOfWeek: 1
+    };
+
+    let date = new Date();
+    let hours = date.getHours();
+    let minutes = date.getMinutes();
+    let newformat = hours >= 12 ? 'PM' : 'AM';
+    // Find current hour in AM-PM Format 
+    hours = hours % 12;
+    // To display "0" as "12" 
+    hours = hours ? hours : 12;
+    minutes = minutes < 10 ? 0 + minutes : minutes;
+
+    var kkk = this.SDate.setDate(this.SDate.getDate() - 300);
+    var lll = this.EDate.setDate(this.EDate.getDate() + 300);
+
+    const format = 'yyyy-MM-dd';
+    const myDate = new Date();
+    const locale = 'en-US';
+    this.todaydate = formatDate(myDate, format, locale);
+
+
+    this.startdate = formatDate(kkk, format, locale);
+    this.enddate = formatDate(lll, format, locale);
+    this.GetAuthorizationMaster();
+    this.GetSuppliermaster()
+    this.Getbuyingcompany()
+  }
+  public GetSuppliermaster() {
+    this.pomservice.GetSupplierMaster().subscribe(
+      data => {
+        this.supplierlist = data;
+
+      },
+      error => { }
+    );
+  }
+
+
+  public Getbuyingcompany() {
+    this.pomservice.GetBuyingCompanyMaster().subscribe(
+      data => {
+        this.companylist = data;
+
+      },
+      error => { }
+    );
+  }
+
+  public GetAuthorizationMaster() {
+    
+    this.pomservice.GetPurchaseOrderCancelledOrders(this.authorizationid, this.startdate, this.enddate).subscribe(data => {
+      this.polist = data;
+      this.dummpolist = data;
+      this.count = this.polist.length;
+
+      this.grandtotal = 0;
+      for (let i = 0; i < this.polist.length; i++) {
+        this.grandtotal = Number(this.grandtotal) + Number(this.polist[i].total)
+      }
+      
+    }, error => {
+
+    })
+  }
+
+
+  public GetSupplierName(even) {
+    
+    this.suppliername = even.target.value;
+
+    if (even.target.value != 0) {
+      this.suppliername = even.target.value;
+      this.polist = this.dummpolist.filter(x => x.supplierName == this.suppliername)
+      this.grandtotal = 0;
+      for (let i = 0; i < this.polist.length; i++) {
+        this.grandtotal = Number(this.grandtotal) + Number(this.polist[i].total)
+      }
+      this.count = this.polist.length;
+    }
+    else {
+      this.GetAuthorizationMaster()
+    }
+  }
+  selectedDate(data) {
+    
+    var sdate = data.split('-')
+    this.startdate = sdate[0]
+    this.enddate = sdate[1]
+    this.GetAuthorizationMaster()
+  }
+
+
+  public GetPurchaseOrderID(id) {
+    
+    this.pomservice.GetPurchaseOrderDetailsByPurchaseOrderID(id).subscribe(data => {
+      this.orderslist = data;
+      
+    }, error => {
+
+    })
+  }
+
+
+
+  public ApprovePurchseOrder(id, autho) {
+    
+    this.approveorderid = id;
+    this.authostage = autho;
+  }
+
+
+  public UpdateApproveRemarks() {
+    var entity = {
+      'ID': this.approveorderid,
+      'StageOfAccept': this.authostage,
+      'Remarks': this.remarks
+    }
+    this.pomservice.UpdatePurchaseOrderAcceptStatus(entity).subscribe(res => {
+      let data = res;
+      Swal.fire('Success', 'Order Approved Successfully');
+      this.remarks = "";
+      this.GetAuthorizationMaster()
+    })
+  }
+
+
+  public GetRejectID(id, autho) {
+    
+    this.rejectid = id;
+    this.rejectstage = autho;
+  }
+
+
+  public UpdateRejectRemarks() {
+    var entity = {
+      'ID': this.rejectid,
+      'StageOfAccept': this.rejectstage,
+      'Remarks': this.remarks
+    }
+    this.pomservice.UpdatePurchaseOrderCancelStatus(entity).subscribe(res => {
+      let data = res;
+      Swal.fire('Success', 'Order Cancelled Successfully');
+      this.remarks = "";
+      this.GetAuthorizationMaster()
+    })
+  }
+
+
+
+
+  public getglmasterexcel() {
+    let hhh = this.tableToJson(document.getElementById('POREPORTS'));
+    this.exportAsExcelFile(hhh, "PO Reports");
+  }
+
+  public tableToJson(table) {
+    
+    var data = []; // first row needs to be headers
+    var headers = [];
+    for (var i = 1; i < table.rows[0].cells.length; i++) {
+      headers[i] = table.rows[0].cells[i].innerHTML.toUpperCase().replace(/ /gi, '');
+    }
+    // go through cells 
+    for (var i = 1; i < table.rows.length; i++) {
+      var tableRow = table.rows[i];
+      var rowData = {};
+      for (var j = 1; j < tableRow.cells.length - 1; j++) {
+        rowData[headers[j]] = tableRow.cells[j].innerHTML;
+
+        document.getElementById('table_rowhtml').innerHTML = rowData['FIRSTLEVELAUTHORIZER'] ? rowData['FIRSTLEVELAUTHORIZER'] : "";
+        rowData['FIRSTLEVELAUTHORIZER'] = document.getElementById('table_rowhtml').innerText;
+
+        document.getElementById('table_rowhtml').innerHTML = rowData['FIRSTLEVELAUTHORIZER'] ? rowData['FIRSTLEVELAUTHORIZER'] : "";
+        rowData['FIRSTLEVELAUTHORIZER'] = document.getElementById('table_rowhtml').innerText;
+
+        document.getElementById('table_rowhtml').innerHTML = rowData['SECONDLEVELAUTHORIZER'] ? rowData['SECONDLEVELAUTHORIZER'] : "";
+        rowData['SECONDLEVELAUTHORIZER'] = document.getElementById('table_rowhtml').innerText;
+
+        document.getElementById('table_rowhtml').innerHTML = rowData['THIRDLEVELAUTHORIZER'] ? rowData['THIRDLEVELAUTHORIZER'] : "";
+        rowData['THIRDLEVELAUTHORIZER'] = document.getElementById('table_rowhtml').innerText;
+      } data.push(rowData);
+    }
+    return data;
+  }
+
+  public exportAsExcelFile(json: any[], excelFileName: string): void {
+    
+    const worksheet: XLSX.WorkSheet = XLSX.utils.json_to_sheet(json);
+    const workbook: XLSX.WorkBook = { Sheets: { 'data': worksheet }, SheetNames: ['data'] };
+    const excelBuffer: any = XLSX.write(workbook, { bookType: 'xlsx', type: 'array' });
+    this.saveAsExcelFile(excelBuffer, excelFileName);
+  }
+
+  private saveAsExcelFile(buffer: any, fileName: string): void {
+    const data: Blob = new Blob([buffer], { type: EXCEL_TYPE });
+    FileSaver.saveAs(data, fileName + '_export_' + new Date().getTime() + EXCEL_EXTENSION);
+  }
+
+  public GetRequisoner(even) {
+    this.requisioner = even.target.value;
+
+    if (even.target.value != 0) {
+      this.requisioner = even.target.value;
+      this.polist = this.dummpolist.filter(x => x.companyName == this.requisioner)
+      this.grandtotal = 0;
+      for (let i = 0; i < this.polist.length; i++) {
+        this.grandtotal = Number(this.grandtotal) + Number(this.polist[i].total)
+      }
+      this.count = this.polist.length;
+    }
+    else {
+      this.GetAuthorizationMaster()
+    }
+  }
+}

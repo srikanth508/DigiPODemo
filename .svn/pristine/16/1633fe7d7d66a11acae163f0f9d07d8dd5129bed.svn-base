@@ -1,0 +1,67 @@
+<br>
+<div class="container-fluid maindiv">
+ 
+       <div class="row headdiv">
+              <div class="col-lg-12">
+                     <h4 style="float: left;">Authorizaton Login</h4>
+              </div>
+       </div>
+       <br>
+       <div class="row">
+              <div class="col-lg-2">
+                     <label>Authorization Name</label>
+              </div>
+              <div class="col-lg-4">
+                     <select class="form-control" (change)="GetauthorizationID($event)"  [(ngModel)]="authorizationid" name="authorizationid">
+                            <option value="0">Select</option>
+                            <option *ngFor="let autho of autholist" value="{{autho.id}}">{{autho.name}}</option>
+                     </select>
+              </div>
+       </div>
+       <br>
+       <div class="row">
+              <div class="col-lg-2">
+                     <label>Department</label>
+              </div>
+              <div class="col-lg-4">
+                     <select class="form-control" (change)="GetDepartmentID($event)">
+                            <option value="" selected>Select</option>
+                            <option *ngFor="let list of departmentlist" value="{{list.id}}">{{list.short}}
+                            </option>
+                     </select>
+              </div>
+       </div>
+       <br>
+       <div class="row">
+              <div class="col-lg-2">
+                     <label>User Name</label>
+              </div>
+              <div class="col-lg-4">
+                     <input type="text" class="form-control"  [(ngModel)]="username" name="username"
+                            placeholder="User Name">
+              </div>
+       </div>
+       <br>
+       <div class="row">
+              <div class="col-lg-2">
+                     <label>Password</label>
+              </div>
+              <div class="col-lg-4">
+                     <input type="text" class="form-control"  [(ngModel)]="password" name="password"
+                            placeholder="Password">
+              </div>
+       </div>
+       <br>
+      
+       <div class="row">
+              <div class="col-lg-5"></div>
+              <div class="col-lg-2">
+                     <button type="button"
+                            class="addnewbtns" style="width: 100%;" (click)="insertdetails()">Save</button>
+                  
+              </div>
+              <div class="col-lg-5"></div>
+       </div>
+
+</div>
+<br>

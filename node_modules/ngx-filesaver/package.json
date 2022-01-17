@@ -1,0 +1,106 @@
+{
+  "_from": "ngx-filesaver@^8.1.0",
+  "_id": "ngx-filesaver@8.1.0",
+  "_inBundle": false,
+  "_integrity": "sha512-xAwThsB/ap9qs7BRgW+mJPWBK60uaqkfPnw3vzbykTdfIvGf62U/6osDCq4TCPl/POWLFui6b3Bu+gfDMqoZhw==",
+  "_location": "/ngx-filesaver",
+  "_phantomChildren": {},
+  "_requested": {
+    "type": "range",
+    "registry": true,
+    "raw": "ngx-filesaver@^8.1.0",
+    "name": "ngx-filesaver",
+    "escapedName": "ngx-filesaver",
+    "rawSpec": "^8.1.0",
+    "saveSpec": null,
+    "fetchSpec": "^8.1.0"
+  },
+  "_requiredBy": [
+    "#USER",
+    "/"
+  ],
+  "_resolved": "https://registry.npmjs.org/ngx-filesaver/-/ngx-filesaver-8.1.0.tgz",
+  "_shasum": "f82a567f70c4ee81fc67b25bf594f3959c371b19",
+  "_spec": "ngx-filesaver@^8.1.0",
+  "_where": "D:\\POMS\\POMSSvn",
+  "author": {
+    "name": "cipchk",
+    "email": "cipchk"
+  },
+  "bugs": {
+    "url": "https://github.com/cipchk/ngx-filesaver/issues"
+  },
+  "bundleDependencies": false,
+  "dependencies": {
+    "tslib": "^1.9.0"
+  },
+  "deprecated": false,
+  "description": "Simple file save with FileSaver.js",
+  "devDependencies": {
+    "@angular-devkit/build-angular": "~0.803.5",
+    "@angular/animations": "~8.2.7",
+    "@angular/cli": "~8.3.5",
+    "@angular/common": "~8.2.7",
+    "@angular/compiler": "~8.2.7",
+    "@angular/compiler-cli": "~8.2.7",
+    "@angular/core": "~8.2.7",
+    "@angular/forms": "~8.2.7",
+    "@angular/language-service": "~8.2.7",
+    "@angular/platform-browser": "~8.2.7",
+    "@angular/platform-browser-dynamic": "~8.2.7",
+    "@angular/router": "~8.2.7",
+    "@types/file-saver": "^2.0.0",
+    "@types/jasmine": "~3.3.8",
+    "@types/jasminewd2": "~2.0.3",
+    "@types/node": "~8.9.4",
+    "codecov": "^3.6.1",
+    "codelyzer": "^5.0.0",
+    "file-saver": "^2.0.0",
+    "gh-pages": "^2.1.1",
+    "jasmine-core": "~3.4.0",
+    "jasmine-spec-reporter": "~4.2.1",
+    "karma": "~4.1.0",
+    "karma-chrome-launcher": "~2.2.0",
+    "karma-coverage-istanbul-reporter": "~2.0.1",
+    "karma-jasmine": "~2.0.1",
+    "karma-jasmine-html-reporter": "^1.4.0",
+    "ng-packagr": "^5.7.0",
+    "protractor": "~5.4.0",
+    "rxjs": "~6.4.0",
+    "ts-node": "~7.0.0",
+    "tslib": "^1.10.0",
+    "tslint": "~5.15.0",
+    "typescript": "~3.5.3",
+    "zone.js": "~0.9.1"
+  },
+  "es2015": "fesm2015/ngx-filesaver.js",
+  "esm2015": "esm2015/ngx-filesaver.js",
+  "esm5": "esm5/ngx-filesaver.js",
+  "fesm2015": "fesm2015/ngx-filesaver.js",
+  "fesm5": "fesm5/ngx-filesaver.js",
+  "homepage": "https://github.com/cipchk/ngx-filesaver#readme",
+  "keywords": [
+    "angular",
+    "FileSaver",
+    "FileSaver.js",
+    "ngx-filesaver",
+    "angular filesaver",
+    "ng filesaver"
+  ],
+  "license": "MIT",
+  "main": "bundles/ngx-filesaver.umd.js",
+  "metadata": "ngx-filesaver.metadata.json",
+  "module": "fesm5/ngx-filesaver.js",
+  "name": "ngx-filesaver",
+  "peerDependencies": {
+    "@types/file-saver": "^2.0.0",
+    "file-saver": "^2.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/cipchk/ngx-filesaver.git"
+  },
+  "sideEffects": false,
+  "typings": "ngx-filesaver.d.ts",
+  "version": "8.1.0"
+}

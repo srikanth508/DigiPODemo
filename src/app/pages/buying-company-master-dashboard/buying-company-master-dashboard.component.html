@@ -1,0 +1,100 @@
+<br>
+<ngx-spinner></ngx-spinner>
+<div class="container-fluid">
+    <div class="row ">
+        <div class="col-lg-12">
+            <h4 style="float: left;">BUYING COMPANY DASHBOARD</h4>
+            <button type="button" style="float: right;" routerLink="/BuyingCompanyMaster" class="addnewbtns">Add</button>
+            <button (click)="getglmasterexcel()" style="margin-right: 40px;" class="addnewbtns">Export
+                            Excel</button>
+        </div>
+    </div>
+</div>
+<br>
+<br>
+<div class="container-fluid maindiv">
+
+    <div class="row">
+        <div class="col-lg-3">
+            <input type="text" placeholder="Search" [(ngModel)]="term" class="form-control">
+        </div>
+        <div class="col-lg-3">
+            <select class="form-control" (change)="GetCountryName($event)">
+                            <option value="0">Select Country</option>
+                            <option *ngFor="let list of countrylist" value="{{list.short}},{{list.id}}">{{list.short}}
+                            </option>
+                     </select>
+        </div>
+        <div class="col-lg-3">
+            <select class="form-control" (change)="GetStateName($event)">
+                            <option value="0">Select State</option>
+                            <option *ngFor="let list of statelist" value="{{list.short}},{{list.id}}">{{list.short}}
+                            </option>
+                     </select>
+        </div>
+        <div class="col-lg-3">
+            <select class="form-control" (change)="GetCityName($event)">
+                            <option value="0">Select City</option>
+                            <option *ngFor="let list of citylist" value="{{list.short}},{{list.id}}">{{list.short}}
+                            </option>
+                     </select>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-10">
+        </div>
+        <div class="col-lg-2">
+            <label style="margin-left: 67px;"> <b>Count : {{count}}</b></label>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-12" style="overflow: auto;">
+            <table id="POREPORTS">
+                <tr>
+                    <th>Buying Company Code</th>
+                    <th>Buying Company Name</th>
+                    <th>Email</th>
+                    <th>Country</th>
+                    <th>State</th>
+                    <th>City</th>
+                    <th>Address</th>
+                    <th>Street</th>
+                    <th>Zipcode</th>
+                    <th>Phone No</th>
+                    <th>Secondary Phone No</th>
+                    <th>Actions</th>
+                </tr>
+                <tr *ngFor="let details of companylist|filter:term| paginate: { id: 'foo', itemsPerPage: 15, currentPage: p}">
+                    <td>{{details.companyCode}}</td>
+                    <td>{{details.companyName}}</td>
+                    <td>{{details.email}}</td>
+                    <td>{{details.country}}</td>
+                    <td>{{details.state}}</td>
+                    <td>{{details.city}}</td>
+                    <td>{{details.address}}</td>
+                    <td>{{details.street}}</td>
+                    <td>{{details.zipCode}}</td>
+                    <td>{{details.primaryPhoneNo}}</td>
+                    <td>{{details.secondaryPhoneNo}}</td>
+                    <td>
+                        <a style="color:black">
+                            <img src="assets/images/edit.png" title="Edit" style="width: 20px" [routerLink]="['/BuyingCompanyMaster',details.id]">
+                        </a>&nbsp;
+                        <a>
+                            <img src="assets/images/dell.png" title="Delete" style="width: 20px;margin-left: 10px;" (click)="DeleteBuyingCompanyMaster(details.id)">
+                        </a>
+                    </td>
+                </tr>
+
+            </table>
+        </div>
+    </div>
+    <div class="col-lg-12" style="text-align: center">
+        <br>
+        <pagination-controls id="foo" (pageChange)="pageChanged($event)" maxSize="15" directionLinks="true"
+               autoHide="true" responsive="true" previousLabel="Previous" nextLabel="Next"
+               screenReaderPaginationLabel="Pagination" screenReaderPageLabel="page"
+               screenReaderCurrentLabel="You're on page">
+        </pagination-controls>
+ </div><br><br>
+</div>

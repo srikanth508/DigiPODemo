@@ -1,0 +1,76 @@
+<br>
+<div class="container-fluid maindiv">
+       <div class="row headdiv">
+              <div class="col-lg-12">
+                     <h4 style="float: left;">Tender Dashboard</h4>
+                     <button type="button" style="float: right;" routerLink="/AddTender" class="addnewbtns">Add</button>
+              </div>
+       </div>
+       <br>
+       <div class="row">
+              <div class="col-lg-4">
+                     <ng-daterangepicker [(ngModel)]="value" [options]="options" (ngModelChange)="selectedDate($event)">
+                     </ng-daterangepicker>
+              </div>
+              <!-- <div class="col-lg-3">
+                     <select class="form-control" (change)="GetDepartmentName($event)">
+                            <option value="0">Select Department</option>
+                            <option *ngFor="let dep of departmentlist" value={{dep.short}}>{{dep.short}}</option>
+                     </select>
+
+              </div> -->
+              <!-- <div class="col-lg-3">
+                     <select class="form-control" (change)="GetStatusID($event)">
+                            <option value="0">Select Status</option>
+                            <option value="1">Raised</option>
+                            <option value="2">Authorized</option>
+                            <option value="3">Cancelled</option>
+                            <option value="4">Accepted</option>
+                            <option value="5">Delivered</option>
+                     </select>
+              </div> -->
+       </div><br>
+       <div class="row">
+              <div class="col-lg-12" style="overflow: auto;">
+                     <table>
+                            <tr>
+                                   <th>Tender No</th>
+                                   <th>Tender Name</th>
+                                   <th>Category</th>    
+                                   <th>Tender Location</th>
+                                   <th>Tender Type</th>
+                                   <th>Estimated Cost</th>
+                                     <th>Tender Opening Date</th>
+                                     <th>Tender Closing Date</th>
+                                   <th>Contact Person Name</th>
+                                   <th>Authorization</th>
+                                   <th>Status</th>
+                                   <th>Actions</th>
+                            </tr>
+                            <tr *ngFor="let details of tenderslist">
+                                   <td>{{details.tenderNo}}</td>
+                                   <td>{{details.tenderName}}</td>
+                                   <td>{{details.categoryName}}</td>
+                                   <td>{{details.tenderLocation}}</td>
+                                   <td>{{details.tenderType}}</td>
+                                   <td>{{details.estimatedCost}}</td>
+                                    <td>{{details.tenderOpeningDate}}</td>
+                                        <td>{{details.tenderClosingDate}}</td>
+                                   <td>{{details.tenderContactPersonName}}</td>
+                                   <td>{{details.name}}</td>
+                                   <td>
+                                          <label style="color:red">{{details.status}}</label>
+                                   </td>
+                                   <td>
+                                          <img src="assets/images/dell.png" title="Delete" style="width: 20px;"
+                                          (click)="DeleteTender(details.id)">
+
+                                           <img src="assets/images/view.png" title="View" style="width: 20px;"
+                                          routerLink="/ViewTenderDetails" (click)="GetTenderViewID(details.id)">
+                                   </td>
+                            </tr>
+
+                     </table>
+              </div>
+       </div>
+</div>

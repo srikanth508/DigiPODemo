@@ -1,0 +1,39 @@
+<br>
+<div class="container-fluid maindiv">
+       <div class="row headdiv">
+              <div class="col-lg-12">
+                     <h4 style="float: left;">Instruction Master Dashboard</h4>
+                     <button type="button" style="float: right;" routerLink="/InstructionMaster"
+                            class="addnewbtns">Add</button>
+              </div>
+       </div>
+       <br>
+       <div class="row">
+              <div class="col-lg-12">
+                     <table>
+                            <tr>
+                                   <th>Instruction Code</th>
+                                   <th>Instruction Description</th>
+                                   <th>Actions</th>
+                            </tr>
+                            <tr *ngFor="let details of instructionlist">
+                                   <td>{{details.instructionCode}}</td>
+                                   <td>{{details.instruction}}</td>
+                                   <td>
+                                          <a style="color:black">
+                                                 <img src="assets/images/edit.png" title="Edit" style="width: 20px"
+                                                        [routerLink]="['/InstructionMaster',details.id]">
+                                          </a>&nbsp;
+                                          <a>
+                                                 <img src="assets/images/dell.png" title="Delete"
+                                                        style="width: 20px;margin-left: 10px;"
+                                                        (click)="DeleteInstructionMaster(details.id)">
+                                          </a>
+
+                                   </td>
+                            </tr>
+
+                     </table>
+              </div>
+       </div>
+</div>

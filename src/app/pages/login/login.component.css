@@ -1,0 +1,24 @@
+.loginbtn{
+    width: 35%;
+    height: 43px;
+    background: #00b5d7;
+    color:white;
+    border-radius: 10px;
+    border: none;
+}
+
+.bg {
+      
+    /* background-image: url("../../../assets/Images/bg.jpg"); */
+    background-image: url("../../../assets/images/bg.jpg");
+    /* width: 1000px;
+   height: auto;  
+    height: 1000px;   */
+
+   height: 100vh;
+  width: 100%;
+/* Center and scale the image nicely */
+background-position: center;
+background-repeat: no-repeat;
+background-size: cover;
+   }

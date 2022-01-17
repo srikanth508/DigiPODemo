@@ -1,0 +1,63 @@
+<ngx-spinner></ngx-spinner>
+<br>
+<div class="container-fluid">
+       <div class="row ">
+              <div class="col-lg-12">
+                     <h4 style="float: left;">TAX DASHBOARD</h4>
+                     <button type="button" style="float: right;" routerLink="/TaxAdditions"
+                            class="addnewbtns">Add</button>
+                     <button (click)="getglmasterexcel()" style="margin-right: 40px;" class="addnewbtns">Export
+                            Excel</button>
+              </div>
+       </div>
+</div>
+<br>
+<br>
+<div class="container-fluid maindiv">
+
+       <div class="row">
+              <div class="col-lg-3">
+                     <input type="text" placeholder="Search" [(ngModel)]="term" class="form-control">
+              </div>
+
+       </div>
+       <div class="row">
+              <div class="col-lg-10">
+              </div>
+              <div class="col-lg-2">
+                     <label style="margin-left: 67px;"> <b>Count : {{count}}</b></label>
+              </div>
+       </div>
+       <div class="row">
+              <div class="col-lg-12">
+                     <table id="POREPORTS">
+                            <tr>
+                                   <th>Tax Code</th>
+                                   <th>Tax Percentage</th>
+                                   <!-- <th>Country</th>
+                                   <th>State</th>
+                                   <th>City</th> -->
+                                   <!-- <th>Tax Description</th> -->
+                                   <th>Action</th>
+                            </tr>
+                            <tr *ngFor="let List of TaxList|filter:term">
+                                   <td>{{List.taxCode}}</td>
+                                   <td>{{List.taxPercentage}}</td>
+                                   <!-- <td>{{List.country}}</td>
+                                   <td>{{List.state}}</td>
+                                   <td>{{List.city}}</td> -->
+                                   <!-- <td>{{List.description}}</td> -->
+                                   <td>
+                                          <img src="assets/images/dell.png" (click)="Delete(List.id)"
+                                                 style="width: 20px;">
+                                          &nbsp;
+                                          <img src="assets/images/edit.png" style="width: 20px;"
+                                                 [routerLink]="['/TaxAdditions',List.id]">
+                                   </td>
+
+                            </tr>
+
+                     </table>
+              </div>
+       </div>
+</div>

@@ -1,0 +1,30 @@
+import { Component, OnInit } from '@angular/core';
+import Swal from 'sweetalert2';
+import { PomsService } from '../../../poms.service';
+import { NgDateRangePickerOptions } from 'ng-daterangepicker';
+import { formatDate } from "@angular/common";
+@Component({
+  selector: 'app-projectcontacts-dash',
+  templateUrl: './projectcontacts-dash.component.html',
+  styleUrls: ['./projectcontacts-dash.component.css']
+})
+export class ProjectcontactsDashComponent implements OnInit {
+
+  constructor(public pomservice: PomsService) { }
+
+  public genaratorid:any;
+  public contactlist:any;
+  public term:any;
+
+  ngOnInit() {
+        this.genaratorid = localStorage.getItem('genaratorid');
+    this.GetProjectContacts()
+  }
+  public GetProjectContacts() {
+    this.pomservice.GetProjectContacts(this.genaratorid).subscribe(data => {
+      this.contactlist = data;
+    }, error => {
+
+    })
+  }
+}

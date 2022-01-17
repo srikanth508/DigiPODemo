@@ -1,0 +1,178 @@
+import { Component, OnInit } from '@angular/core';
+import { PomsService } from '../../poms.service';
+import Swal from 'sweetalert2'
+import { from } from 'rxjs';
+import { ActivatedRoute } from '@angular/router';
+import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
+
+
+@Component({
+  selector: 'app-item-master',
+  templateUrl: './item-master.component.html',
+  styleUrls: ['./item-master.component.css']
+})
+export class ItemMasterComponent implements OnInit {
+  ItemNo: any;
+  Unit: any;
+  Cost: any;
+  PricingUnit: any;
+  PriceFactor: any;
+  ProcurementTime: any;
+  Commodity: any;
+  Category: any;
+  SubCategory: any;
+  Tax: any;
+  Description: any;
+  CategoryList: any;
+  SubcategoryList: any;
+  ItemID: any;
+  categorylist: any;
+  saveupdatebtn: number;
+  SubcategoryList1: any;
+  itemname: any;
+  public TaxList: any;
+  public taxid:any;
+  public Editor = ClassicEditor;
+  constructor(private PomsService: PomsService, private activatedroute: ActivatedRoute) { }
+
+  public currency: any;
+
+  ngOnInit() {
+    this.currency = "";
+    this.PricingUnit = "";
+    this.Category = "";
+    this.SubCategory = "";
+    this.Description=""
+    this.taxid=0
+    this.PomsService.GetCategoryMaster().subscribe(data => {
+      debugger;
+      this.CategoryList = data
+    })
+
+    this.PomsService.GetTaxMaster().subscribe(data => {
+      debugger;
+      this.TaxList = data;
+    })
+
+  
+
+    this.activatedroute.params.subscribe(params => {
+      debugger;
+      this.ItemID = params['id'];
+      if (this.ItemID == undefined) {
+        this.saveupdatebtn = 0;
+      }
+      else {
+        this.saveupdatebtn = 1;
+        this.PomsService.GetItemMaster().subscribe(data => {
+          debugger;
+          this.categorylist = data;
+          this.categorylist = this.categorylist.filter(x => x.id == this.ItemID);
+          this.ItemNo = this.categorylist[0].itemCode;
+          this.Unit = this.categorylist[0].unit;
+          this.Cost = this.categorylist[0].cost;
+          this.currency = this.categorylist[0].currency;
+          this.PricingUnit = this.categorylist[0].pricingUnit;
+          this.PriceFactor = this.categorylist[0].pricingFactor;
+          this.ProcurementTime = this.categorylist[0].procurentTime;
+          this.Commodity = this.categorylist[0].commodity;
+          this.Category = this.categorylist[0].categoryID;
+          this.itemname = this.categorylist[0].itemName;
+          this.PomsService.GetSubCategoryMaster().subscribe(data => {
+            debugger;
+            this.PomsService.GetTaxMaster().subscribe(data => {
+              debugger;
+              this.TaxList = data;
+            })
+            this.SubcategoryList1 = data
+            this.SubcategoryList = this.SubcategoryList1.filter(x => x.categoryID == this.Category)
+          })
+          this.SubCategory = this.categorylist[0].subCategoryID;
+          this.taxid = this.categorylist[0].taxID;
+          this.Description = this.categorylist[0].description;
+        })
+      }
+    }
+    )
+  }
+
+
+  public GetTaxID(even)
+  {
+    debugger
+    this.taxid=even.target.value;
+  }
+
+  public InsertItem() {
+    debugger;
+    var Entity = {
+      "ItemCode": this.ItemNo,
+      "ItemName": this.itemname,
+      "Unit": this.Unit,
+      "Cost": this.Cost,
+      "Currency": this.currency,
+      "PricingUnit": this.PricingUnit,
+      "PricingFactor": this.PriceFactor,
+      "ProcurentTime": this.ProcurementTime,
+      "Commodity": this.Commodity,
+      "CategoryID": this.Category,
+      "SubCategoryID": this.SubCategory,
+      "TaxID": this.taxid,
+      "Description": this.Description,
+    }
+    this.PomsService.InsertItemMaster(Entity).subscribe((data: any) => {
+      if (data != undefined) {
+        debugger;
+        Swal.fire('success', 'Item Details Saved  Successfully', 'success');
+        location.href = "#/ItemMasterDashboard"
+
+      }
+    });
+  }
+
+  public getcurreny(even) {
+    debugger
+    this.currency = even.target.value;
+  }
+
+  public getCategoryID(even) {
+    debugger
+    this.Category = even.target.value;
+    // var list = this.CategoryList.filter(x => x.id == this.Category)
+    // this.Tax = list[0].taxCode
+
+    this.PomsService.GetSubCategoryMaster().subscribe(data => {
+      debugger;
+      this.SubcategoryList1 = data
+      var List = this.SubcategoryList1.filter(x => x.categoryID == this.Category)
+      this.SubcategoryList = List;
+    })
+  }
+  public UpdateItemMaster() {
+    debugger;
+    var Entity = {
+      "ID": this.ItemID,
+      "ItemCode": this.ItemNo,
+      "ItemName": this.itemname,
+      "Unit": this.Unit,
+      "Cost": this.Cost,
+      "Currency": this.currency,
+      "PricingUnit": this.PricingUnit,
+      "PricingFactor": this.PriceFactor,
+      "ProcurentTime": this.ProcurementTime,
+      "Commodity": this.Commodity,
+      "CategoryID": this.Category,
+      "SubCategoryID": this.SubCategory,
+      "TaxID": this.taxid,
+      "Description": this.Description,
+    }
+    this.PomsService.UpdateItemMaster(Entity).subscribe((data: any) => {
+      if (data != undefined) {
+        debugger;
+        Swal.fire('success', 'Item Details updated  Successfully', 'success');
+        location.href = "#/ItemMasterDashboard"
+
+      }
+    });
+  }
+}

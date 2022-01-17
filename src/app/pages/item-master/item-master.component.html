@@ -1,0 +1,243 @@
+<br>
+<div class="container-fluid">
+       <div class="row">
+              <div class="col-lg-12">
+                     <h4 style="float: left;">ITEM MASTER</h4>
+              </div>
+       </div>
+</div>
+<br>
+<div class="container-fluid maindiv">
+       <form #ItemForm="ngForm">
+              <div *ngIf="saveupdatebtn==0">
+                     <div class="row">
+                            <div class="col-lg-2">
+                                   <label>Vendor </label>
+                                   <span style="color:red;">*</span>
+                            </div>
+                            <div class="col-lg-4">
+                                   <select class="form-control" required (change)="GetSupplierID($event)">
+                                          <option value="">Select</option>
+                                          <option *ngFor="let sup of supplierlist" value="{{sup.supcode}},{{sup.id}}">
+                                                 {{sup.supplierName}}</option>
+                                   </select>
+                            </div>
+                     </div>
+                     <br>
+                     <div class="row">
+                            <div class="col-lg-2">
+                                   <label>Department </label>
+                                   <span style="color:red;">*</span>
+                            </div>
+                            <div class="col-lg-4">
+                                   <select class="form-control" required [(ngModel)]="departmentid" name="departmentid"
+                                          (change)="GetDepartmentID($event)">
+                                          <option value="">Select</option>
+                                          <option *ngFor="let dep of departmentlist" value="{{dep.deptno}}">
+                                                 {{dep.short}}</option>
+                                   </select>
+                            </div>
+                     </div>
+                     <br>
+              </div>
+
+              <!-- <div class="row">
+                     <div class="col-lg-2">
+                            <label>Item Code</label>
+                            <span style="color:red;">*</span>
+                     </div>
+                     <div class="col-lg-4">
+                            <input type="text" [(ngModel)]="ItemNo" required name="ItemNo" class="form-control"
+                                   placeholder="Item Code">
+                     </div>
+              </div>
+              <br> -->
+              <!-- <div class="row">
+                     <div class="col-lg-2">
+                            <label>Item Name</label>
+                            <span style="color:red;">*</span>
+                     </div>
+                     <div class="col-lg-4">
+                            <input type="text" [(ngModel)]="itemname" required name="itemname" class="form-control"
+                                   placeholder="Item Name">
+                     </div>
+              </div>
+              <br> -->
+
+              <div class="row">
+                     <div class="col-lg-2">
+                            <label>Category</label>
+                            <span style="color:red;">*</span>
+                     </div>
+                     <div class="col-lg-4">
+                            <select class="form-control" required [(ngModel)]="Category" name="Category"
+                                   (change)="getCategoryID($event)">
+                                   <option value="">Select</option>
+                                   <option *ngFor="let item of CategoryList" value="{{item.id}}">{{item.categoryName}}
+                                   </option>
+                            </select>
+                     </div>
+              </div>
+              <br>
+              <!-- <div class="row">
+                     <div class="col-lg-2">
+                            <label>Sub Category</label>
+                            <span style="color:red;">*</span>
+                     </div>
+                     <div class="col-lg-4">
+                            <select class="form-control" required [(ngModel)]="SubCategory" name="SubCategory">
+                                   <option value="">Select</option>
+                                   <option *ngFor="let List of SubcategoryList" value="{{List.id}}">
+                                          {{List.subCategoryName}}
+                                   </option>
+                            </select>
+                     </div>
+              </div>
+              <br> -->
+              <!-- <div class="row">
+                     <div class="col-lg-2">
+                            <label>Tax Per Item</label>
+                            <span style="color:red;">*</span>
+                     </div>
+                     <div class="col-lg-4">
+                            <select class="form-control" (change)="GetTaxID($event)" [(ngModel)]="taxid" name="taxid">
+                                   <option value="0">Select</option>
+                                   <option *ngFor="let tax of TaxList" value="{{tax.id}}">{{tax.taxPercentage}}</option>
+                            </select>
+                     </div>
+              </div>
+              <br> -->
+
+              <div class="row">
+                     <div class="col-lg-2">
+                            <label>Unit Of Measure</label>
+                            <span style="color:red;">*</span>
+                     </div>
+                     <div class="col-lg-4">
+                            <select class="form-control" required (change)="GetUnitOfMeasuere($event)"
+                                   [(ngModel)]="Unit" name="Unit">
+                                   <option value="0">Select</option>
+                                   <option *ngFor="let unit of unitlist" value="{{unit.unit}}">{{unit.unit}}</option>
+                            </select>
+                     </div>
+              </div><br>
+              <!-- <div class="row">
+                     <div class="col-lg-2">
+                            <label>Unit</label>
+                            <span style="color:red;">*</span>
+                     </div>
+                     <div class="col-lg-4">
+                            <input type="text" class="form-control" required [(ngModel)]="Unit" name="Unit"
+                                   placeholder="Unit">
+                     </div>
+              </div>
+              <br> -->
+              <div class="row">
+                     <div class="col-lg-2">
+                            <label>Cost</label>
+                            <span style="color:red;">*</span>
+                     </div>
+                     <div class="col-lg-4">
+                            <input type="text" class="form-control" required [(ngModel)]="Cost" name="Cost"
+                            onkeypress='return(event.charCode>=48&&event.charCode<=57||event.charCode==46)'  placeholder="Cost">
+                     </div>
+              </div>
+              <br>
+              <div class="row">
+                     <div class="col-lg-2">
+                            <label>Currency</label>
+                            <span style="color:red;">*</span>
+                     </div>
+                     <div class="col-lg-4">
+                            <select class="form-control" [(ngModel)]="currency" required name="currency"
+                                   (change)="getcurreny($event)">
+                                   <option value="">Select</option>
+                                   <option *ngFor="let cur of currencylist" value="{{cur.id}}">{{cur.currency}}</option>
+                                   <!-- <option value="1">USD</option> -->
+                                   <!-- <option value="2">INR</option>
+                                   <option value="3">SGP</option> -->
+                            </select>
+                     </div>
+              </div>
+              <br>
+              <!-- <div class="row">
+              <div class="col-lg-2">
+                     <label>Pricing Unit of Measure</label>
+              </div>
+              <div class="col-lg-4">
+                     <input type="text" class="form-control"  [(ngModel)]="PricingUnit" name="PricingUnit"
+                            placeholder="Pricing Unit of Measure">
+              </div>
+       </div>
+       <br> -->
+              <!-- <div class="row">
+              <div class="col-lg-2">
+                     <label>Price Factor</label>
+              </div>
+              <div class="col-lg-4">
+                     <input type="text" class="form-control"  [(ngModel)]="PriceFactor" name="PriceFactor"
+                            placeholder="Price Factor">
+              </div>
+       </div>
+       <br> -->
+              <div class="row">
+                     <div class="col-lg-2">
+                            <label>Procurement Time</label>
+                            <span style="color:red;">*</span>
+                     </div>
+                     <div class="col-lg-4">
+                            <input type="text" class="form-control" required [(ngModel)]="ProcurementTime"
+                                   name="ProcurementTime" placeholder="Procurement Time">
+                     </div>
+              </div>
+              <br>
+              <div class="row">
+                     <div class="col-lg-2">
+                            <label>Commodity</label>
+                     </div>
+                     <div class="col-lg-4">
+                            <input type="text" class="form-control" [(ngModel)]="Commodity" name="Commodity"
+                                   placeholder="Commodity">
+                     </div>
+              </div>
+              <br>
+              <div class="row">
+                     <div class="col-lg-2">
+                            <label>Description</label>
+                            <span style="color:red;">*</span>
+                     </div>
+                     <div class="col-lg-4">
+
+                            <textarea rows="4" placeholder="Description" class="form-control" [(ngModel)]="Description" name="Description" ></textarea>
+                            <!-- <ckeditor [editor]="Editor" [(ngModel)]="Description" name="Description" required data="">
+                            </ckeditor> -->
+                     </div>
+              </div>
+              <br>
+
+              <!-- <div class="row">
+                     <div class="col-lg-2">
+                            <label>Extended Description</label>
+                     </div>
+                     <div class="col-lg-4">
+
+                            <ckeditor [editor]="Editor" [(ngModel)]="descr2" name="descr2" data="">
+                            </ckeditor>
+                     </div>
+              </div>
+              <br> -->
+              <div class="row">
+                     <div class="col-lg-4"></div>
+                     <div class="col-lg-2">
+                            <button type="button" *ngIf="saveupdatebtn==0" (click)="InsertItem()" class="addnewbtns"
+                                   style="width: 100%;" [disabled]="ItemForm.form.invalid">Save</button>
+                            <button type="button" *ngIf="saveupdatebtn==1" (click)="UpdateItemMaster()"
+                                   class="addnewbtns" style="width: 100%;"
+                                   [disabled]="ItemForm.form.invalid">Update</button>
+
+                     </div>
+                     <div class="col-lg-5"></div>
+              </div>
+       </form>
+</div>
+<br>

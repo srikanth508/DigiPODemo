@@ -1,0 +1,155 @@
+import { Component, OnInit } from "@angular/core";
+import { PomsService } from "../../poms.service";
+import Swal from "sweetalert2";
+@Component({
+  selector: "app-supplier-master-dashboard",
+  templateUrl: "./supplier-master-dashboard.component.html",
+  styleUrls: ["./supplier-master-dashboard.component.css"]
+})
+export class SupplierMasterDashboardComponent implements OnInit {
+  constructor(public pomservice: PomsService) {}
+  public supplierlist: any;
+  public term: any;
+  public suppliername: any;
+  public countrylist: any;
+  public countryname: any;
+  public countryid: any;
+  public statelist: any;
+  public stateid: any;
+  public citylist: any;
+  public cityid: any;
+  public statename: any;
+  public cityname: any;
+
+  ngOnInit() {
+    this.GetSuppliermaster();
+    this.getcountrymaster();
+  }
+
+  public GetSuppliermaster() {
+    this.pomservice.GetSupplierMaster().subscribe(
+      data => {
+        this.supplierlist = data;
+      },
+      error => {}
+    );
+  }
+
+  public DeleteSupplierMaster(id) {
+    debugger;
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You will not be able to recover this Data!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonText: "Yes, delete it!",
+      cancelButtonText: "No, keep it"
+    }).then(result => {
+      if (result.value) {
+        this.pomservice.DeleteSupplierMaster(id).subscribe(res => {
+          let test = res;
+          this.GetSuppliermaster();
+        });
+        Swal.fire("Deleted!", "Your Data has been deleted.", "success");
+      } else if (result.dismiss === Swal.DismissReason.cancel) {
+        Swal.fire("Cancelled", "Your Data  is safe :)", "error");
+        this.GetSuppliermaster();
+      }
+    });
+  }
+
+  public GetSupplierName(even) {
+    debugger;
+    this.suppliername = even.target.value;
+  }
+
+  public getcountrymaster() {
+    this.pomservice.GetCountryMaster().subscribe(
+      data => {
+        this.countrylist = data;
+      },
+      error => {}
+    );
+  }
+
+  public GetCountryName(even) {
+    debugger;
+    let list = even.target.value.split(",");
+    this.countryname = list[0];
+    this.countryid = list[1];
+    this.GetStateMasterbycountryid();
+  }
+  public GetStateMasterbycountryid() {
+    this.pomservice.GetStateMasterByCountryID(this.countryid).subscribe(
+      data => {
+        this.statelist = data;
+      },
+      error => {}
+    );
+  }
+  public GetStateName(even) {
+    let list1 = even.target.value.split(",");
+    this.statename = list1[0];
+    this.stateid = list1[1];
+    this.GetCityMasterbyStateid();
+  }
+  public GetCityMasterbyStateid() {
+    this.pomservice.GetCityMasterByStateID(this.stateid).subscribe(
+      data => {
+        this.citylist = data;
+      },
+      error => {}
+    );
+  }
+  public GetCityName(even) {
+    let list2 = even.target.value.split(",");
+    this.cityname = list2[0];
+    this.cityid = list2[1];
+  }
+
+  public DeactiveSupplier(id) {
+    debugger;
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You Want to Deactivate This Supplier!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonText: "Yes, Deactivate it!",
+      cancelButtonText: "No, keep it"
+    }).then(result => {
+      if (result.value) {
+        this.pomservice.GetSupplierInActiveStatus(id).subscribe(res => {
+          let test = res;
+          this.GetSuppliermaster();
+        });
+        Swal.fire("Success!", "The Supplier Has Deactivated.", "success");
+      } else if (result.dismiss === Swal.DismissReason.cancel) {
+        Swal.fire("Cancelled", "Your Supplier  is safe :)", "error");
+        this.GetSuppliermaster();
+      }
+    });
+  }
+
+  public ActiveSupplier(id) {
+    debugger;
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You Want to Activate This Supplier!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonText: "Yes, Activate it!",
+      cancelButtonText: "No, keep it"
+    }).then(result => {
+      if (result.value) {
+        this.pomservice.GetSupplierActiveStatus(id).subscribe(res => {
+          let test = res;
+          this.GetSuppliermaster();
+        });
+        Swal.fire("Success!", "Supplier has Activated.", "success");
+      } else if (result.dismiss === Swal.DismissReason.cancel) {
+        Swal.fire("Cancelled", "Your Supplier is safe :)", "error");
+        this.GetSuppliermaster();
+      }
+    });
+  }
+}

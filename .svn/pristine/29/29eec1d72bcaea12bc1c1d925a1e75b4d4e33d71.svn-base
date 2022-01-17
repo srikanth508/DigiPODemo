@@ -1,0 +1,45 @@
+import { Component } from '@angular/core';
+import { PomsService } from '././poms.service'
+@Component({
+  selector: 'app-root',
+  templateUrl: './app.component.html',
+  styleUrls: ['./app.component.css']
+})
+export class AppComponent {
+  title = 'POMS';
+  constructor(private PomsService: PomsService) { }
+  public temp: any;
+  public userid:any;
+  public messages:any;
+  public count:any;
+
+  ngOnInit() {
+    debugger;
+    this.temp = localStorage.getItem("temp");
+    this.userid = localStorage.getItem('UserID');
+    this.GetMessages()
+  }
+
+  public GetMessages() {
+    this.PomsService.GetNotificationMessages(this.userid).subscribe(data => {
+      debugger
+      this.messages = data[0];
+      this.count=this.messages.msgcount
+    })
+  }
+
+
+
+
+  public logout() {
+    debugger;
+    localStorage.clear();
+    location.href = "#/Login";
+    location.reload();
+  }
+
+  public onActivate(event) {
+    window.scroll(0, 0);
+  }
+
+}

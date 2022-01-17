@@ -1,0 +1,74 @@
+<br>
+<div class="container-fluid">
+       <div class="row">
+              <div class="col-lg-12">
+                     <h4 style="float: left;">SUB CATEGORY MASTER</h4>
+              </div>
+       </div>
+       <br>
+</div>
+<br>
+<div class="container-fluid maindiv">
+       <form #SubCategoryFonm="ngForm">
+              <div class="row">
+                     <div class="col-lg-2">
+                            <label>Category</label>
+                            <span style="color:red;">*</span>
+                     </div>
+                     <div class="col-lg-4">
+                            <select class="form-control" required [(ngModel)]="CategoryID" name="CategoryID">
+                                   <option value="0">Select</option>
+                                   <option *ngFor="let item of categoryList" value="{{item.id}}">{{item.categoryName}}
+                                   </option>
+                            </select>
+                     </div>
+              </div>
+              <br>
+              <div class="row">
+                     <div class="col-lg-2">
+                            <label>Sub Category Code</label>
+                            <span style="color:red;">*</span>
+                     </div>
+                     <div class="col-lg-4">
+                            <input type="text" class="form-control" required [(ngModel)]="code" name="code"
+                                   placeholder="Sub Category Code">
+                     </div>
+              </div>
+              <br>
+              <div class="row">
+                     <div class="col-lg-2">
+                            <label>Sub Category Name</label>
+                            <span style="color:red;">*</span>
+                     </div>
+                     <div class="col-lg-4">
+                            <input type="text" class="form-control" required [(ngModel)]="Name" name="Name"
+                                   placeholder="Sub Category Name">
+                     </div>
+              </div>
+              <br>
+              <div class="row">
+                     <div class="col-lg-2">
+                            <label>Sub Category Description</label>
+                            <span style="color:red;">*</span>
+                     </div>
+                     <div class="col-lg-4">
+                            <textarea rows="3" class="form-control" required [(ngModel)]="Description"
+                                   name="Description" placeholder="Sub Category Description"></textarea>
+                     </div>
+              </div>
+              <br>
+              <div class="row">
+                     <div class="col-lg-4"></div>
+                     <div class="col-lg-2">
+                            <button type="button" *ngIf="saveupdatebtn==0" (click)="InsertSubCategoryDetails()"
+                                   class="addnewbtns" style="width: 100%;"
+                                   [disabled]="SubCategoryFonm.form.invalid">Save</button>
+                            <button type="button" *ngIf="saveupdatebtn==1" (click)="UpdateSubCategoryMaster()"
+                                   class="addnewbtns" style="width: 100%;"
+                                   [disabled]="SubCategoryFonm.form.invalid">Update</button>
+                     </div>
+                     <div class="col-lg-5"></div>
+              </div>
+       </form>
+</div>
+<br>

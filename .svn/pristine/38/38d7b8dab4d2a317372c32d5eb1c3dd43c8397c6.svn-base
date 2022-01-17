@@ -1,0 +1,71 @@
+import { Component, OnInit } from '@angular/core';
+import Swal from 'sweetalert2';
+import { PomsService } from '../../../poms.service';
+import { NgDateRangePickerOptions } from 'ng-daterangepicker';
+import { formatDate } from "@angular/common";
+@Component({
+  selector: 'app-po-chat',
+  templateUrl: './po-chat.component.html',
+  styleUrls: ['./po-chat.component.css']
+})
+export class PoChatComponent implements OnInit {
+
+  constructor(public pomservice: PomsService) { }
+
+public genaratorid:any;
+public messageslist:any;
+public term:any;
+public user:any;
+public subject:any;
+public message:any;
+public chatid:any;
+public receivername:any;
+public projectid:any;
+public pogenaratorid:any;
+
+  ngOnInit() {
+      this.genaratorid = localStorage.getItem('genaratorid');
+      this.GetProjectchatMessages();
+        this.user=localStorage.getItem('user');
+  }
+
+ public GetProjectchatMessages() {
+    this.pomservice.GetProjectChatMessages(this.genaratorid).subscribe(data => {
+      this.messageslist = data;
+    }, error => {
+
+    })
+  }
+
+
+public GetProjectIDddd(chatID,projectID,senderName)
+{
+  debugger
+  this.chatid=chatID;
+  this.projectid=projectID,
+  this.receivername=senderName;
+}
+
+
+  public InsertChatMessages()
+{
+  debugger
+  var entity={
+    'ChatID':this.chatid,
+    'SenderID':this.genaratorid,
+    'ReceiverID':this.pogenaratorid,
+     'SenderName':this.user,
+    'ReceiverName':this.receivername,
+    'Subject':this.subject,
+    'Message':this.message,
+    'ProjectID':this.projectid
+  }
+  this.pomservice.InsertProjectChatMessages(entity).subscribe(data=>{
+   if(data!=0)
+   {
+     Swal.fire("Message Sent Successfully");
+     this.GetProjectchatMessages()
+   }
+  })
+}
+}

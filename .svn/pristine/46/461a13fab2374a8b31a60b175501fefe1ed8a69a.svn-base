@@ -1,0 +1,106 @@
+<br>
+<div class="container-fluid">
+       <div class="row ">
+              <div class="col-lg-12">
+                     <h4 style="float: left;">AUTHORIZATION MASTER</h4>
+              </div>
+       </div>
+</div>
+<br>
+<div class="container-fluid maindiv">
+       <form #authForm="ngForm">
+              <div class="row">
+                     <div class="col-lg-2">
+                            <label>Authorization Code</label>
+                     </div>
+                     <div class="col-lg-4">
+                            <input type="text" class="form-control" required [(ngModel)]="authorizationcode"
+                                   name="authorizationcode" placeholder="Authorization Code">
+                     </div>
+              </div>
+              <br>
+              <div class="row">
+                     <div class="col-lg-2">
+                            <label>Name</label>
+                     </div>
+                     <div class="col-lg-4">
+                            <input type="text" class="form-control" required [(ngModel)]="name" name="name"
+                                   placeholder="Name">
+                     </div>
+              </div>
+              <br>
+              <div class="row">
+                     <div class="col-lg-2">
+                            <label>Email</label>
+                     </div>
+                     <div class="col-lg-4">
+                            <input type="text" class="form-control" required [(ngModel)]="email" name="email"
+                                   placeholder="Email">
+                     </div>
+              </div>
+              <br>
+              <div class="row">
+                     <div class="col-lg-2">
+                            <label>Department</label>
+                     </div>
+                     <div class="col-lg-4">
+                            <select class="form-control" (change)="GetDepartmentID($event)" [(ngModel)]="departmentid"
+                                   name="departmentid">
+                                   <option value="" selected>Select</option>
+                                   <option *ngFor="let list of departmentlist" value="{{list.id}}">{{list.short}}
+                                   </option>
+                            </select>
+                     </div>
+              </div>
+              <br>
+              <div class="row">
+                     <div class="col-lg-2">
+                            <label>Primary Phone No</label>
+                     </div>
+                     <div class="col-lg-4">
+                            <input type="text" class="form-control" required [(ngModel)]="primaryphoneno"
+                                   name="primaryphoneno" placeholder="Primary Phone No"
+                                   onkeypress='return(event.charCode>=48&&event.charCode<=57)'>
+                     </div>
+              </div>
+              <br>
+              <div class="row">
+                     <div class="col-lg-2">
+                            <label>Secondary Phone No</label>
+                     </div>
+                     <div class="col-lg-4">
+                            <input type="text" class="form-control" required [(ngModel)]="secondaryphoneno"
+                                   name="secondaryphoneno" placeholder="Secondary Phone No"
+                                   onkeypress='return(event.charCode>=48&&event.charCode<=57)'>
+                     </div>
+              </div>
+              <br>
+              <div class="row">
+                     <div class="col-lg-2">
+                            <label>Fax Telephone</label>
+                     </div>
+                     <div class="col-lg-4">
+                            <input type="text" class="form-control" required [(ngModel)]="faxtelephone"
+                                   name="faxtelephone" placeholder="Fax Telephone"
+                                   onkeypress='return(event.charCode>=48&&event.charCode<=57)'>
+                     </div>
+              </div>
+              <br>
+              <div class="row" *ngIf="showbit=='1'">
+                     <div class="col-lg-4"></div>
+                     <div class="col-lg-2">
+                            <button type="button" class="addnewbtns" style="width: 100%;"
+                                   [disabled]="authForm.form.invalid" (click)="insertdetails()">Save</button>
+                     </div>
+                     <div class="col-lg-5"></div>
+              </div>
+              <div class="row" *ngIf="showbit=='0'">
+                     <div class="col-lg-4"></div>
+                     <div class="col-lg-2">
+                            <button type="button" class="addnewbtns" style="width: 100%;"
+                                   [disabled]="authForm.form.invalid" (click)="updatedetails()">Update</button>
+                     </div>
+                     <div class="col-lg-5"></div>
+              </div>
+       </form>
+</div>

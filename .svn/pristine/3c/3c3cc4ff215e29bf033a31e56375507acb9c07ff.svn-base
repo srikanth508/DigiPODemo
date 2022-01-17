@@ -1,0 +1,90 @@
+<br>
+<div class="containe-fluid">
+    <div class="row ">
+        <div class="col-lg-12">
+            <h4 style="float: left;">PURCHASE ORDER ITEMS</h4>
+
+            <button (click)="getglmasterexcel()" style="margin-right: 40px;" class="addnewbtns">Export
+                Excel</button>
+
+        </div>
+    </div>
+</div>
+<br>
+<br>
+<div class="container-fluid maindiv">
+
+
+    <div class="row">
+        <div class="col-lg-3">
+            <input type="text" placeholder="Search" [(ngModel)]="term" class="form-control">
+        </div>
+        <div class="col-lg-3">
+            <select class="form-control" (change)="GetCategoryName($event)">
+                <option value="0">Select Category</option>
+                <option *ngFor="let list of CategoryList" value="{{list.categoryName}}">{{list.categoryName}}
+                </option>
+            </select>
+        </div>
+        <div class="col-lg-3">
+            <select class="form-control" *ngIf="categoryname!='undefined'" (change)="GetSubCategoryName($event)">
+                <option value="0">Select SubCategory</option>
+                <option *ngFor="let list of subCategoryList" value="{{list.subCategoryName}}">{{list.subCategoryName}}
+                </option>
+            </select>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-9">
+        </div>
+        <div class="col-lg-2">
+            <label><b>Grand Total : {{grandtotal|number}}</b></label>
+        </div>
+        <div class="col-lg-1">
+            <label><b>Count : {{count}}</b></label>
+        </div>
+    </div>
+    <div class="row">
+        <table id="POREPORTS">
+            <tr>
+                <th>P.O</th>
+                <th>Item No</th>
+                <th>Category</th>
+                <th>Sub Category</th>
+                <th>Item Name</th>
+                <th>Due Date</th>
+                <th>Description</th>
+                <th>Unit</th>
+                <th>Quantity</th>
+                <th>Net Total</th>
+                <th>Tax Percentage</th>
+                <th>Tax Amount</th>
+                <th>Total PO Amount</th>
+                <th>Actions</th>
+            </tr>
+            <tr *ngFor="let item of itemslist|filter:term|filter:categoryname|filter:subcategoryname">
+                <td>{{item.poNo}}</td>
+                <td>{{item.itemCode}}</td>
+                <td>{{item.categoryName}}</td>
+                <td>{{item.subCategoryName}}</td>
+                <td>{{item.itemName}}</td>
+                <td>{{item.duedate}}</td>
+                <td>{{item.description}}</td>
+                <td>{{item.unit}}</td>
+                <td>{{item.quantity}}</td>
+                <td>{{item.price}}</td>
+                <td>{{item.taxPercentage}}%</td>
+                <td>{{item.taxAmount}}</td>
+                <td>{{item.totalPrice|number}}</td>
+                <td>
+                    <img src="assets/images/edit.png" title="Edit" data-dismiss="modal"
+                        [routerLink]="['/EditProductOrderdetails',item.id]" style="width: 20px;"> &nbsp;
+                    <img src="assets/images/dell.png" title="Delete" style="width: 20px;"
+                        (click)="DeletePurchaseOrderDetails(item.id)">
+
+                </td>
+            </tr>
+
+        </table>
+    </div>
+</div>

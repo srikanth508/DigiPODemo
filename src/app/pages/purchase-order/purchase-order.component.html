@@ -1,0 +1,478 @@
+<br>
+<ngx-spinner></ngx-spinner>
+<div class="container-fluid">
+    <div class="col-lg-12">
+        <h4 style="float: left;">PURCHASE ORDER</h4>
+
+    </div>
+</div>
+<br><br>
+<div class="container-fluid maindiv">
+    <form #purchaseForm="ngForm">
+        <br>
+        <div class="row">
+            <div class="col-lg-3">
+                <label>Buying Company</label>
+                <span style="color:red">*</span>
+            </div>
+            <div class="col-lg-4">
+                <select class="form-control" (change)="GetCompanyID($event)" required [(ngModel)]="companyid"
+                    name="companyid">
+                    <option value="0" selected>Select</option>
+                    <option *ngFor="let company of companylist" value="{{company.id}}">
+                        {{company.companyName}}</option>
+                </select>
+            </div>
+        </div>
+        <br>
+        <div class="row">
+            <div class="col-lg-3">
+                <label>Date</label>
+                <span style="color:red">*</span>
+            </div>
+            <div class="col-lg-4">
+                <input type="date" class="form-control" min={{todaydate}} id="date" required [(ngModel)]="date"
+                    name="date">
+            </div>
+        </div>
+        <br>
+        <div class="row">
+            <div class="col-lg-3">
+                <label>Order Type</label>
+                <span style="color:red">*</span>
+            </div>
+            <div class="col-lg-4">
+                <select class="form-control" required [(ngModel)]="ordertypeid" name="ordertypeid"
+                    (change)="GetOrderTypeID($event)">
+                    <option value="0">Select</option>
+                    <option *ngFor="let order of orderlist" value="{{order.orderType}}">{{order.orderType}}</option>
+                    <!-- <option value="New">New</option>
+                    <option value="Contract">Contract</option>
+                    <option value="Blanket">Blanket</option>
+                    <option value="Amendment">Amendment</option> -->
+                </select>
+            </div>
+        </div>
+        <br>
+        <div class="row">
+            <div class="col-lg-3">
+                <label>Ship Via</label>
+                <span style="color:red">*</span>
+            </div>
+            <div class="col-lg-4">
+                <select class="form-control" required [(ngModel)]="shipviaid" name="shipviaid"
+                    (change)="GetShipViaID($event)">
+                    <option value="0" selected>Select</option>
+                    <option *ngFor="let ship of ShipViaList" value="{{ship.id}}">
+                        {{ship.shipViaDescription}}
+                    </option>
+                </select>
+            </div>
+            <div class="col-lg-4" *ngIf="shipviaid!=0">
+                <label>Ship Description : <b>{{shipdesc}}</b></label>
+            </div>
+        </div>
+        <br>
+        <div class="row">
+            <div class="col-lg-3">
+                <label>FOB</label>
+                <span style="color:red">*</span>
+            </div>
+            <div class="col-lg-4">
+                <select class="form-control" required [(ngModel)]="fobid" name="fobid" (change)="GetFobID($event)">
+                    <option value="0">Select</option>
+                    <option *ngFor="let fob of foblist" value="{{fob.id}}">{{fob.fobCode}}</option>
+                </select>
+            </div>
+            <div class="col-lg-5" *ngIf="fobid!=0">
+                <label>FOB Description : <b>{{fobdesc}}</b></label>
+            </div>
+        </div>
+        <br>
+        <div *ngIf="showbit=='1'">
+            <div class="row">
+                <div class="col-lg-3">
+                    <label>Item No </label>
+                    <span style="color:red">*</span>
+                </div>
+                <div class="col-lg-4">
+
+                    <input type="text" class="form-control" placeholder="Item No"
+                        onkeypress='return(event.charCode>=48&&event.charCode<=57)' [(ngModel)]="itemno" name="itemno">
+                </div>
+                <div class="col-lg-3">
+                    <button class="btn btn primary" placeholder="Item No" style="background-color:#00b5d7;color: white;"
+                        (click)="GetItemNo()">Search</button>
+                </div>
+            </div>
+            <br>
+        </div>
+        <div *ngIf="tablecount=='1'" class="groove">
+            <br>
+            <div class="row">
+                <div class="col-lg-3" style="margin-left:10px">
+                    <input type="text" class="form-control" placeholder="Search" [(ngModel)]="term" name="term">
+                </div>
+                <div class="col-lg-5">
+                </div>
+                <div class="col-lg-2">
+                    <label ><b style="margin-left: 65px;">Count : {{count}}</b></label>
+                </div>
+                <div class="col-lg-1">
+                    <img src="assets/images/cross.png" (click)="Showofdash()" style="margin-left: 128px;">
+                </div>
+            </div><br>
+            <div class="row">
+                <div class="col-lg-12" style="overflow: auto;height: 250px;">
+                    <table>
+                        <tr>
+                            <th>Item No</th>
+                            <th>Vendor No</th>
+                            <th>Vendor Name</th>
+                            <!-- <th>Item Name</th> -->
+                            <th>Description</th>
+                            <!-- <th>Extended Description</th> -->
+                            <th style="width: 12%;">Cost</th>
+                            <th style="width: 1px;">Quantity</th>
+                            <th>Total Price</th>
+                            <th>Actions</th>
+                        </tr>
+                        <tr *ngFor="let sup of ItemList|filter:term">
+                            <td>{{sup.itemCode}}</td>
+                            <td>{{sup.supplierCode}}</td>
+                            <td>{{sup.supplierName}}</td>
+                            <!-- <td>{{sup.itemName}}</td> -->
+                            <td>{{sup.description}}</td>
+                            <!-- <td>{{sup.descr2}}</td>  -->
+                            <td>
+                                <!-- {{sup.cost| number:'1.2-2'}} -->
+                                <!-- <input type="text" class="form-control" onkeypress='return(event.charCode>=48&&event.charCode<=57||event.charCode==46)'    [(ngModel)]="sup.cost" [name]="sup.cost"  (ngModelChange)="valuechange1(sup.cost,sup)"
+                                style="width:100%"> -->
+                                <input type="text" class="form-control"
+                                    onkeypress='return(event.charCode>=48&&event.charCode<=57||event.charCode==46)'
+                                    [(ngModel)]="sup.cost" [name]="sup.cost" [ngModelOptions]="{standalone: true}"
+                                    (ngModelChange)="valuechange1(sup.cost,sup)" style="width:100%">
+
+                            </td>
+                            <td>
+                                <input type="text" class="form-control"
+                                    onkeypress='return(event.charCode>=48&&event.charCode<=57)'
+                                    [(ngModel)]="sup.quantity" name="sup.quantity"
+                                    (ngModelChange)="valuechange(sup.quantity,sup)" style="width:100%">
+                            </td>
+                            <td>
+                                {{sup.totalPrice | number:'1.2-2' }}
+                            </td>
+                            <td>
+                                <!-- <input type="checkbox" class="form-control" style="width:13px"  > -->
+                                <button class="btn btn-primary" style="background-color: #00b5d7;"
+                                    (click)="getTotalList(sup)">Add</button>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div> <br>
+        </div>
+        <div *ngIf="tablecountforadd=='2'">
+            <div class="row">
+                <div class="col-lg-12">
+                    <table>
+                        <tr>
+                            <th>Vendor Name</th>
+                            <th>Description</th>
+                            <th>Cost</th>
+                            <th style="width: 1px;">Quantity</th>
+                            <th>Total Price</th>
+                            <th>Actions</th>
+                        <tr *ngFor="let itemq of Itemqwerty">
+                            <td>{{itemq.SupplierName}}</td>
+                            <td>{{itemq.Description}}</td>
+                            <td>{{itemq.Price | number:'1.2-2'}}</td>
+                            <td>{{itemq.Quantity}}</td>
+                            <td>{{itemq.TotalPrice | number:'1.2-2'}}</td>
+                            <td>
+                                <img src="assets/images/dell.png" style="width: 25px;" title="Delete"
+                                    (click)="delete(itemq.Sno)">
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+            <br>
+        </div>
+        <div class="row">
+            <div class="col-lg-3">
+                <label>Note</label>
+
+            </div>
+            <div class="col-lg-4">
+                <textarea rows="3" class="form-control" [(ngModel)]="note" name="note" placeholder="Note"></textarea>
+                <!-- <ckeditor [editor]="Editor" [(ngModel)]="note" name="note"  data="">
+                </ckeditor> -->
+            </div>
+        </div>
+        <br>
+        <div class="row">
+            <div class="col-lg-3">
+                <label>Due Date</label>
+                <span style="color:red">*</span>
+            </div>
+            <div class="col-lg-4">
+                <input type="date" class="form-control" min="{{date}}" required [(ngModel)]="duedate" name="duedate">
+            </div>
+        </div>
+        <br>
+        <div class="row">
+            <div class="col-lg-3">
+                <label>Ship To </label>
+                <span style="color:red">*</span>
+            </div>
+            <div class="col-lg-4">
+                <select class="form-control" required [(ngModel)]="shiptoid" name="shiptoid"
+                    (change)="GetShiptoID($event)">
+                    <option value="0" selected>Select</option>
+                    <option *ngFor="let ship of shiplist" value="{{ship.id}}">{{ship.clientName}}</option>
+                </select>
+            </div>
+        </div>
+        <br>
+        <div class="row">
+            <div class="col-lg-3">
+                <label>Tax</label>
+                <span style="color:red">*</span>
+            </div>
+            <div class="col-lg-4">
+                <select class="form-control" required [(ngModel)]="taxid" name="taxid" (change)="GetTaxID($event)">
+                    <option value="0" selected>Select</option>
+                    <option *ngFor="let tax of TaxList" value="{{tax.id}}">{{tax.taxCode}}</option>
+                </select>
+            </div>
+            <div class="col-lg-4" *ngIf="taxid!='0'">
+                <label>Tax Percentage : <b>{{taxpercentage}}</b></label>
+            </div>
+        </div>
+        <br>
+        <!-- <div class="row">
+            <div class="col-lg-3">
+                <label>Terms </label>
+
+            </div>
+            <div class="col-lg-4">
+                <textarea rows="3"  class="form-control" name="terms" [(ngModel)]="terms"
+                    placeholder="Terms"></textarea>
+                <ckeditor [editor]="Editor" [(ngModel)]="terms" name="terms"  data="">
+                </ckeditor>
+            </div>
+        </div>
+        <br> -->
+        <div class="row">
+            <div class="col-lg-3">
+                <label>Instruction</label>
+                <span style="color:red">*</span>
+            </div>
+            <div class="col-lg-4">
+                <select class="form-control" required (change)="GetInstructionCode($event)" [(ngModel)]="instacode"
+                    name="instacode">
+                    <option value="0">Select</option>
+                    <option *ngFor="let inst of instructionlist" value="{{inst.instructionCode}}">
+                        {{inst.instructionCode}}</option>
+                </select>
+            </div>
+            <div class="col-lg-4" *ngIf="instacode!=0">
+                <label>Description : <b>{{instdesc}}</b></label>
+            </div>
+        </div>
+        <br>
+
+
+        <!-- <div class="row">
+            <div class="col-lg-3">
+                <label>Ref #</label>
+                <span style="color:red">*</span>
+            </div>
+            <div class="col-lg-4">
+                <input type="text" required class="form-control" name="ref" [(ngModel)]="ref" placeholder="Ref #">
+            </div>
+        </div>
+        <br> -->
+
+        <div class="row">
+            <div class="col-lg-3">
+                <label>Department</label>
+                <span style="color:red">*</span>
+            </div>
+            <div class="col-lg-4">
+                <select class="form-control" required [(ngModel)]="departmentid" name="departmentid"
+                    (change)="GetDepartmentID($event)">
+                    <option value="0" selected>Select</option>
+                    <option *ngFor="let dept of departmentlist" value="{{dept.id}}">{{dept.short}}
+                    </option>
+
+                </select>
+            </div>
+        </div>
+        <br>
+        <div class="row">
+            <div class="col-lg-3">
+                <label>P.O Type</label>
+                <span style="color:red">*</span>
+            </div>
+            <div class="col-lg-4">
+                <select class="form-control" required [(ngModel)]="potypeid" name="potypeid"
+                    (change)="GetPoTypeID($event)">
+                    <option value="0">Select</option>
+                    <option value="1">Expense</option>
+                    <option value="2">Capital</option>
+                </select>
+            </div>
+        </div>
+        <br>
+        <!-- <div class="row">
+            <div class="col-lg-3">
+                <label>P.O Description</label>
+            </div>
+            <div class="col-lg-4">
+
+
+                <ckeditor [editor]="Editor" [(ngModel)]="podescription" name="podescription"  data="">
+                </ckeditor>
+            </div>
+        </div>
+        <br> -->
+        <div class="row">
+            <div class="col-lg-3">
+                <label>Bill To</label>
+                <span style="color:red">*</span>
+            </div>
+            <div class="col-lg-4">
+                <select class="form-control" required [(ngModel)]="billtoid" name="billtoid"
+                    (change)="GetBillToID($event)">
+                    <option value="0" selected>Select</option>
+                    <option *ngFor="let bill of billlist" value="{{bill.id}}">{{bill.clientCode}}
+                    </option>
+                </select>
+            </div>
+        </div>
+        <br>
+
+        <div class="row">
+            <div class="col-lg-3">
+                <label>Accounting Code</label>
+                <span style="color:red">*</span>
+            </div>
+            <div class="col-lg-4">
+                <div *ngIf="showbit=='0'">
+                    <select class="form-control" required (change)="GetAccountingIDs($event)" [(ngModel)]="accountid"
+                        name="accountid">
+                        <option value="0">Select</option>
+                        <option *ngFor="let act of AccountingList" value="{{act.id}}">{{act.accountingCode}}</option>
+                    </select>
+                </div>
+                <div *ngIf="showbit=='1'">
+                    <ng-multiselect-dropdown [placeholder]="'Select'" [data]="AccountingList" [settings]="acctype"
+                        (onSelect)="GetAccountingID($event)">
+                    </ng-multiselect-dropdown>
+                </div>
+            </div>
+            <div class="col-lg-4" *ngIf="accountid!=0">
+                <label>Description : <b>{{accountdescription}}</b></label>
+            </div>
+        </div>
+        <br>
+        <!-- <div class="row">
+            <div class="col-lg-3">
+                <label>Requisitioner</label>
+                <span style="color:red">*</span>
+            </div>
+            <div class="col-lg-4">
+                <input type="text" required class="form-control" name="requisitioner" [(ngModel)]="requisitioner" placeholder="Requisitioner">
+            </div>
+        </div>
+        <br>
+        <div class="row">
+            <div class="col-lg-3">
+                <label>Requisition Number</label>
+            </div>
+            <div class="col-lg-4">
+                <input type="text" required class="form-control" name="requisition" [(ngModel)]="requisition" placeholder="Requisition Number">
+            </div>
+        </div>
+        <br> -->
+        <div class="row">
+            <div class="col-lg-3">
+                <label>Buyer's Name</label>
+                <span style="color:red">*</span>
+            </div>
+            <div class="col-lg-4">
+                <select class="form-control" required [(ngModel)]="buyersid" name="buyersid"
+                    (change)="GetBuyersID($event)">
+                    <option value="0" selected>Select</option>
+                    <option *ngFor="let buy of buyerlist" value="{{buy.id}}">{{buy.buyerName}}</option>
+                </select>
+            </div>
+        </div>
+        <br>
+        <div class="row">
+            <div class="col-lg-3">
+                <label>Authorization </label>
+                <span style="color:red">*</span>
+            </div>
+            <div class="col-lg-4">
+                <select class="form-control" [(ngModel)]="authorizationid" name="authorizationid" required
+                    (change)="GetAuthorizationID($event)">
+                    <option value="0" selected>Select</option>
+                    <option *ngFor="let autho of autholist" value="{{autho.id}}">{{autho.name}}</option>
+                </select>
+            </div>
+        </div>
+        <br>
+
+
+
+        <!-- <div class="row">
+            <div class="col-lg-3">
+                <label>Authorization 2nd Level</label>
+            </div>
+            <div class="col-lg-4">
+                <select class="form-control" [(ngModel)]="secondauthoid" name="secondauthoid"
+                    (change)="GetAuthorizationSecondlevelID($event)">
+                    <option value="0" selected>Select</option>
+                    <option *ngFor="let authos of authosecondlevel" value="{{authos.id}}">{{authos.name}}
+                    </option>
+                </select>
+            </div>
+        </div>
+        <br> -->
+        <!-- <div class="row">
+            <div class="col-lg-3">
+                <label>Authorization 3rd Level</label>
+            </div>
+            <div class="col-lg-4">
+                <select class="form-control" [(ngModel)]="authothirdid" name="authothirdid"
+                    (change)="GetAuthorizationThirdid($event)">
+                    <option value="0" selected>Select</option>
+                    <option *ngFor="let authoss of authothirdlevel" value="{{authoss.id}}">
+                        {{authoss.name}}</option>
+                </select>
+            </div>
+        </div>
+        <br> -->
+        <div class="row" *ngIf="showbit==1">
+            <div class="col-lg-5"></div>
+            <div class="col-lg-2">
+                <button type="button" class="addnewbtns" style="width: 100%;" [disabled]="purchaseForm.form.invalid"
+                    (click)="insertdetails()">Save</button>
+            </div>
+            <div class="col-lg-5"></div>
+        </div>
+        <div class="row" *ngIf="showbit==0">
+            <div class="col-lg-5"></div>
+            <div class="col-lg-2">
+                <button type="button" class="addnewbtns" style="width: 100%;" [disabled]="purchaseForm.form.invalid"
+                    (click)="updatedetails()">Update</button>
+            </div>
+            <div class="col-lg-5"></div>
+        </div>
+    </form>
+</div>
+<br>

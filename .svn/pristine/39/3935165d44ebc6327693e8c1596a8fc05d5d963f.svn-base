@@ -1,0 +1,50 @@
+import { Component, OnInit } from '@angular/core';
+import { PomsService } from "../../../poms.service";
+import Swal from "sweetalert2";
+@Component({
+  selector: 'app-vendor-login',
+  templateUrl: './vendor-login.component.html',
+  styleUrls: ['./vendor-login.component.css']
+})
+export class VendorLoginComponent implements OnInit {
+
+  constructor(public pomservice: PomsService) { }
+  public username: any;
+  public password: any;
+  public vendorslist:any;
+  public vendorid:any;
+  ngOnInit() {
+     this.pomservice.GetVendorsRegistration().subscribe(data => {
+        debugger
+      this.vendorslist = data;
+    }, error => {
+
+    })
+  }
+
+public GetVendorID(even)
+{
+  debugger
+  this.vendorid=even.target.value;
+}
+
+
+public insertdetails() {
+    debugger;
+    var entity = {
+      VendorID: this.vendorid,
+      UserName: this.username,
+      Password: this.password
+    };
+    this.pomservice.InsertVendorLogins(entity).subscribe(data => {
+      if (data != 0) {
+        Swal.fire("Completed", "Details Added Successfully");
+        location.href = "#/VendorLoginDash";
+      } else {
+        Swal.fire("Error", "UserName Already Exists");
+        location.href = "#/VendorLoginDash";
+      }
+    });
+  }
+
+}

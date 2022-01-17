@@ -1,0 +1,64 @@
+<br>
+<div class="container-fluid">
+       <div class="row ">
+              <div class="col-lg-12">
+                     <h4 style="float: left;">ACCOUNTING CODE MASTER</h4>
+              </div>
+       </div>
+
+</div>
+<br>
+<div class="container-fluid maindiv">
+       <form #AccountingForm="ngForm">
+              <div class="row">
+                     <div class="col-lg-2">
+                            <label>P.O Type</label>
+                            <span style="color:red">*</span>
+                     </div>
+                     <div class="col-lg-4">
+                            <select class="form-control" required [(ngModel)]="potypeid" name="potypeid"
+                                   (change)="GetPoTypeID($event)">
+                                   <option value="">Select</option>
+                                   <option value="1">Expense</option>
+                                   <option value="2">Capital</option>
+                            </select>
+                     </div>
+              </div>
+              <br>
+              <div class="row">
+                     <div class="col-lg-2">
+                            <label>Accounting Code</label>
+                            <span style="color:red;">*</span>
+                     </div>
+                     <div class="col-lg-4">
+                            <input type="text" class="form-control" required [(ngModel)]="AccountingCode"
+                            onkeypress='return(event.charCode>=48&&event.charCode<=57||event.charCode==45)'     name="AccountingCode" placeholder="Accounting Code">
+                     </div>
+              </div>
+              <br>
+              <div class="row">
+                     <div class="col-lg-2">
+                            <label>Accounting Description</label>
+                            <span style="color:red;">*</span>
+                     </div>
+                     <div class="col-lg-4">
+                            <textarea rows="3" class="form-control" required [(ngModel)]="Description"
+                                   name="Description" placeholder="Accounting Description"></textarea>
+                     </div>
+              </div>
+              <br>
+              <div class="row">
+                     <div class="col-lg-4"></div>
+                     <div class="col-lg-2">
+                            <button type="button" *ngIf="saveupdatebtn==0" (click)="InsertAccountingCodeMaster()"
+                                   class="addnewbtns" style="width: 100%;"
+                                   [disabled]="AccountingForm.form.invalid">Save</button>
+                            <button type="button" *ngIf="saveupdatebtn==1" (click)="UpdateAccountingCodeMaster()"
+                                   class="addnewbtns" style="width: 100%;"
+                                   [disabled]="AccountingForm.form.invalid">Update</button>
+                     </div>
+                     <div class="col-lg-5"></div>
+              </div>
+       </form>
+</div>
+<br>

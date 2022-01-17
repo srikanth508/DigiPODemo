@@ -1,0 +1,90 @@
+<br>
+<div class="container-fluid">
+       <div class="row">
+              <div class="col-lg-12">
+                     <h4 style="float: left;">Messages</h4>
+              </div>
+       </div>
+</div>
+<br>
+<br>
+<div class="container-fluid maindiv">
+       <div class="row">
+              <div class="col-lg-4">
+                     <div class="col-lg-3">
+                            <ng-daterangepicker [(ngModel)]="value" [options]="options"
+                                   (ngModelChange)="selectedDate($event)">
+                            </ng-daterangepicker>
+                     </div>
+              </div>
+              <div class="col-lg-3">
+                     <input type="text" [(ngModel)]="term" name="term" class="form-control" placeholder="Search...">
+              </div>
+              <div class="col-lg-3">
+                     <select class="form-control" (change)="GetPoNos($event)">
+                            <option value="0">Select PO</option>
+                            <option *ngFor="let polist of ponos" value="{{polist.poNo}}">{{polist.poNo}}</option>
+
+                     </select>
+              </div>
+
+              <div class="col-lg-2">
+                     <label> Message Count : {{count}}</label>
+              </div>
+              <div class="col-lg-12">
+                     <br>
+
+                     <!-- <button class="accordion"
+                            (click)="openacc(pono.poid)">{{pono.poNo}}  <img src="assets/images/down.jpg" style="width:50px"/></button> -->
+                     <!-- class="panel" id="pono.poid" -->
+
+                     <table>
+                            <tr>
+                                   <th>PO No</th>
+                                   <th>Date</th>
+                                   <th>Message From</th>
+                                   <th>Message</th>
+                                   <th>Time</th>
+                                   <th>Actions</th>
+                            </tr>
+                            <tr *ngFor="let msg of messages|filter:term">
+                                   <td>{{msg.poNo}}</td>
+                                   <td>{{msg.date}}</td>
+                                   <td>{{msg.senderName}}</td>
+                                   <td>{{msg.messages}}</td>
+                                   <td>{{msg.time}}</td>
+                                   <td>
+                                          <img src="assets/images/message.png" data-toggle="modal"
+                                                 data-target="#message" style="width: 25px;"
+                                                 (click)="GetChatID(msg.chatID)">
+                                   </td>
+                            </tr>
+                     </table>
+              </div>
+       </div>
+</div>
+
+<div id="message" class="modal fade" role="dialog">
+       <div class="modal-dialog">
+
+              <!-- Modal content-->
+              <div class="modal-content">
+                     <div class="modal-header">
+                            <h4 class="modal-title">Message</h4>
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                     </div>
+                     <div class="modal-body">
+                            <div class="row">
+                                   <div class="col-lg-12">
+                                          <textarea rows="5" class="form-control" [(ngModel)]="message" name="message"
+                                                 placeholder="Remarks"></textarea>
+                                          <br>
+                                          <button type="button" class="viewbtn" (click)="insertmessage()"
+                                                 data-dismiss="modal">Send</button>
+                                   </div>
+                            </div>
+                     </div>
+              </div>
+
+       </div>
+</div>

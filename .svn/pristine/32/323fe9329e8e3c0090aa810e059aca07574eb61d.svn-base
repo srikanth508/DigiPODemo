@@ -1,0 +1,44 @@
+import { Component, OnInit } from "@angular/core";
+import { PomsService } from "../../poms.service";
+import Swal from "sweetalert2";
+import { ActivatedRoute } from "@angular/router";
+
+@Component({
+  selector: "app-tax-additions-dashboard",
+  templateUrl: "./tax-additions-dashboard.component.html",
+  styleUrls: ["./tax-additions-dashboard.component.css"]
+})
+export class TaxAdditionsDashboardComponent implements OnInit {
+  TaxList: any[];
+
+  public term: any;
+
+  constructor(
+    private PomsService: PomsService,
+    private activatedroute: ActivatedRoute
+  ) {}
+
+  ngOnInit() {
+    this.GetTaxMaster();
+  }
+
+  public GetTaxMaster() {
+    this.PomsService.GetTaxMaster().subscribe(data => {
+      debugger;
+      this.TaxList = data;
+    });
+  }
+
+  public Delete(ID) {
+    debugger;
+    this.PomsService.DeleteTaxMaster(ID).subscribe(res => {
+      debugger;
+      this.GetTaxMaster();
+      Swal.fire(
+        "success",
+        "Tax Audition Code  Deleted Successfully",
+        "success"
+      );
+    });
+  }
+}

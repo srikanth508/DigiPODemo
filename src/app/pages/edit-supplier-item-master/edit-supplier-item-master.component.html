@@ -1,0 +1,93 @@
+<br>
+<div class="container-fluid maindiv">
+
+    <div class="row">
+        <div class="col-lg-12">
+            <h4 style="float: left;">Update Supplier Item Master</h4>
+        </div>
+    </div>
+    <br>
+    <div class="row">
+        <div class="col-lg-2">
+            <label>Supplier Name</label>
+        </div>
+        <div class="col-lg-4">
+            <select class="form-control" [(ngModel)]="supplierid" name="supplierid" (change)="GetSupplierID($event)">
+                <option value="0">Select</option>
+                <option *ngFor="let sup of supplierlist" value="{{sup.id}}">{{sup.supplierName}}</option>
+            </select>
+        </div>
+    </div>
+    <br>
+    <div class="row">
+        <div class="col-lg-2">
+            <label>Category</label>
+        </div>
+        <div class="col-lg-4">
+            <select class="form-control" [(ngModel)]="Categoryid" name="Categoryid" (change)="getCategoryID($event)">
+                <option value="0">Select</option>
+                <option *ngFor="let item of CategoryList" value="{{item.id}}">{{item.categoryName}}</option>
+            </select>
+        </div>
+    </div>
+    <br>
+    <div class="row">
+        <div class="col-lg-2">
+            <label>Sub Category</label>
+        </div>
+        <div class="col-lg-4">
+            <select class="form-control" (change)="GetsubcategoryID($event)" [(ngModel)]="subcategoryid" name="subcategoryid">
+                <option value="0">Select</option>
+                <option *ngFor="let List of SubcategoryList" value="{{List.id}}">{{List.subCategoryName}}
+                </option>
+            </select>
+        </div>
+    </div>
+    <br>
+    <div class="row">
+        <div class="col-lg-2">
+            <label>Items</label>
+        </div>
+        <div class="col-lg-4">
+            <select class="form-control" [(ngModel)]="itemid" name="itemid" (change)="GetItemID($event)">
+                <option>Select</option>
+                <option *ngFor="let item of ItemList" value="{{item.id}}">{{item.itemName}}</option>
+            </select>
+        </div>
+    </div>
+    <br>
+    <div class="row">
+        <div class="col-lg-2">
+            <label>Net Total</label>
+        </div>
+        <div class="col-lg-4">
+            <input type="text" class="form-control" disabled [(ngModel)]="nettotal" name="nettotal" placeholder="Net Total">
+        </div>
+    </div>
+    <br>
+    <div class="row">
+        <div class="col-lg-2">
+            <label>Tax</label>
+        </div>
+        <div class="col-lg-4">
+            <input type="text" class="form-control" disabled [(ngModel)]="taxPercentage" name="taxPercentage" placeholder="Tax">
+        </div>
+    </div>
+    <br>
+    <div class="row">
+        <div class="col-lg-2">
+            <label>Grand Total</label>
+        </div>
+        <div class="col-lg-4">
+            <input type="text" disabled class="form-control" [(ngModel)]="grandtotal" name="grandtotal" placeholder="Grand Total">
+        </div>
+    </div><br>
+
+    <div class="row">
+        <div class="col-lg-5"></div>
+        <div class="col-lg-2">
+            <button type="button" class="addnewbtns" style="width: 100%;" (click)="UpdateDetails()">Update</button>
+        </div>
+        <div class="col-lg-5"></div>
+    </div><br>
+</div>

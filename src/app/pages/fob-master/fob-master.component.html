@@ -1,0 +1,49 @@
+<br>
+<div class="container-fluid ">
+       <div class="row ">
+              <div class="col-lg-12">
+                     <h4 style="float: left;">FOB MASTER</h4>
+                    
+              </div>
+       </div>
+       <br>
+</div>
+<div class="container-fluid maindiv">
+       <form #fobForm="ngForm">
+       <div class="row">
+              <div class="col-lg-2">
+                     <label>FOB Code</label>
+                     <span style="color:red;">*</span>
+              </div>
+              <div class="col-lg-4">
+                     <input type="text" class="form-control" required [(ngModel)]="fobcode" name="fobcode" placeholder="FOB Code">
+              </div>
+       </div>
+       <br>
+       <div class="row">
+              <div class="col-lg-2">
+                     <label>FOB Description</label>
+                     <span style="color:red;">*</span>
+              </div>
+              <div class="col-lg-4">
+                     <textarea rows="3" class="form-control" required [(ngModel)]="fobcdesc" name="fobcdesc" placeholder="FOB Description"></textarea>
+              </div>
+       </div>
+       <br>
+       <div class="row" *ngIf="showbit=='1'">
+              <div class="col-lg-4"></div>
+              <div class="col-lg-2">
+                     <button type="button" class="addnewbtns" style="width: 100%;" [disabled]="fobForm.form.invalid" (click)="insertdetails()">Save</button>
+              </div>
+              <div class="col-lg-5"></div>
+       </div>
+       <div class="row" *ngIf="showbit=='0'">
+              <div class="col-lg-4"></div>
+              <div class="col-lg-2">
+                     <button type="button" class="addnewbtns" [disabled]="fobForm.form.invalid" style="width: 100%;"  (click)="UpdateDetails()">Update</button>
+              </div>
+              <div class="col-lg-5"></div>
+       </div>
+</form>
+</div>
+<br>

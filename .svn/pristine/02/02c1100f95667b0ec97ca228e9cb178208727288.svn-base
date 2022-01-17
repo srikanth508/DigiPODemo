@@ -1,0 +1,110 @@
+<br>
+<div class="container-fluid maindiv">
+       <div class="row headdiv">
+              <div class="col-lg-12">
+                     <h4 style="float: left;">Live Projects</h4>
+               <button type="button" style="float: right;" routerLink="/AddWorkSchedule" class="addnewbtns">Add Work Schedule</button>
+              </div>
+       </div>
+       <br>
+       <div class="row">
+              <div class="col-lg-4">
+                     <ng-daterangepicker [(ngModel)]="value" [options]="options" (ngModelChange)="selectedDate($event)">
+                     </ng-daterangepicker>
+              </div>
+              <div class="col-lg-3">
+                     <!-- <select class="form-control" (change)="GetTenderName($event)">
+                            <option value="0">Select Project</option>
+                            <option *ngFor="let dep of bidslist" value={{dep.tenderName}}>{{dep.tenderName}}</option>
+                     </select> -->
+              </div>
+              <!-- <div class="col-lg-3">
+                     <select class="form-control" (change)="GetStatusID($event)">
+                            <option value="0">Select Status</option>
+                            <option value="1">Raised</option>
+                            <option value="2">Authorized</option>
+                            <option value="3">Cancelled</option>
+                            <option value="4">Accepted</option>
+                            <option value="5">Delivered</option>
+                     </select>
+              </div> -->
+       </div><br>
+       <div class="row">
+              <div class="col-lg-12" style="overflow: auto;">
+                     <table>
+                            <tr>
+                                   <th>Date</th>
+                                   <th>Tender No</th>
+                                   <th>Project Name</th>
+                                   <th>Vendor Company Name</th>    
+                                   <th>Contact Person Name</th>
+                                   <th>Contact Person Ph No</th>
+                                   <th>Email</th>
+                                  <th>Project Start Date</th>
+                                   <th>Project End Date</th>
+                                   <!-- <th>Status</th> -->
+                                   <th>Actions</th>
+                            </tr>
+                            <tr *ngFor="let details of bidslist">
+                                   <td>{{details.date}}</td>
+                                   <td>{{details.tenderNo}}</td>
+                                    <td>{{details.tenderName}}</td>
+                                   <td>{{details.vendorCompanyName}}</td>
+                                   <td>{{details.contactPersonName}}</td>
+                                    <td>{{details.contactPersonPhNo}}</td>
+                                     <td>{{details.email}}</td>
+                                     <td>{{details.tenderOpeningDate}}</td>
+                                      <td>{{details.tenderClosingDate}}</td>
+                                     <td>
+                                    <img src="assets/images/view.png"  data-toggle="modal" data-target="#myModal" title="Work Schedule" (click)="GetTenderID(details.tenderID)" style="width: 20px;">
+                                  
+                                  </td>
+                            </tr>
+                     </table>
+              </div>
+       </div>
+</div>
+
+<div id="myModal" class="modal fade" role="dialog">
+       <div class="modal-dialog">
+
+              <!-- Modal content-->
+              <div class="modal-content modal-lg" style="width:700px">
+                     <div class="modal-header lg">
+                            <h4 class="modal-title">Work Schedule</h4>
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                     </div>
+                     <div class="modal-body">
+                     
+                 <div class="row">
+                 <div class="col-lg-12">
+                 <table>
+                 <tr>
+                 <th>Project Name</th>
+                  <th>Start Date</th>
+                   <th>End Date</th>
+                    <th>Work Item</th>
+                     <th>Work Description</th>
+                     <th>Vendor Name</th>
+                      <th>Status</th>
+                 </tr>
+                 <tr *ngFor="let det of workschuleslistt">
+                 <td>{{det.tenderName}}</td>
+                   <td>{{det.startdate}}</td>
+                     <td>{{det.enddate}}</td>
+               <td>{{det.workItem}}</td>
+               <td>{{det.workDescription}}</td>
+               <td>{{det.vendorName}}</td>
+                <td style="color:red">{{det.status}}</td>
+                 </tr>
+                 </table>
+                 </div>
+                 </div> 
+                     </div><br>
+                     <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                     </div>
+              </div>
+
+       </div>
+</div>

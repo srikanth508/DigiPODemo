@@ -1,0 +1,64 @@
+<br>
+<div class="container-fluid card card-hover">
+  <br>
+  <div class="row">
+    <div class="col-lg-4" style="margin-top: -10px;">
+      <ng-daterangepicker [options]="options" [(ngModel)]="value" (ngModelChange)="selectedDate($event)">
+      </ng-daterangepicker>
+    </div>
+    <div class="col-lg-4">
+      <h4 style="text-align: center;">
+        <b>Dashboard</b>
+      </h4><br>
+    </div>
+    <div class="col-lg-3">
+    </div>
+  </div>
+</div><br>
+<div class="container-fluid card card-hover">
+  <br>
+  <div class="row"> 
+    <div class="col-lg-2"></div>
+    <div class="col-lg-2" *ngFor="let cou of countlist">
+      <div class="optionsboxdown" style="cursor: pointer;" routerLink="/SupplierReports"
+        (click)="GetStatus('Authorized')">
+        <br>
+        <label style="color: white;cursor: pointer;">
+          Waiting To Accept</label>
+        <br /> <br />
+        <label style="color: white;">{{cou.waitingforaccept}}</label>
+      </div>
+      <br />
+      <p style="margin-left: 56px;margin-top: -16px;"></p>
+    </div>
+    <br />
+    <div class="col-lg-1"></div>
+    <div class="col-lg-2" *ngFor="let cou of countlist">
+      <div class="optionsboxdown" style="cursor: pointer;" routerLink="/SupplierReports"
+        (click)="GetStatus('Accepted')">
+        <br>
+        <label style="color: white;">Accepted PO
+        </label>
+        <br /> <br />
+        <label style="color: white;">{{cou.accptedpo}}</label>
+      </div>
+      <br />
+      <br />
+      <p style="margin-left: 56px;margin-top: -16px;"></p>
+    </div>
+    <div class="col-lg-1"></div>
+    <div class="col-lg-2" *ngFor="let cou of countlist">
+      <div class="optionsboxdown" style="cursor: pointer;" routerLink="/SupplierReports"
+        (click)="GetStatus('Delivered')">
+        <br>
+        <label style="color: white;">Delivered PO
+        </label>
+        <br /> <br />
+        <label style="color: white;">{{cou.delivered}}</label>
+      </div>
+      <br />
+      <br />
+      <p style="margin-left: 56px;margin-top: -16px;"></p>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,320 @@
+<br>
+<ngx-spinner></ngx-spinner>
+<div class="container-fluid">
+    <div class="row ">
+        <div class="col-lg-12">
+            <h4 style="float: left;">ADD PURCHASE ORDER ITEMS</h4>
+        </div>
+    </div>
+</div>
+<br>
+<br>
+<div class="container-fluid maindiv">
+    <div class="row">
+        <div class="col-lg-3">
+            <label>PO No : {{pono}}</label>
+        </div>
+        <div class="col-lg-3">
+            <label>Vendor Code : {{vendorid}}</label>
+        </div>
+    </div><br>
+    <div class="row">
+        <div class="col-lg-3">
+            <label>Item No </label>
+            <span style="color:red">*</span>
+        </div>
+        <div class="col-lg-4">
+
+            <input type="text" class="form-control" placeholder="Item No" [(ngModel)]="itemno" name="itemno">
+        </div>
+        <div class="col-lg-3">
+            <button class="btn btn primary" placeholder="Item No" style="background-color:#00b5d7;color: white;"
+                (click)="GetItemNo()">Search</button>
+        </div>
+    </div>
+    <br>
+    <div *ngIf="tablecount=='1'" class="groove">
+        <br>
+        <div class="row">
+            <div class="col-lg-3" style="margin-left:10px">
+                <input type="text" class="form-control" placeholder="Search" [(ngModel)]="term" name="term">
+            </div>
+            <div class="col-lg-5">
+            </div>
+            <div class="col-lg-2">
+                <label ><b style="margin-left: 65px;">Count : {{count}}</b></label>
+            </div>
+            <div class="col-lg-1">
+                <img src="assets/images/cross.png" (click)="Showofdash()" style="margin-left: 128px;">
+            </div>
+        </div><br>
+        <div class="row">
+            <div class="col-lg-12" style="overflow: auto;height: 250px;">
+                <table>
+                    <tr>
+                        <th>Item No</th>
+                        <th>Vendor No</th>
+                        <th>Vendor Name</th>
+                        <!-- <th>Item Name</th> -->
+                        <th>Description</th>
+                        <th>Cost</th>
+                        <th style="width: 1px;">Quantity</th>
+                        <th>Total Price</th>
+                        <th>Actions</th>
+                    </tr>
+                    <tr *ngFor="let sup of ItemList|filter:term">
+                        <td>{{sup.itemCode}}</td>
+                        <td>{{sup.supplierCode}}</td>
+                        <td>{{sup.supplierName}}</td>
+                        <!-- <td>{{sup.itemName}}</td> -->
+                        <td>{{sup.description}}</td>
+                        <td>
+                            <!-- {{sup.cost| number:'1.2-2'}} -->
+                            <input type="text" class="form-control" onkeypress='return(event.charCode>=48&&event.charCode<=57||event.charCode==46)'   [(ngModel)]="sup.cost" [name]="sup.cost"  (ngModelChange)="valuechange1(sup.cost,sup)"
+                            style="width:100%">
+                        
+                        </td>
+                        <td>
+                            <input type="text" class="form-control" [(ngModel)]="sup.quantity" name="sup.quantity"
+                            onkeypress='return(event.charCode>=48&&event.charCode<=57)'  (ngModelChange)="valuechange(sup.quantity,sup)" style="width:100%">
+                        </td>
+                        <td>
+                            {{sup.totalPrice | number:'1.2-2' }}
+                        </td>
+                        <td>
+                            <!-- <input type="checkbox" class="form-control" style="width:13px"  > -->
+                            <button class="btn btn-primary" style="background-color: #00b5d7;"
+                                (click)="getTotalList(sup)">Add</button>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div> <br>
+    </div>
+    <div *ngIf="tablecountforadd=='2'">
+        <div class="row">
+            <div class="col-lg-12">
+                <table>
+                    <tr>
+                        <th>Vendor Name</th>
+                        <th>Description</th>
+                        <th>Cost</th>
+                        <th style="width: 1px;">Quantity</th>
+                        <th>Total Price</th>
+                        <th>Actions</th>
+                    <tr *ngFor="let itemq of Itemqwerty">
+                        <td>{{itemq.SupplierName}}</td>
+                        <td>{{itemq.Description}}</td>
+                        <td>{{itemq.Price | number:'1.2-2'}}</td>
+                        <td>{{itemq.Quantity}}</td>
+                        <td>{{itemq.TotalPrice | number:'1.2-2'}}</td>
+                        <td>
+                            <img src="assets/images/dell.png" style="width: 25px;" title="Delete"
+                                (click)="delete(itemq.Sno)">
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+        <br>
+    </div>
+    <div class="row" *ngIf="tablecountforadd=='2'">
+        <div class="col-lg-5">
+        </div>
+        <div class="col-lg-2">
+            <button type="button" class="addnewbtns" style="width: 100%;" (click)="InsertItemDetails()">Save</button>
+        </div>
+        <div class="col-lg-5">
+
+        </div>
+    </div>
+
+</div>
+
+
+
+
+
+
+
+
+
+<!-- <div class="container-fluid  ">
+    <form #purchaseForm="ngForm">
+
+
+        <div class="row">
+            <div class="col-lg-2">
+                <label>Purchase Order</label>
+            </div>
+            <div class="col-lg-4">
+                <input type="text" disabled class="form-control" [(ngModel)]="pono" name="pono">
+            </div>
+        </div>
+        <br>
+      
+        <div class="row">
+            <div class="col-lg-2">
+                <label>Item Name</label>
+            </div>
+            <div class="col-lg-4">
+             
+                <ng-multiselect-dropdown [placeholder]="'Select'" [data]="itemlist" [settings]="itemdd"
+                    (onSelect)="GetItemID($event)" [(ngModel)]="clearitem" name="clearitem"
+                    (onDeSelect)="onItemDeSelect($event)" [(ngModel)]="itemid">
+                </ng-multiselect-dropdown>
+            </div>
+        </div>
+        <br>
+        <div class="row">
+            <div class="col-lg-2">
+                <label>Item Name</label>
+            </div>
+            <div class="col-lg-4">
+                <input type="text" class="form-control" disabled [(ngModel)]="itemname" name="itemname"
+                    placeholder="Item Name">
+            </div>
+        </div>
+        <br>
+        <div class="row">
+            <div class="col-lg-2">
+                <label>Description</label>
+            </div>
+            <div class="col-lg-4">
+                <textarea rows="3" class="form-control" disabled [(ngModel)]="itemdesc" name="itemdesc"
+                    placeholder="Description"></textarea>
+            </div>
+        </div>
+        <br>
+        <div class="row">
+            <div class="col-lg-2">
+                <label>Ship To</label>
+            </div>
+            <div class="col-lg-4">
+                <select class="form-control" required (change)="GetShipToID($event)" [(ngModel)]="shiptoid"
+                    name="shiptoid">
+                    <option value="0" selected>Select</option>
+                    <option *ngFor="let ship of shiplist" value="{{ship.id}}">{{ship.clientName}}</option>
+                </select>
+            </div>
+        </div>
+        <br>
+
+        <div class="row">
+            <div class="col-lg-2">
+                <label>Unit of Measure</label>
+            </div>
+            <div class="col-lg-4">
+             
+                <select class="form-control"  (change)="GetUnitmeasuer($event)">
+                    <option value="0">Select</option>
+                    <option *ngFor="let unit of unitofmeasurelist" value="{{unit.unit}}">{{unit.unit}}</option>
+                </select>
+
+            </div>
+        </div>
+        <br>
+        <div class="row">
+            <div class="col-lg-2">
+                <label>Quantity</label>
+            </div>
+            <div class="col-lg-4">
+                <input type="text" class="form-control" required [(ngModel)]="quantity" name="quantity"
+                    (ngModelChange)="valuechange($event)" placeholder="Quantity">
+            </div>
+        </div>
+        <br>
+        <div class="row">
+            <div class="col-lg-2">
+                <label>Due Date</label>
+            </div>
+            <div class="col-lg-4">
+                <input type="date" class="form-control" [(ngModel)]="duedate" name="duedate" required
+                    placeholder="Quantity">
+            </div>
+        </div>
+        <br>
+        <div class="row">
+            <div class="col-lg-2">
+                <label>Tax Percentage</label>
+            </div>
+            <div class="col-lg-4">
+                <input type="text" class="form-control" disabled [(ngModel)]="taxpercentage" name="taxpercentage"
+                    required placeholder="Tax Percentage">
+            </div>
+        </div>
+        <br>
+        <div class="row">
+            <div class="col-lg-2">
+                <label>Net Total</label>
+            </div>
+            <div class="col-lg-4">
+                <input type="text" class="form-control" disabled [(ngModel)]="cost" name="cost" placeholder="Price">
+            </div>
+        </div>
+        <br>
+        <div class="row">
+            <div class="col-lg-2">
+                <label>Grand Total</label>
+            </div>
+            <div class="col-lg-4">
+                <input type="text" class="form-control" disabled [(ngModel)]="granstotall" name="granstotall"
+                    placeholder="Grand Total">
+            </div>
+        </div>
+        <br>
+        <div class="row">
+            <div class="col-lg-4"></div>
+            <div class="col-lg-2">
+                <button type="button" class="addnewbtns" style="width: 100%;" [disabled]="purchaseForm.form.invalid"
+                    (click)="addetsils()">Add</button>
+            </div>
+            <div class="col-lg-5"></div>
+        </div>
+        <br>
+        <div class="row" *ngIf="tablecount=='1'">
+            <div class="col-lg-12">
+                <table>
+                    <tr>
+                        <th>P.O</th>
+                        <th>Item No</th>
+                        <th>Item Name</th>
+                        <th>Description</th>
+                        <th>U/M</th>
+                        <th>Quantity</th>
+                        <th>Due Date</th>
+                        <th>Net Total</th>
+                        <th>Tax Percentage</th>
+                        <th>Grand Total</th>
+                        <th>Actions</th>
+                    </tr>
+                    <tr *ngFor="let details of qwerty">
+                        <td>{{details.PurchaseOrderID}}</td>
+                        <td>{{details.ItemNo}}</td>
+                        <td>{{details.ItemName}}</td>
+                        <td>{{details.Description}}</td>
+                        <td>{{details.Unit}}</td>
+                        <td>{{details.Quantity}}</td>
+                        <td>{{details.DueDate| date: 'dd-MMM-yyyy'}}</td>
+                        <td>{{details.Price}}</td>
+                        <td>{{details.TaxPercentage}}</td>
+                        <td>{{details.TotalPrice}}</td>
+
+                        <td>
+                            <img src="assets/images/dell.png" style="width: 25px;" title="Delete"
+                                (click)="delete(details.Sno)">
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+        <br>
+        <div class="row" *ngIf="tablecount=='1'">
+            <div class="col-lg-4"></div>
+            <div class="col-lg-2">
+                <button type="button" class="addnewbtns" style="width: 100%;" (click)="insertdetails()">Save</button>
+            </div>
+            <div class="col-lg-5"></div>
+        </div>
+    </form>
+</div> -->

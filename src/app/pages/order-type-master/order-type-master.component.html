@@ -1,0 +1,38 @@
+
+<br>
+<div class="container-fluid">
+       <div class="row ">
+              <div class="col-lg-12">
+                     <h4 style="float: left;">ORDER TYPE MASTER</h4>
+              </div>
+       </div>
+</div>
+<br>
+<div class="container-fluid maindiv">
+       <form #CategotyForm="ngForm">
+              <div class="row">
+                     <div class="col-lg-2">
+                            <label>Order Type</label>
+                            <span style="color:red;">*</span>
+                     </div>
+                     <div class="col-lg-4">
+                            <input type="text" class="form-control" required name="ordertype" [(ngModel)]="ordertype"
+                                   placeholder="Order Type">
+                     </div>
+              </div>
+              <br>
+              <div class="row">
+                     <div class="col-lg-4"></div>
+                     <div class="col-lg-2">
+                            <button type="button" *ngIf="saveupdatebtn==0" (click)="InsertOrderTypeMaster()"
+                                   class="addnewbtns" style="width: 100%;"
+                                   [disabled]="CategotyForm.form.invalid">Save</button>
+                            <button type="button" *ngIf="saveupdatebtn==1" (click)="UpdateOrderType()"
+                                   class="addnewbtns" style="width: 100%;"
+                                   [disabled]="CategotyForm.form.invalid">Update</button>
+                     </div>
+                     <div class="col-lg-5"></div>
+              </div>
+       </form>
+</div>
+<br>

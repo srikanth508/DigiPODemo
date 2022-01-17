@@ -1,0 +1,65 @@
+<br>
+<ngx-spinner></ngx-spinner>
+<div class="container-fluid"> 
+       <div class="row ">
+              <div class="col-lg-12">
+                     <h4 style="float: left;">ORDER TYPE DASHBOARD</h4>
+
+                     <button type="button" style="float: right;" routerLink="/OrderTypeMaster"
+                            class="addnewbtns">Add</button>
+
+                     <button (click)="getglmasterexcel()" style="margin-right: 40px;" class="addnewbtns">Export
+                            Excel</button>
+
+              </div>
+       </div>
+</div>
+<br>
+<br>
+<div class="container-fluid maindiv">
+       <div class="row">
+              <div class="col-lg-3">
+                     <input type="text" placeholder="Search" [(ngModel)]="term" class="form-control">
+              </div>
+       </div>
+       <div class="row">
+              <div class="col-lg-10">
+              </div>
+              <div class="col-lg-2">
+                     <label><b>Count : {{count}}</b></label>
+              </div>
+       </div>
+       <div class="row">
+              <div class="col-lg-12">
+                     <table id="Departments">
+                            <tr>
+                                   <th>Order Type</th>
+                                   <th style="width: 100px;">Actions</th>
+                            </tr>
+                            <tr *ngFor="let dept of orderlist|filter:term| paginate: { id: 'foo', itemsPerPage: 20, currentPage: p}">
+                                   <td>{{dept.orderType}}</td>
+                                  
+                                   <td>
+                                          <img src="assets/images/dell.png" title="Delete" (click)="DeleteOrderTypeMaster(dept.id)"
+                                                 style="width: 20px;">
+                                          &nbsp;
+                                          <img src="assets/images/edit.png" title="Edit" [routerLink]="['/OrderTypeMaster',dept.id]"
+                                                 style="width: 20px;">&nbsp;
+
+                                            
+                                   </td>
+
+                            </tr>
+
+                     </table>
+              </div>
+       </div>
+       <div class="col-lg-12" style="text-align: center">
+              <br>
+              <pagination-controls id="foo" (pageChange)="pageChanged($event)" maxSize="15" directionLinks="true"
+                     autoHide="true" responsive="true" previousLabel="Previous" nextLabel="Next"
+                     screenReaderPaginationLabel="Pagination" screenReaderPageLabel="page"
+                     screenReaderCurrentLabel="You're on page">
+              </pagination-controls>
+          </div><br><br>
+</div>

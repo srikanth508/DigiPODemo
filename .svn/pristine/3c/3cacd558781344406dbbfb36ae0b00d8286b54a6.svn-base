@@ -1,0 +1,312 @@
+<br>
+<div class="container-fluid">
+       <div class="col-lg-12">
+              <h4 style="float: left;">PURCHASE ORDERS</h4>
+              <button type="button" style="float: right;" routerLink="/PurchaseOrder" class="addnewbtns">Add</button>
+
+              <button (click)="getglmasterexcel()" style="margin-right: 40px;" class="addnewbtns">Export
+                     Excel</button>
+       </div>
+</div>
+<br>
+<br>
+<br>
+<div class="container-fluid maindiv">
+       <!-- <div class="row headdiv">
+              <div class="col-lg-12">
+                     <h4 style="float: left;">Purchase Orders</h4>
+                     <button type="button" style="float: right;" routerLink="/PurchaseOrder"
+                            class="addnewbtns">Add</button>
+
+                     <button (click)="getglmasterexcel()" style="margin-right: 40px;" class="addnewbtns">Export
+                            Excel</button>
+              </div>
+       </div>
+       <br> -->
+       <div class="row">
+              <div class="col-lg-3">
+                     <ng-daterangepicker [(ngModel)]="value" [options]="options" (ngModelChange)="selectedDate($event)">
+                     </ng-daterangepicker>
+              </div>
+              <div class="col-lg-3">
+                     <select class="form-control" style="width: 90%;float: right;" (change)="GetDepartmentName($event)">
+                            <option value="0">Select Department</option>
+                            <option *ngFor="let dep of departmentlist" value={{dep.short}}>{{dep.short}}</option>
+                     </select>
+
+              </div>
+              <div class="col-lg-3">
+                     <select class="form-control" (change)="GetStatusID($event)">
+                            <option value="0">Select Status</option>
+                            <option value="1">Raised</option>
+                            <option value="2">Authorized</option>
+                            <option value="3">Cancelled</option>
+                            <option value="4">Accepted</option>
+                            <option value="5">Delivered</option>
+                     </select>
+              </div>
+              <div class="col-lg-3">
+                     <input type="text" placeholder="Search" [(ngModel)]="term" class="form-control">
+              </div>
+              <div class="col-lg-3">
+              </div>
+              <div class="col-lg-3">
+                     <select class="form-control" style="width: 90%;float: right;" (change)="GetSupplierName($event)">
+                            <option value="">Select Supplier</option>
+                            <option *ngFor="let sup of supplierlist" value="{{sup.supplierName}}">{{sup.supplierName}}
+                            </option>
+                     </select>
+              </div>
+              <div class="col-lg-3">
+                     <select class="form-control" (change)="GetRequisoner($event)">
+                            <option value="0">Select Buying Company</option>
+                            <option *ngFor="let pur of companylist" value="{{pur.companyName}}">
+                                   {{pur.companyName}}
+                            </option>
+                     </select>
+              </div>
+       </div>
+       <div class="row">
+              <div class="col-lg-7">
+              </div>
+              <div class="col-lg-3">
+                     <label style="margin-left: 69px;"><b>Grand Total : {{grandtotal|number}}</b></label>
+              </div>
+              <div class="col-lg-2">
+                     <label style="margin-left: 69px;"><b>Count : {{count}}</b></label>
+              </div>
+       </div>
+       <div class="row">
+              <div class="col-lg-12" style="overflow: auto;">
+                     <table id="POREPORTS">
+                            <tr>
+                                   <th>Actions</th>
+                                   <th>P.O No</th>
+                                   <th>Buying Company</th>
+                                   <th>Requisitioner</th>
+                                   <th>PO Date</th>
+                                   <!-- <th>Order Type</th> -->
+                                   <th>First Level Authorizer</th>
+                                   <!-- <th>First Authorizer Comments</th> -->
+                                   <th>Second Level Authorizer</th>
+                                   <!-- <th>Second Authorizer Comments</th> -->
+                                   <th>Third Level Authorizer</th>
+                                   <!-- <th>Third Authorizer Comments</th> -->
+                                   <th>Department</th>
+                                   <th>PO Description</th>
+                                   <th>Supplier</th>
+                                   <th>Phone No</th>
+                                   <!-- <th>Net Total</th> -->
+                                   <!-- <th>Tax Percentage</th> -->
+                                   <!-- <th>Tax Amount</th> -->
+                                   <th>Total PO Amount</th>
+                                   <th *ngIf="id=='3'">Reason For Cancel</th>
+                                   <th>Status</th>
+
+                            </tr>
+                            <tr
+                                   *ngFor="let details of purchaseorderlist|filter:suppliername|filter:requisioner|filter:term | paginate: { id: 'foo', itemsPerPage: 15, currentPage: p}">
+
+                                   <td>
+                                          <table style="border:none">
+                                                 <tr style="border:none">
+                                                        <td style="border:none">
+                                                               <img src="assets/images/view.png" style="width: 25px;"
+                                                                      title="View Details"
+                                                                      [routerLink]="['/PoOrderItems',details.id]">
+
+
+                                                        </td>
+                                                        <td style="border:none">
+                                                               <img src="assets/images/plus.png"
+                                                                      routerLink="/PurchaseOrderDetails"
+                                                                      (click)="GetItemPono(details.poNo,details.id,details.supplierID)"
+                                                                      style="width: 25px;"
+                                                                      *ngIf="details.status=='Raised'">
+                                                        </td>
+                                                 </tr>
+                                                 <tr style="border:none">
+                                                        <td style="border:none">
+                                                               <img src="assets/images/edit.png" title="Edit"
+                                                                      data-dismiss="modal"
+                                                                      *ngIf="details.status=='Raised'"
+                                                                      [routerLink]="['/PurchaseOrder',details.id]"
+                                                                      style="width: 20px;">
+
+                                                        </td>
+                                                        <td style="border:none">
+                                                               <img src="assets/images/dell.png" title="Delete"
+                                                                      style="width: 20px;"
+                                                                      *ngIf="details.status=='Raised'"
+                                                                      (click)="deletepurchaseoredre(details.id)">
+                                                        </td>
+                                                 </tr>
+                                          </table>
+
+                                   </td>
+                                   <td>{{details.poNo}}</td>
+                                   <td>{{details.companyName}}</td>
+                                   <td>{{details.userName}}</td>
+                                   <td>{{details.date}}</td>
+                                   <!-- <td>{{details.orderType}}</td> -->
+                                   <td>{{details.firstlevel}}
+                                          <table>
+                                                 <tr>
+                                                        <td style="border:none">
+                                                               <label style="color: red; margin-left: -9px;"
+                                                                      *ngIf="details.authorizationID!=0&&details.firstLevelAuthoStatus=='0'">Pending</label>
+
+                                                               <label style="color: green;margin-left: -9px;"
+                                                                      *ngIf="details.authorizationID!=0&&details.firstLevelAuthoStatus=='1'">Authorized</label>
+
+                                                               <label style="color: green;margin-left: -9px;"
+                                                                      *ngIf="details.authorizationID!=0&&details.firstLevelAuthoStatus=='2'">Cancelled</label>
+
+                                                        </td>
+
+                                                 </tr>
+                                          </table>
+
+                                   </td>
+                                   <!-- <td>{{details.firstLevelRemarks}}</td> -->
+                                   <td>{{details.secondlevel}}
+
+
+                                          <table>
+                                                 <tr>
+                                                        <td style="border:none">
+                                                               <label style="color: red;margin-left: -9px;"
+                                                                      *ngIf="details.secondAuthorizationID!=0&&details.secondLevelAuthoStatus=='0'&&details.firstLevelAuthoStatus!='2'">Pending</label>
+
+                                                               <label style="color: green;margin-left: -9px;"
+                                                                      *ngIf="details.secondAuthorizationID!=0&&details.secondLevelAuthoStatus=='1'">Authorized</label>
+
+                                                               <label style="color: green;margin-left: -9px;"
+                                                                      *ngIf="details.secondAuthorizationID!=0&&details.secondLevelAuthoStatus=='2'">Cancelled</label>
+
+                                                        </td>
+
+                                                 </tr>
+                                          </table>
+                                   </td>
+                                   <!-- <td>{{details.secondLevelRemarks}}</td> -->
+                                   <td>{{details.thirdlevel}}
+
+                                          <table>
+                                                 <tr>
+                                                        <td style="border:none">
+                                                               <label style="color: red;margin-left: -9px;"
+                                                                      *ngIf="details.thirdAuthorizationID!=0&&details.thirdLevelAuthoStatus=='0'&&details.firstLevelAuthoStatus!='2'&&details.secondLevelAuthoStatus!='2'">Pending</label>
+
+                                                               <label style="color: green;margin-left: -9px;"
+                                                                      *ngIf="details.thirdAuthorizationID!=0&&details.thirdLevelAuthoStatus=='1'">Authorized</label>
+
+                                                               <label style="color: green;margin-left: -9px;"
+                                                                      *ngIf="details.thirdAuthorizationID!=0&&details.thirdLevelAuthoStatus=='2'">Cancelled</label>
+
+                                                        </td>
+
+                                                 </tr>
+                                          </table>
+                                   </td>
+                                   <!-- <td>{{details.thirdLevelRemarks}}</td> -->
+                                   <td>{{details.short}}</td>
+                                   <td innerHTML="{{details.poDescription}}"></td>
+                                   <td>{{details.supplierName}}</td>
+                                   <td>{{details.phoneNo}}</td>
+                                   <!-- <td>{{details.totalmoney}}</td> -->
+                                   <!-- <td>{{details.totaltaxpercentage}} </td> -->
+                                   <!-- <td>{{details.totaltaxamount}} </td> -->
+                                   <td>{{details.total|number}}</td>
+                                   <td *ngIf="id=='3'">
+                                          <label
+                                                 *ngIf="details.firstLevelAuthoStatus=='2'">{{details.firstLevelRemarks}}</label>
+                                          <label
+                                                 *ngIf="details.secondLevelAuthoStatus=='2'">{{details.secondLevelRemarks}}</label>
+                                          <label
+                                                 *ngIf="details.thirdLevelAuthoStatus=='2'">{{details.thirdLevelRemarks}}</label>
+
+                                   </td>
+
+                                   <td style="color:red">{{details.status}}</td>
+
+                            </tr>
+                     </table>
+              </div>
+              <div class="col-lg-12" style="text-align: center">
+                     <br>
+                     <pagination-controls id="foo" (pageChange)="pageChanged($event)" maxSize="15" directionLinks="true"
+                            autoHide="true" responsive="true" previousLabel="Previous" nextLabel="Next"
+                            screenReaderPaginationLabel="Pagination" screenReaderPageLabel="page"
+                            screenReaderCurrentLabel="You're on page">
+                     </pagination-controls>
+              </div><br><br>
+       </div>
+
+    
+</div>
+
+
+
+
+
+<div id="myModal" class="modal fade" role="dialog">
+       <div class="modal-dialog modal-lg">
+
+              <!-- Modal content-->
+              <div class="modal-content">
+                     <div class="modal-header">
+                            <h4 class="modal-title">PO Item Details</h4>
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                     </div>
+                     <div class="modal-body" style="overflow: auto;">
+                            <table>
+                                   <tr>
+                                          <th>P.O</th>
+                                          <th>Item No</th>
+                                          <th>Category</th>
+                                          <th>Sub Category</th>
+                                          <th>Item Name</th>
+                                          <th>Due Date</th>
+                                          <th>Description</th>
+                                          <th>Unit</th>
+                                          <th>Quantity</th>
+                                          <th>Net Total</th>
+                                          <th>Tax Percentage</th>
+                                          <th>Tax Amount</th>
+                                          <th>Grand Total</th>
+                                          <th>Actions</th>
+                                   </tr>
+                                   <tr *ngFor="let item of itemslist">
+                                          <td>{{item.poNo}}</td>
+                                          <td>{{item.itemCode}}</td>
+                                          <td>{{item.categoryName}}</td>
+                                          <td>{{item.subCategoryName}}</td>
+                                          <td>{{item.itemName}}</td>
+                                          <td>{{item.duedate}}</td>
+                                          <td>{{item.description}}</td>
+                                          <td>{{item.unit}}</td>
+                                          <td>{{item.quantity}}</td>
+                                          <td>{{item.price}}</td>
+                                          <td>{{item.taxPercentage}}%</td>
+                                          <td>{{item.taxAmount}}</td>
+                                          <td>{{item.totalPrice}}</td>
+                                          <td>
+                                                 <img src="assets/images/edit.png" title="Edit" data-dismiss="modal"
+                                                        [routerLink]="['/EditProductOrderdetails',item.id]"
+                                                        style="width: 20px;"> &nbsp;
+                                                 <img src="assets/images/dell.png" title="Delete" style="width: 20px;"
+                                                        (click)="DeletePurchaseOrderDetails(item.id)">
+
+                                          </td>
+                                   </tr>
+
+                            </table>
+                     </div>
+                     <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                     </div>
+              </div>
+
+       </div>
+</div>

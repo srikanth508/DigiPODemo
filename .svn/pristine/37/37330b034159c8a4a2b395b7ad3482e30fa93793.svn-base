@@ -1,0 +1,422 @@
+import { Component, OnInit } from '@angular/core';
+import Swal from 'sweetalert2';
+import { PomsService } from '../../poms.service';
+import { ActivatedRoute } from '@angular/router';
+
+@Component({
+  selector: 'app-purchase-order',
+  templateUrl: './purchase-order.component.html',
+  styleUrls: ['./purchase-order.component.css']
+})
+export class PurchaseOrderComponent implements OnInit {
+
+  constructor(public pomservice: PomsService, private activatedroute: ActivatedRoute) { }
+
+  public companylist: any;
+  public companyid: any;
+  public ordertypeid: any;
+  public supplierlist: any;
+  public supplierid: any;
+  public ShipViaList: any;
+  public shipviaid: any;
+  public foblist: any;
+  public fobid: any;
+  public TaxList: any;
+  public taxid: any;
+  public potypeid: any;
+  public billlist: any;
+  public billtoid: any;
+  public buyerlist: any;
+  public buyersid: any;
+  public autholist: any;
+  public authorizationid: any;
+
+  public pono: any;
+  public date: any;
+  public note: any;
+  public terms: any;
+  public ref: any;
+  public accountno: any;
+  public dept: any;
+  public podescription: any;
+  public requisitioner: any;
+  public requisition: any;
+
+  public supplies: any;
+  public shipdesc: any;
+  public purchaseorderlist: any;
+  public id: any;
+  public showbit: any;
+  public authosecondlevel: any;
+  public secondauthoid: any;
+  public authothirdlevel: any;
+  public authothirdid: any;
+  public firstlevelstatus: any;
+  public secondlevelstats: any;
+  public thirdelevelstatus: any;
+  public departmentlist: any;
+  public departmentid: any;
+  public genaratorid: any;
+  public Raised: any;
+
+  ngOnInit() {
+    this.genaratorid = localStorage.getItem('genaratorid');
+    this.activatedroute.params.subscribe(params => {
+      debugger;
+      this.id = params['id'];
+
+      if (this.id != undefined || this.id != null) {
+        this.showbit = 0;
+        this.GetPurchaseOrder();
+        this.GetAuthorizationMaster()
+      }
+      else {
+        this.showbit = 1;
+      }
+    })
+
+    this.Getbuyingcompany();
+    this.GetSuppliermaster();
+    this.GetShipViaMaster();
+    this.GetFobMaster();
+    this.GetTaxMaster();
+    this.getbillmaster();
+    // this.Getbuyermaster();
+    this.GetAuthorizationMaster();
+    this.getdepartmentmaster();
+    this.companyid = 0;
+    this.ordertypeid = 0;
+    this.supplierid = 0;
+    this.supplierid = 0;
+    this.shipviaid = 0;
+    this.fobid = 0;
+    this.potypeid = 0;
+    this.buyersid = 0;
+    this.authorizationid = 0;
+    this.billtoid = 0;
+    this.taxid = 0;
+    this.authothirdid = 0;
+    this.secondauthoid = 0;
+    this.departmentid = 0;
+    this.Raised='Raised'
+
+    this.pomservice.GetAuthorizationMaster().subscribe(data => {
+      this.autholist = data;
+    }, error => {
+
+    })
+  }
+
+
+
+  public Getbuyingcompany() {
+    this.pomservice.GetBuyingCompanyMaster().subscribe(data => {
+      this.companylist = data;
+  
+    }, error => {
+
+    })
+  }
+
+  // public Getbuyermaster() {
+  //   this.pomservice.GetBuyerMaster().subscribe(data => {
+  //     this.buyerlist = data;
+  //     this.buyerlist=this.buyerlist.filter(x=>x.buyingCompanyID==this.companyid)
+  //   }, error => {
+
+  //   })
+  // }
+
+  public getdepartmentmaster() {
+    this.pomservice.GetDepartmentMaster().subscribe(data => {
+      this.departmentlist = data;
+    }, error => {
+
+    })
+  }
+
+  public GetSuppliermaster() {
+    this.pomservice.GetSupplierMaster().subscribe(data => {
+      this.supplierlist = data;
+
+      this.supplierlist = this.supplierlist.filter(x => x.supplierStatus == 0)
+    }, error => {
+
+    })
+  }
+
+  public GetShipViaMaster() {
+    this.pomservice.GetShipViaMaster().subscribe(data => {
+      debugger;
+      this.ShipViaList = data;
+    })
+  }
+  public GetFobMaster() {
+    this.pomservice.GetFOBMaster().subscribe(data => {
+      this.foblist = data;
+    }, error => {
+    })
+  }
+  public GetTaxMaster() {
+    this.pomservice.GetTaxMaster().subscribe(data => {
+      debugger;
+      this.TaxList = data;
+    })
+  }
+
+  public getbillmaster() {
+    this.pomservice.GetBillToMaster().subscribe(data => {
+      this.billlist = data;
+    }, error => {
+
+    })
+  }
+
+
+
+  public GetAuthorizationMaster() {
+    this.pomservice.GetAuthorizationMaster().subscribe(data => {
+      this.autholist = data;
+    }, error => {
+
+    })
+  }
+
+
+  public GetDepartmentID(even) {
+    debugger
+    this.departmentid = even.target.value;
+  }
+
+  public GetCompanyID(even) {
+    debugger
+    this.companyid = even.target.value;
+
+    this.pomservice.GetBuyerMaster().subscribe(data => {
+      this.buyerlist = data;
+      this.buyerlist=this.buyerlist.filter(x=>x.buyingCompanyID==this.companyid)
+    }, error => {
+
+    })
+  }
+  public GetOrderTypeID(even) {
+    debugger
+    this.ordertypeid = even.target.value;
+  }
+  public GetSupplierID(even) {
+    debugger
+    this.supplierid = even.target.value;
+    var suppliess = this.supplierlist.filter(x => x.id == this.supplierid)
+    this.supplies = suppliess[0].supplies
+
+  }
+  public GetShipViaID(even) {
+    debugger
+    this.shipviaid = even.target.value;
+
+    var ship = this.ShipViaList.filter(x => x.id == this.shipviaid)
+    this.shipdesc = ship[0].shipViaDescription
+  }
+  public GetFobID(even) {
+    debugger
+    this.fobid = even.target.value;
+  }
+  // public GetTaxID(even) {
+  //   debugger
+  //   this.taxid = even.target.value;
+  // }
+  public GetPoTypeID(even) {
+    debugger
+    this.potypeid = even.target.value;
+  }
+
+  public GetBillToID(even) {
+    debugger
+    this.billtoid = even.target.value;
+  }
+  public GetBuyersID(even) {
+    debugger
+    this.buyersid = even.target.value;
+  }
+
+  public GetAuthorizationID(even) {
+    debugger
+    this.authorizationid = even.target.value;
+
+    this.authosecondlevel = this.autholist.filter(x => x.id != this.authorizationid)
+  }
+
+
+  public GetAuthorizationSecondlevelID(even) {
+    debugger
+    this.secondauthoid = even.target.value;
+    this.authothirdlevel = this.authosecondlevel.filter(x => x.id != this.secondauthoid)
+  }
+
+  public GetAuthorizationThirdid(even) {
+    debugger
+    this.authothirdid = even.target.value;
+  }
+
+
+
+
+  public insertdetails() {
+    debugger
+    if (this.authorizationid == 0) {
+      this.firstlevelstatus = 1;
+    }
+    if (this.secondauthoid == 0) {
+      this.secondlevelstats = 1;
+    }
+    if (this.authothirdid == 0) {
+      this.thirdelevelstatus = 1;
+    }
+    var entity = {
+      'BuyingCompanyID': this.companyid,
+      'PoNo': this.pono,
+      'Date': this.date,
+      'OrderType': this.ordertypeid,
+      'SupplierID': this.supplierid,
+      'ShipViaID': this.shipviaid,
+      'FOBID': 0,
+      'Note': this.note,
+      'TaxID': 0,
+      'Terms': this.terms,
+      'Reference': this.ref,
+      'AccountNo': this.accountno,
+      'Dept': this.departmentid,
+      'PoType': this.potypeid,
+      'PoDescription': this.podescription,
+      'BillToID': this.billtoid,
+      'Requistioner': this.requisitioner,
+      'Requisition': this.requisition,
+      'BuyersID': this.buyersid,
+      'AuthorizationID': this.authorizationid,
+      'SecondAuthorizationID': this.secondauthoid,
+      'ThirdAuthorizationID': this.authothirdid,
+      'FirstLevelAuthoStatus': this.firstlevelstatus,
+      'SecondLevelAuthoStatus': this.secondlevelstats,
+      'ThirdLevelAuthoStatus': this.thirdelevelstatus,
+      'POGenaratorID': this.genaratorid,
+      
+    }
+    this.pomservice.InsertPurchaseOrder(entity).subscribe(data => {
+      if (data != 0) {
+        Swal.fire('Completed', 'Data Added Successfully');
+
+        location.href = "#/PurchaseOrderDashboard"
+      }
+    })
+  }
+
+
+
+  public GetPurchaseOrder() {
+    this.GetAuthorizationMaster();
+    this.pomservice.GetPurchaseOrder().subscribe(data => {
+      this.purchaseorderlist = data;
+      var purchase = this.purchaseorderlist.filter(x => x.id == this.id)
+      this.companyid = purchase[0].buyingCompanyID,
+        this.pono = purchase[0].poNo
+      this.date = purchase[0].date
+      this.ordertypeid = purchase[0].orderType
+      this.supplierid = purchase[0].supplierID
+      this.supplies = purchase[0].supplies,
+        this.shipviaid = purchase[0].shipViaID
+      this.note = purchase[0].note
+      this.taxid = purchase[0].taxID
+      this.terms = purchase[0].terms
+      this.ref = purchase[0].reference
+      this.accountno = purchase[0].accountNo
+      this.departmentid = purchase[0].dept
+      this.potypeid = purchase[0].poType
+      this.podescription = purchase[0].poDescription
+      this.billtoid = purchase[0].billToID
+      this.requisitioner = purchase[0].requistioner
+      this.requisition = purchase[0].requisition
+      this.buyersid = purchase[0].buyersID
+      this.authorizationid = purchase[0].authorizationID
+      this.shipdesc = purchase[0].shipViaDescription
+      this.secondauthoid = purchase[0].secondAuthorizationID
+      this.authothirdid = purchase[0].thirdAuthorizationID
+      this.firstlevelstatus = purchase[0].firstLevelAuthoStatus
+      this.secondlevelstats = purchase[0].secondLevelAuthoStatus
+      this.thirdelevelstatus = purchase[0].thirdLevelAuthoStatus
+
+      this.pomservice.GetBuyerMaster().subscribe(data => {
+        this.buyerlist = data;
+        this.buyerlist=this.buyerlist.filter(x=>x.buyingCompanyID==this.companyid)
+      }, error => {
+  
+      })
+
+      // this.pomservice.GetAuthorizationMaster().subscribe(data => {
+      //   this.autholist = data;
+      // }, error => {
+
+      // })
+      debugger
+      this.authosecondlevel = this.autholist.filter(x => x.id != this.authorizationid)
+      this.authothirdlevel = this.authosecondlevel.filter(x => x.id != this.secondauthoid)
+
+
+    }, error => {
+
+    })
+  }
+
+  public GetDate(even) {
+    debugger
+    this.date = even.target.value;
+  }
+
+
+  public updatedetails() {
+    if (this.authorizationid == 0) {
+      this.firstlevelstatus = 1;
+    }
+    if (this.secondauthoid == 0) {
+      this.secondlevelstats = 1;
+    }
+    if (this.authothirdid == 0) {
+      this.thirdelevelstatus = 1;
+    }
+    debugger
+    var entity = {
+      'ID': this.id,
+      'BuyingCompanyID': this.companyid,
+      'PoNo': this.pono,
+      'Date': this.date,
+      'OrderType': this.ordertypeid,
+      'SupplierID': this.supplierid,
+      'ShipViaID': this.shipviaid,
+      'Note': this.note,
+      'TaxID': 0,
+      'Terms': this.terms,
+      'Reference': this.ref,
+      'AccountNo': this.accountno,
+      'Dept': this.departmentid,
+      'PoType': this.potypeid,
+      'PoDescription': this.podescription,
+      'BillToID': this.billtoid,
+      'Requistioner': this.requisitioner,
+      'Requisition': this.requisition,
+      'BuyersID': this.buyersid,
+      'AuthorizationID': this.authorizationid,
+      'SecondAuthorizationID': this.secondauthoid,
+      'ThirdAuthorizationID': this.authothirdid,
+      'FirstLevelAuthoStatus': this.firstlevelstatus,
+      'SecondLevelAuthoStatus': this.secondlevelstats,
+      'ThirdLevelAuthoStatus': this.thirdelevelstatus,
+    }
+    this.pomservice.UpdatePurchaseOrder(entity).subscribe(res => {
+      let data = res
+      Swal.fire('Completed', 'Data Updated Successfully');
+
+      location.href = "#/PurchaseOrderDashboard"
+
+    })
+  }
+
+}

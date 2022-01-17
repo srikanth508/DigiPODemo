@@ -1,0 +1,152 @@
+<br>
+<div class="container-fluid card card-hover">
+<br>
+<div class="row">
+<div class="col-lg-12">
+<h5>Tender Details</h5>
+</div>
+</div>
+</div><br>
+
+<div class="container-fluid maindiv">
+<div class="row">
+<div class="col-lg-12">
+          <table class="table">
+		    <tbody>
+			<tr>
+		      <td width="39%"><strong>Tender No:</strong><br></td>
+		      <td width="61%">{{tenderno}}  </td>
+	        </tr>
+		   
+			<tr>
+		      <td width="39%"><strong>Tender Name:</strong><br></td>
+		      <td width="61%">{{tendername}}  </td>
+	        </tr>
+		    <tr>
+		      <td><strong>Brief Description:</strong></td>
+		      <td>{{description}}</td>
+	        </tr>
+		    <tr>
+		      <td><strong>Category:</strong></td>
+		      <td>{{categoryname}}</td>
+	        </tr>
+		    <tr>
+		      <td><strong>Approximate Quantity:</strong></td>
+		      <td>{{approxmatequantity}} </td>
+	        </tr>
+		      <tr>
+		      <td><strong>Tender Contract Period From date:</strong></td>
+		      <td>{{tendercontactfromdate}} </td>
+	        </tr>
+			 <tr>
+		      <td><strong>Tender Contract Period To date:</strong></td>
+		      <td>{{tendercontacttodate}} </td>
+	        </tr>
+		    <tr>
+		      <td><strong>Tender  Location :</strong></td>
+		      <td>{{tenderlocation}}</td>
+	        </tr>
+		    <tr>
+		      <td><strong>Type of tender:</strong></td>
+		      <td>{{tendertype}}</td>
+	        </tr>
+		    <tr>
+		      <td><strong>Cost of tender document:</strong></td>
+		      <td>  {{tenderdoccost}} </td>
+	        </tr>
+	        <tr>
+			 <tr>
+		      <td><strong>Tender Deposit Amount:</strong></td>
+		      <td>  {{tenderdepostamount}} </td>
+	        </tr>
+	        <tr>
+		      <td><strong>Tender Issue Date:</strong></td>
+		      <td>   {{tenderissuedate}} </td>
+	        </tr>
+	        <tr>
+		      <td><strong>Last Date Of Tender Query:</strong></td>
+		      <td>   {{lastdateoftenderqueary}}   </td>
+	        </tr>
+		    <tr>
+		      <td><strong>Pre Bid Conference Venue:</strong></td>
+		      <td>  {{prebidconferencevenue}}</td>
+	        </tr>
+		    <tr>
+		      <td><strong>Pre Bid Conference Date:</strong></td>
+		      <td>
+		     {{prebidconferencedate}}
+		      </td>
+	        </tr>
+	        
+		    <tr>
+		      <td><strong>Tender Opening Date:</strong></td>
+		      <td>{{tenderopeningdate}}
+		      </td>
+	        </tr>
+		    <tr>
+		      <td><strong>Tender Closing Date:</strong></td>
+		      <td> {{tenderclosingdate}}
+		      </td>
+	        </tr>
+		    <tr>
+		      <td><strong>Tender Opening Place :</strong></td>
+		      <td> {{tenderopeningplace}}
+		      </td>
+	        </tr>
+		    
+		    <tr>
+		      <td><strong>Tender Submission Place:</strong></td>
+		      <td> {{tendersubmissionplace}}
+		      </td>
+	        </tr>
+		    <tr>
+		      <td><strong>Estimated Cost:</strong></td>
+		      <td>{{estimatedcost}}</td>
+	        </tr>	        
+		    <tr>
+		      <td><strong>Job Completion Date:</strong></td>
+		<td>{{jobcompletiondate}}</td>
+	        </tr>
+
+	         <tr>
+		      <td><strong>Site Location:</strong></td>
+		      <td>{{sitelocation}} </td>
+	        </tr>
+		    <tr>
+		      <td valign="top"><strong>Pre Qualification criteria:</strong></td>
+		       <td><p innerHTML="{{preaualificationcriteria}}"></p></td> 
+	        </tr>
+		    <tr>
+		      <td><strong>Other details:</strong></td>
+		      <td>
+ <p innerHTML="{{otherdetails}}"></p>
+               </td>
+	            </tr>	        <tr>
+		      <td><strong>Contact Person Name :</strong></td>
+		      <td>
+			  {{tendercontactpersonanme}}
+               </td>
+	        </tr>
+	         <tr>
+		      <td><strong>Contact Person Phone No :</strong></td>
+		      <td>
+			  {{tendercontactpersonphno}}
+               </td>
+	        </tr>
+           <tr>
+		      <td><strong>Contact Person Email  :</strong></td>
+		      <td>
+			  {{tendercontactemail}}
+               </td>
+	        </tr>
+	        <!-- <tr><td colspan="2">
+	     For any query related to this tender please contact : <b>Suman Gupta PH:-07923267026</b>
+	    </td>
+	    </tr> -->
+	       
+	      </tbody></table>
+	     
+		
+			</div>
+				</div>
+					</div>

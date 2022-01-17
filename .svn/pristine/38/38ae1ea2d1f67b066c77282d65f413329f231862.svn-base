@@ -1,0 +1,44 @@
+<br>
+<div class="container-fluid">
+       <div class="row ">
+              <div class="col-lg-12">
+                     <h4 style="float: left;">ACCOUNTING CODE MASTER</h4>
+              </div>
+       </div>
+     
+</div>
+<br>
+<div class="container-fluid maindiv">
+       <form #AccountingForm="ngForm">
+    
+       <div class="row">
+              <div class="col-lg-2">
+                     <label>Accounting Code</label>
+              </div>
+              <div class="col-lg-4">
+                     <input type="text" class="form-control" required [(ngModel)]="AccountingCode" name="AccountingCode" placeholder="Accounting Code">
+              </div>
+       </div>
+       <br>
+       <div class="row">
+              <div class="col-lg-2">
+                     <label>Accounting Description</label>
+              </div>
+              <div class="col-lg-4">
+                     <textarea rows="3" class="form-control" required [(ngModel)]="Description" name="Description" placeholder="Accounting Description"></textarea>
+              </div>
+       </div>
+       <br>
+       <div class="row">
+              <div class="col-lg-4"></div>
+              <div class="col-lg-2">
+                     <button type="button" *ngIf="saveupdatebtn==0" (click)="InsertAccountingCodeMaster()"
+                            class="addnewbtns" style="width: 100%;" [disabled]="AccountingForm.form.invalid">Save</button>
+                     <button type="button" *ngIf="saveupdatebtn==1" (click)="UpdateAccountingCodeMaster()"
+                            class="addnewbtns" style="width: 100%;" [disabled]="AccountingForm.form.invalid">Update</button>
+              </div>
+              <div class="col-lg-5"></div>
+       </div>
+</form>
+</div>
+<br>

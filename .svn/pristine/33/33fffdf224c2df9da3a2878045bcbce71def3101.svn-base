@@ -1,0 +1,86 @@
+import { Component, OnInit } from "@angular/core";
+import { PomsService } from "../../poms.service";
+import Swal from "sweetalert2";
+import { ActivatedRoute } from "@angular/router";
+@Component({
+  selector: "app-po-genarator-login-dash",
+  templateUrl: "./po-genarator-login-dash.component.html",
+  styleUrls: ["./po-genarator-login-dash.component.css"]
+})
+export class PoGenaratorLoginDashComponent implements OnInit {
+  constructor(public pomservice: PomsService) {}
+
+  public userslist: any;
+  public term: any;
+  public departmentlist: any;
+  public departmentname: any;
+
+  ngOnInit() {
+    this.GetUserList();
+    this.GetDepartment();
+  }
+  public GetUserList() {
+    this.pomservice.GetPoGenaratorLogins().subscribe(
+      data => {
+        this.userslist = data;
+      },
+      error => {}
+    );
+  }
+
+  public GetDepartment() {
+    this.pomservice.GetDepartmentMaster().subscribe(data => {
+      this.departmentlist = data;
+    });
+  }
+
+  public GetDepartmentName(even) {
+    this.departmentname = even.target.value;
+  }
+
+  public EnablePoGenaratorLogins(id) {
+    debugger;
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You Want To Enable This Po Genarator!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonText: "Yes, Enable it!",
+      cancelButtonText: "No, keep it"
+    }).then(result => {
+      if (result.value) {
+        this.pomservice.EnablePoGenaratorLogins(id).subscribe(res => {
+          let test = res;
+          this.GetUserList();
+        });
+        Swal.fire("Enabled!", "Po Genarator has Enabled.", "success");
+      } else if (result.dismiss === Swal.DismissReason.cancel) {
+        Swal.fire("Cancelled", "Po Genarator  is safe :)", "error");
+        this.GetUserList();
+      }
+    });
+  }
+
+  public DisablePoGenaratorLogins(id) {
+    debugger;
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You Want To Disable This Po Genarator!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonText: "Yes, Disable it!",
+      cancelButtonText: "No, keep it"
+    }).then(result => {
+      if (result.value) {
+        this.pomservice.DisablePoGenaratorLogins(id).subscribe(res => {
+          let test = res;
+          this.GetUserList();
+        });
+        Swal.fire("Disabled!", "Po Genarator has Enabled.", "success");
+      } else if (result.dismiss === Swal.DismissReason.cancel) {
+        Swal.fire("Cancelled", "Po Genarator  is safe :)", "error");
+        this.GetUserList();
+      }
+    });
+  }
+}

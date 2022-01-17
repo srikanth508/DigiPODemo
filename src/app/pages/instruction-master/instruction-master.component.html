@@ -1,0 +1,49 @@
+<br>
+<div class="container-fluid"> 
+<div class="row">
+<div class="col-lg-12">
+       <h4 style="float: left;">INSTRUCTION MASTER</h4>
+</div>
+</div>
+</div>
+<br>
+<div class="container-fluid maindiv">
+       <form #instForm="ngForm">
+    
+       <div class="row">
+              <div class="col-lg-2">
+                     <label>Instruction Code</label>
+                     <span style="color:red;">*</span>
+              </div>
+              <div class="col-lg-4">
+                     <input type="text" class="form-control" required [(ngModel)]="instructioncode" name="instructioncode" placeholder="Instruction Code">
+              </div>
+       </div>
+       <br>
+       <div class="row">
+              <div class="col-lg-2">
+                     <label>Instruction</label>
+                     <span style="color:red;">*</span>
+              </div>
+              <div class="col-lg-4">
+                     <textarea rows="3" class="form-control" required [(ngModel)]="instruction" name="instruction" placeholder="Instruction"></textarea>
+              </div>
+       </div>
+       <br>
+       <div class="row" *ngIf="showbit=='1'">
+              <div class="col-lg-4"></div>
+              <div class="col-lg-2">
+                     <button type="button" class="addnewbtns" style="width: 100%;" [disabled]="instForm.form.invalid" (click)="insertdetails()">Save</button>
+              </div>
+              <div class="col-lg-5"></div>
+       </div>
+       <div class="row" *ngIf="showbit=='0'">
+              <div class="col-lg-4"></div>
+              <div class="col-lg-2">
+                     <button type="button" class="addnewbtns" style="width: 100%;" [disabled]="instForm.form.invalid" (click)="Updatedetails()">Update</button>
+              </div>
+              <div class="col-lg-5"></div>
+       </div>
+</form>
+</div>
+<br>

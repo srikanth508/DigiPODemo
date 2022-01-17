@@ -1,0 +1,103 @@
+<br>
+<div class="container-fluid">
+       <div class="row ">
+              <div class="col-lg-12">
+                     <h4 style="float: left;">ACCEPTED PO</h4>
+                     <!-- <button type="button" style="float: right;" routerLink="/PurchaseOrder"
+                            class="addnewbtns">Add</button> -->
+
+                     <button (click)="getglmasterexcel()" style="margin-right: 40px;" class="addnewbtns">Export
+                            Excel</button>
+              </div>
+       </div>
+</div>
+<br>
+<br>
+
+<div class="container-fluid maindiv">
+
+       <div class="row">
+              <div class="col-lg-4">
+                     <ng-daterangepicker [(ngModel)]="value" [options]="options" (ngModelChange)="selectedDate($event)">
+                     </ng-daterangepicker>
+              </div>
+              <div class="col-lg-3">
+                     <input type="text" placeholder="Search" [(ngModel)]="term" class="form-control">
+              </div>
+
+              <div class="col-lg-3">
+                     <select class="form-control" (change)="GetRequisoner($event)">
+                            <option value="0">Select Buying Company</option>
+                            <option *ngFor="let pur of companylist" value="{{pur.companyName}}">
+                                   {{pur.companyName}}
+                            </option>
+                     </select>
+              </div>
+       </div>
+       <div class="row">
+              <div class="col-lg-9">
+              </div>
+              <div class="col-lg-2">
+                     <label><b>Grand Total : {{grandtotal|number}}</b></label>
+              </div>
+              <div class="col-lg-1">
+                     <label><b>Count : {{count}}</b></label>
+              </div>
+       </div>
+       <div class="row">
+              <div class="col-lg-12" style="overflow:auto">
+                     <table id="POREPORTS">
+                            <tr>
+                                   <th style="width: 120px;">Actions</th>
+                                   <th>PO No</th>
+                                   <th>Requistioner</th>
+                                   <th>Buying Company</th>
+                                   <th>PO Date</th>
+                                   <th>Company</th>
+                                   <th>Buyer Name</th>
+                                   <!-- <th>Requestioner</th> -->
+                                   <th>Ship Via</th>
+                                   <th>PO Description</th>
+                                   <th>Order Type</th>
+                                   <th>Net Total</th>
+                                   <!-- <th>Tax Percentage</th> -->
+                                   <th>Tax Amount</th>
+                                   <th>Total PO Amount</th>
+                                   <th>Status</th>
+
+                            </tr>
+                            <tr *ngFor="let details of orderslist|filter:term|filter:requisioner">
+                                   <td>
+                                          <img src="assets/images/view.png" style="width: 25px;"
+                                                 [routerLink]="['/PoOrderItems',details.id]">&nbsp;
+
+                                          <img src="assets/images/delivery.png"
+                                                 *ngIf="details.supplierAccept=='1'&&details.delivered=='0'"
+                                                 (click)="UpdateDeliverPurchaseOrder(details.id)">
+
+                                   </td>
+                                   <td>{{details.poNo}}</td>
+                                   <td>{{details.userName}}</td>
+                                   <td>{{details.companyName}}</td>
+                                   <td>{{details.date}}</td>
+                                   <td>{{details.companyName}}</td>
+                                   <td>{{details.buyerName}}</td>
+                                   <!-- <td>{{details.requistioner}}</td> -->
+                                   <td>{{details.shipViaDescription}}</td>
+                                   <td innerHTML="{{details.poDescription}}"></td>
+                                   <td>{{details.orderType}}</td>
+                                   <td>{{details.totalmoney}}</td>
+                                   <td>{{details.totaltaxamount}}</td>
+                                   <!-- <td>{{details.totaltaxpercentage}}</td> -->
+
+                                   <td>{{details.total|number}}</td>
+                                   <td>
+                                          <label style="color:green">Accepted</label>
+
+                                   </td>
+
+                            </tr>
+                     </table>
+              </div>
+       </div>
+</div>

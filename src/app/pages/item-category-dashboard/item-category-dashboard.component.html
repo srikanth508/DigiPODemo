@@ -1,0 +1,79 @@
+<br>
+<ngx-spinner></ngx-spinner>
+<div class="container-fluid"> 
+       <div class="row ">
+              <div class="col-lg-12">
+                     <h4 style="float: left;">CATEGORY DASHBOARD</h4>
+
+                     <button type="button" style="float: right;" routerLink="/ItemCategory"
+                            class="addnewbtns">Add</button>
+
+                     <button (click)="getglmasterexcel()" style="margin-right: 40px;" class="addnewbtns">Export
+                            Excel</button>
+
+              </div>
+       </div>
+</div>
+<br>
+<br>
+<div class="container-fluid maindiv">
+       <div class="row">
+              <div class="col-lg-3">
+                     <input type="text" placeholder="Search" [(ngModel)]="term" class="form-control">
+              </div>
+       </div>
+       <div class="row">
+              <div class="col-lg-11">
+              </div>
+              <div class="col-lg-1">
+                     <label><b>Count : {{count}}</b></label>
+              </div>
+       </div>
+       <div class="row">
+              <div class="col-lg-12">
+                     <table id="POREPORTS">
+                            <tr>
+                                   <th>Category Code</th>
+                                   <th>Category Name</th>
+                                   <th>Category Description</th>
+                                   <!-- <th>Tax</th> -->
+                                   <th style="width: 100px;">Action</th>
+                            </tr>
+                            <tr *ngFor="let item of CategoryItem|filter:term| paginate: { id: 'foo', itemsPerPage: 20, currentPage: p}">
+                                   <td>{{item.categoryCode}}</td>
+                                   <td>{{item.categoryName}}</td>
+                                   <td>{{item.categoryDescription}}</td>
+                                   <!-- <td>{{item.taxCode}}</td> -->
+                                   <td>
+                                          <img src="assets/images/dell.png" (click)="Delete(item.id)"
+                                                 style="width: 20px;">
+                                          &nbsp;
+                                          <img src="assets/images/edit.png" [routerLink]="['/ItemCategory',item.id]"
+                                                 style="width: 20px;">&nbsp;
+
+                                               
+                                                        <img *ngIf="item.enableDIsable == 0" src="assets/images/activate.png"
+                                                               title="Active" (click)="Disablecategoryy(item.id)"
+                                                               style="width: 30px;" />
+                                               
+                                               
+                                                        <img *ngIf="item.enableDIsable == 1" (click)="EnableCategory(item.id)"
+                                                               src="assets/images/deactivate.png" title="Deactive"
+                                                               style="width: 30px;" />
+                                                
+                                   </td>
+
+                            </tr>
+
+                     </table>
+              </div>
+       </div>
+       <div class="col-lg-12" style="text-align: center">
+              <br>
+              <pagination-controls id="foo" (pageChange)="pageChanged($event)" maxSize="15" directionLinks="true"
+                     autoHide="true" responsive="true" previousLabel="Previous" nextLabel="Next"
+                     screenReaderPaginationLabel="Pagination" screenReaderPageLabel="page"
+                     screenReaderCurrentLabel="You're on page">
+              </pagination-controls>
+          </div><br><br>
+</div>

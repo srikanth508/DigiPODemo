@@ -1,0 +1,27 @@
+import { Component, OnInit } from '@angular/core';
+import { PomsService } from '../../../poms.service';
+import Swal from 'sweetalert2';
+import { ActivatedRoute } from '@angular/router';
+@Component({
+  selector: 'app-vendor-company-dash',
+  templateUrl: './vendor-company-dash.component.html',
+  styleUrls: ['./vendor-company-dash.component.css']
+})
+export class VendorCompanyDashComponent implements OnInit {
+
+  constructor(public pomservice: PomsService) { }
+
+   public companylist:any;
+   public term:any;
+
+  ngOnInit() {
+      this.pomservice.GetVendorCompanyRegistration().subscribe(data => {
+        debugger
+      this.companylist = data;
+    }, error => {
+
+    })
+  }
+
+
+}

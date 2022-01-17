@@ -1,0 +1,165 @@
+<br>
+<div class="container-fluid card card-hover">
+  <br>
+  <div class="row">
+    <div class="col-lg-5" style="margin-top: -10px;">
+      <ng-daterangepicker [options]="options" [(ngModel)]="value" (ngModelChange)="selectedDate($event)">
+      </ng-daterangepicker>
+    </div>
+    <div class="col-lg-2">
+      <h4 style="text-align: center;">
+        <b>Dashboard</b>
+      </h4><br>
+    </div>
+    <div class="col-lg-5">
+    </div>
+  </div>
+</div><br>
+<div class="container-fluid card card-hover">
+  <br>
+  <div class="row">
+    <div class="col-lg-2"></div>
+    <div class="col-lg-2" *ngFor="let cou of countlist">
+      <div class="optionsboxdown" style="cursor: pointer;" routerLink="/AdminDashReports"  (click)="GetActivePoslist('Raised')">
+        <br>
+        <label style="color: white;cursor: pointer;">
+          Total PO</label>
+        <br /> <br />
+        <label style="color: white;">{{cou.totalpos}}</label>
+      </div>
+      <br />
+      <p style="margin-left: 56px;margin-top: -16px;"></p>
+    </div>
+    <br />
+    <div class="col-lg-1"></div>
+    <div class="col-lg-2" *ngFor="let cou of countlist">
+      <div class="optionsboxdown" style="cursor: pointer;" routerLink="/AdminDashReports" (click)="GetActivePoslist('Authorized')">
+        <br>
+        <label style="color: white;" >Authorized
+          PO
+        </label>
+        <br /> <br />
+        <label style="color: white;">{{cou.authorizedcount}}</label>
+      </div>
+      <br />
+      <br />
+      <p style="margin-left: 56px;margin-top: -16px;"></p>
+    </div>
+    <div class="col-lg-1"></div>
+    <br />
+    <div class="col-lg-2" *ngFor="let cou of countlist">
+      <div class="optionsboxdown" style="cursor: pointer;" routerLink="/AdminDashReports" (click)="GetActivePoslist('Cancelled')">
+        <br>
+        <label style="color: white;" >Cancelled PO
+        </label>
+        <br /> <br />
+        <label style="color: white;">{{cou.cancelledcount}}</label>
+      </div>
+      <br />
+      <br />
+      <p style="margin-left: 56px;margin-top: -16px;"></p>
+    </div>
+    <div class="col-lg-1"></div>
+    <br />
+  </div>
+  <div class="row">
+    <div class="col-lg-2"></div>
+    <br />
+    <!-- <div class="col-lg-2" *ngFor="let cou of countlist">
+      <div class="optionsboxdown" style="cursor: pointer;" routerLink="/AdminDashReports" (click)="GetActivePoslist('Accepted')">
+        <br>
+        <label style="color: white;" >Supplier
+          Accepted
+        </label>
+        <br /> <br />
+        <label style="color: white;">{{cou.supplieraccCount}}</label>
+      </div>
+      <br />
+      <br />
+      <p style="margin-left: 56px;margin-top: -16px;"></p>
+    </div> -->
+    <!-- <div class="col-lg-1"></div> -->
+    <br />
+    <div class="col-lg-2" *ngFor="let cou of countlist">
+      <div class="optionsboxdown" style="cursor: pointer;" routerLink="/AdminDashReports" (click)="GetActivePoslist('Delivered')">
+        <br>
+        <label style="color: white;" >Delivered PO
+        </label>
+        <br /> <br />
+        <label style="color: white;">{{cou.deliverCount}}</label>
+      </div>
+      <br />
+      <br />
+      <p style="margin-left: 56px;margin-top: -16px;"></p>
+    </div>
+    <div class="col-lg-1"></div>
+    <!-- <div class="col-lg-2">
+      <div class="optionsboxdown" style="cursor: pointer;"  routerLink="/AdminDashReports">
+        <br>
+        <label style="color: white;">Category
+        </label>
+        <br /> <br />
+        <label style="color: white;">0</label>
+      </div>
+      <br />
+      <br />
+      <p style="margin-left: 56px;margin-top: -16px;"></p>
+    </div> -->
+    <br />
+  </div>
+
+
+</div><br>
+
+
+<div class="container-fluid card card-hover">
+  <br>
+  <h4 style="text-align: center;">
+    <b>ITEMS</b>
+  </h4><br><br>
+  <div class="row">
+    <div class="col-lg-2"></div>
+    <br />
+    <div class="col-lg-2">
+      <div class="optionsboxdown" style="cursor: pointer;" routerLink="/ItemCategoryDashboard">
+        <br>
+        <label style="color: white;">Category
+
+        </label>
+        <br /> <br />
+        <label style="color: white;">{{categorycount}}</label>
+      </div>
+      <br />
+      <br />
+      <p style="margin-left: 56px;margin-top: -16px;"></p>
+    </div>
+    <!-- <div class="col-lg-1"></div>
+    <br />
+    <div class="col-lg-2">
+      <div class="optionsboxdown" style="cursor: pointer;" routerLink="/ItemSubCategoryDashboard">
+        <br>
+        <label style="color: white;">Sub Category
+        </label>
+        <br /> <br />
+        <label style="color: white;">{{SubcategoryListcount}}</label>
+      </div>
+      <br />
+      <br />
+      <p style="margin-left: 56px;margin-top: -16px;"></p>
+    </div> -->
+    <div class="col-lg-1"></div>
+    <div class="col-lg-2">
+      <div class="optionsboxdown" style="cursor: pointer;" routerLink="/ItemMasterDashboard">
+        <br>
+        <label style="color: white;">Items
+        </label>
+        <br /> <br />
+        <label style="color: white;">{{itemcount}}</label>
+      </div>
+      <br />
+      <br />
+      <p style="margin-left: 56px;margin-top: -16px;"></p>
+    </div>
+    <br />
+  </div>
+</div>

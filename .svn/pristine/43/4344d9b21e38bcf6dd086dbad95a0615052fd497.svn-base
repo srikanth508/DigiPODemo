@@ -1,0 +1,123 @@
+import { Component, OnInit } from '@angular/core';
+import { PomsService } from '../../poms.service';
+import Swal from 'sweetalert2';
+import { ActivatedRoute } from '@angular/router';
+
+@Component({
+  selector: 'app-buyer-master',
+  templateUrl: './buyer-master.component.html',
+  styleUrls: ['./buyer-master.component.css']
+})
+export class BuyerMasterComponent implements OnInit {
+
+  constructor(public pomservice: PomsService, private activatedroute: ActivatedRoute) { }
+
+  public buyercode: any;
+  public buyername: any;
+  public primaryphoneno: any;
+  public secondaryhoneno: any;
+  public faxtelephone: any;
+  public id: any;
+  public showbit: any;
+  public buyerlist: any;
+  public buyingcompanyid:any;
+  public companylist: any;
+
+  ngOnInit() {
+    this.activatedroute.params.subscribe(params => {
+      debugger;
+      this.id = params['id'];
+
+      if (this.id != undefined || this.id != null) {
+        this.showbit = 0;
+        this.Getbuyermaster();
+      }
+      else {
+        this.showbit = 1;
+      }
+    })
+
+    this.Getbuyingcompany();
+    this.buyingcompanyid=0;
+
+  }
+
+
+  public Getbuyingcompany() {
+    this.pomservice.GetBuyingCompanyMaster().subscribe(data => {
+      this.companylist = data;
+    }, error => {
+
+    })
+  }
+
+
+  public GetBuyingCompanyID(even)
+  {
+    debugger
+    this.buyingcompanyid=even.target.value;
+  }
+
+  public insertdetails() {
+    debugger
+    var entity = {
+      
+      'BuyerCode': this.buyercode,
+      'BuyingCompanyID': this.buyingcompanyid,
+      'BuyerName': this.buyername,
+      'PrimaryPhoneNo': this.primaryphoneno,
+      'SecondaryPhoneNo': this.secondaryhoneno,
+      'FaxTelephone': this.faxtelephone,
+    }
+    this.pomservice.InsertBuyerMaster(entity).subscribe(data => {
+      if (data != 0) {
+        Swal.fire('Completed', 'Data Added Successfully');
+        this.clear();
+        location.href = "#/BuyerMasterDashboard"
+      }
+    })
+  }
+  public clear() {
+    this.buyercode = "",
+      this.buyername = "",
+      this.primaryphoneno = "",
+      this.secondaryhoneno = "",
+      this.faxtelephone = ""
+  }
+
+
+  public Getbuyermaster() {
+    this.pomservice.GetBuyerMaster().subscribe(data => {
+      this.buyerlist = data;
+      let buy = this.buyerlist.filter(x => x.id == this.id)
+      this.buyercode = buy[0].buyerCode,
+        this.buyername = buy[0].buyerName,
+        this.primaryphoneno = buy[0].primaryPhoneNo,
+        this.secondaryhoneno = buy[0].secondaryPhoneNo,
+        this.faxtelephone = buy[0].faxTelephone,
+        this.buyingcompanyid = buy[0].buyingCompanyID
+        this.Getbuyingcompany()
+    }, error => {
+
+    })
+  }
+  public updatedetails() {
+    debugger
+    var entity = {
+      'ID': this.id,
+      'BuyingCompanyID': this.buyingcompanyid,
+      'BuyerCode': this.buyercode,
+      'BuyerName': this.buyername,
+      'PrimaryPhoneNo': this.primaryphoneno,
+      'SecondaryPhoneNo': this.secondaryhoneno,
+      'FaxTelephone': this.faxtelephone,
+    }
+    this.pomservice.UpdateBuyerMaster(entity).subscribe(res => {
+      let data = res;
+      Swal.fire('Success', 'Data Updated Successfully');
+      location.href = "#/BuyerMasterDashboard"
+
+
+    })
+  }
+}

@@ -1,0 +1,102 @@
+<br>
+
+<ngx-spinner></ngx-spinner>
+<div class="container-fluid">
+       <div class="row ">
+              <div class="col-lg-12">
+                     <h4 style="float: left;">AUTHORIZATION DASHBOARD</h4>
+                     <button type="button" style="float: right;" routerLink="/AuthorizationMaster"
+                            class="addnewbtns">Add</button>
+                     <button (click)="getglmasterexcel()" style="margin-right: 40px;" class="addnewbtns">Export
+                            Excel</button>
+
+              </div>
+       </div>
+</div>
+<br>
+<br>
+<div class="container-fluid maindiv">
+       
+    
+       <div class="row">
+              <div class="col-lg-3">
+                     <input type="text" placeholder="Search" [(ngModel)]="term" class="form-control">
+              </div>
+              <div class="col-lg-3">
+                     <select class="form-control" (change)="GetDepartmentName($event)">
+                            <option value="" selected>Select Department</option>
+                            <option *ngFor="let list of departmentlist" value="{{list.short}}">{{list.short}}
+                            </option>
+                     </select>
+              </div>
+
+       </div>
+       <div class="row">
+              <div class="col-lg-10">
+              </div>
+              <div class="col-lg-2">
+                     <label style="margin-left: 67px;"><b>Count : {{count}}</b></label>
+              </div>
+       </div>
+       <div class="row">
+              <div class="col-lg-12">
+                     <table id="POREPORTS">
+                            <tr>
+                                   <th>Authorization Code</th>
+                                   <th>Authorization Name</th>
+                                   <th>Department</th>
+                                   <th>Email</th>
+                                   <!-- <th>Status</th> -->
+                                   <th>Phone No</th>
+                                   <th>Secondary Phone No</th>
+                                   <th>Actions</th>
+                            </tr>
+
+                            <tr *ngFor="let details of autholist|filter:term|filter:departmentname| paginate: { id: 'foo', itemsPerPage: 15, currentPage: p}">
+                                   <td>{{details.authorizationCode}}</td>
+                                   <td>{{details.name}}</td>
+                                   <td>{{details.short}}</td>
+                                   <td>{{details.email}}</td>
+                                   <!-- <td *ngIf="details.enable == 0" style="color: green;">active</td>
+                                   <td *ngIf="details.enable == 1" style="color: red;">In-active</td> -->
+                                   <td>{{details.primaryPhoneNo}}</td>
+                                   <td>{{details.secondaryPhoneNo}}</td>
+                                   <td>
+                                          <a style="color:black">
+                                                 <img src="assets/images/edit.png" title="Edit" style="width: 20px"
+                                                        [routerLink]="['/AuthorizationMaster',details.id]">
+                                          </a>&nbsp;
+                                          <a>
+                                                 <img src="assets/images/dell.png" title="Delete"
+                                                        style="width: 20px;margin-left: 10px;"
+                                                        (click)="DeleteAuthorizationMaster(details.id)">
+                                          </a>
+
+                                          &nbsp;
+                                          <!-- <a>
+                                                 <img *ngIf="details.enable == 0" src="assets/images/activate.png"
+                                                        title="Active" (click)="DisableAuthor(details.id)"
+                                                        style="width: 50px;" />
+                                          </a>
+                                          <a> &nbsp;
+                                                 <img *ngIf="details.enable == 1" (click)="EnableAuthor(details.id)"
+                                                        src="assets/images/deactivate.png" title="Deactive"
+                                                        style="width: 50px;" />
+                                          </a> -->
+
+                                   </td>
+                            </tr>
+
+                     </table>
+              </div>
+       </div>
+       <div class="col-lg-12" style="text-align: center">
+              <br>
+              <pagination-controls id="foo" (pageChange)="pageChanged($event)" maxSize="15" directionLinks="true"
+                     autoHide="true" responsive="true" previousLabel="Previous" nextLabel="Next"
+                     screenReaderPaginationLabel="Pagination" screenReaderPageLabel="page"
+                     screenReaderCurrentLabel="You're on page">
+              </pagination-controls>
+       </div><br><br>
+
+</div>

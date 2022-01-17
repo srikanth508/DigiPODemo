@@ -1,0 +1,175 @@
+import { NgModule } from '@angular/core';
+import { Routes, RouterModule } from '@angular/router';
+import { LoginComponent } from '../../src/app/pages/login/login.component';
+import { HomeComponent } from '../../src/app/pages/home/home.component';
+import { ItemMasterComponent } from '../../src/app/pages/item-master/item-master.component';
+import { ItemMasterDashboardComponent } from '../../src/app/pages/item-master-dashboard/item-master-dashboard.component';
+import { SupplierMasterComponent } from '../../src/app/pages/supplier-master/supplier-master.component';
+import { SupplierMasterDashboardComponent } from '../../src/app/pages/supplier-master-dashboard/supplier-master-dashboard.component';
+import { BillToMasterComponent } from '../../src/app/pages/bill-to-master/bill-to-master.component';
+import { BillToMasterDashboardComponent } from '../../src/app/pages/bill-to-master-dashboard/bill-to-master-dashboard.component';
+import { ShipToMasterComponent } from '../../src/app/pages/ship-to-master/ship-to-master.component';
+import { ShipToMasterDashboardComponent } from '../../src/app/pages/ship-to-master-dashboard/ship-to-master-dashboard.component';
+import { BuyerMasterComponent } from '../../src/app/pages/buyer-master/buyer-master.component';
+import { BuyerMasterDashboardComponent } from '../../src/app/pages/buyer-master-dashboard/buyer-master-dashboard.component';
+import { AuthorizationMasterComponent } from '../../src/app/pages/authorization-master/authorization-master.component';
+import { AuthorizationMasterDashboardComponent } from '../../src/app/pages/authorization-master-dashboard/authorization-master-dashboard.component';
+import { InstructionMasterComponent } from '../../src/app/pages/instruction-master/instruction-master.component';
+import { InstructionMasterDashboardComponent } from '../../src/app/pages/instruction-master-dashboard/instruction-master-dashboard.component';
+import { AccountingCodeMasterComponent } from '../../src/app/pages/accounting-code-master/accounting-code-master.component';
+import { AccountingCodeMasterDashboardComponent } from '../../src/app/pages/accounting-code-master-dashboard/accounting-code-master-dashboard.component';
+import { BuyingCompanyMasterComponent } from '../../src/app/pages/buying-company-master/buying-company-master.component';
+import { BuyingCompanyMasterDashboardComponent } from '../../src/app/pages/buying-company-master-dashboard/buying-company-master-dashboard.component';
+import { ShipViaMasterComponent } from '../../src/app/pages/ship-via-master/ship-via-master.component';
+import { ShipViaMasterDashboardComponent } from '../../src/app/pages/ship-via-master-dashboard/ship-via-master-dashboard.component';
+import { FobMasterComponent } from '../../src/app/pages/fob-master/fob-master.component';
+import { FobMasterDashboardComponent } from '../../src/app/pages/fob-master-dashboard/fob-master-dashboard.component';
+import { TaxAdditionsComponent } from '../../src/app/pages/tax-additions/tax-additions.component';
+import { TaxAdditionsDashboardComponent } from '../../src/app/pages/tax-additions-dashboard/tax-additions-dashboard.component';
+import { TextMasterComponent } from '../../src/app/pages/text-master/text-master.component';
+import { TextMasterDashboardComponent } from '../../src/app/pages/text-master-dashboard/text-master-dashboard.component';
+import { PurchaseOrderComponent } from '../../src/app/pages/purchase-order/purchase-order.component';
+import { PurchaseOrderDetailsComponent } from '../../src/app/pages/purchase-order-details/purchase-order-details.component';
+import { PurchaseOrderDashboardComponent } from '../../src/app/pages/purchase-order-dashboard/purchase-order-dashboard.component';
+import { ApprovePoComponent } from '../../src/app/pages/approve-po/approve-po.component';
+import { OutputsComponent } from '../../src/app/pages/outputs/outputs.component';
+import { ItemCategoryComponent } from '../../src/app/pages/item-category/item-category.component';
+import { ItemCategoryDashboardComponent } from '../../src/app/pages/item-category-dashboard/item-category-dashboard.component';
+import { ItemSubCategoryComponent } from '../../src/app/pages/item-sub-category/item-sub-category.component';
+import { ItemSubCategoryDashboardComponent } from '../../src/app/pages/item-sub-category-dashboard/item-sub-category-dashboard.component';
+import { MyPoComponent } from '../../src/app/pages/my-po/my-po.component';
+import { MessagesComponent } from '../../src/app/pages/messages/messages.component';
+import { EditProductOrderdetailsComponent } from './pages/edit-product-orderdetails/edit-product-orderdetails.component';
+import { RegisterLoginsComponent } from './pages/register-logins/register-logins.component';
+import { RegisterDashComponent } from './pages/register-dash/register-dash.component';
+import { SupplierLoginComponent } from './pages/supplier-login/supplier-login.component';
+import { SupplierLoginDashComponent } from './pages/supplier-login-dash/supplier-login-dash.component';
+import { AuthorizarionloginComponent } from './pages/authorizarionlogin/authorizarionlogin.component';
+import { AuthologindashComponent } from './pages/authologindash/authologindash.component';
+import { PoGenaratorLoginComponent } from './pages/po-genarator-login/po-genarator-login.component';
+import { PoGenaratorLoginDashComponent } from './pages/po-genarator-login-dash/po-genarator-login-dash.component';
+import { PurchaseOrderDashComponent } from './pages/purchase-order-dash/purchase-order-dash.component';
+import { PoGenaratorReportsComponent } from './pages/po-genarator-reports/po-genarator-reports.component';
+import { ApprovePODashComponent } from './pages/approve-podash/approve-podash.component';
+import { ApprovePoReportsComponent } from './pages/approve-po-reports/approve-po-reports.component';
+import { AdminDashboardComponent } from './pages/admin-dashboard/admin-dashboard.component';
+import { AdminDashReportsComponent } from './pages/admin-dash-reports/admin-dash-reports.component';
+import { SupplierDashComponent } from './pages/supplier-dash/supplier-dash.component';
+import { SupplierReportsComponent } from './pages/supplier-reports/supplier-reports.component';
+import { FooterComponent } from './pages/footer/footer.component';
+import { SupplierItemsComponent } from './pages/supplier-items/supplier-items.component';
+import { SupplierItemsDashComponent } from './pages/supplier-items-dash/supplier-items-dash.component';
+import { MyProfileComponent } from './pages/my-profile/my-profile.component';
+import { EditSupplierItemMasterComponent } from './pages/edit-supplier-item-master/edit-supplier-item-master.component';
+import { TenderAuthDashboardComponent } from './pages/TenderAuthorization/tender-auth-dashboard/tender-auth-dashboard.component';
+import { AmazeDashComponent } from './pages/AmazeLogin/amaze-dash/amaze-dash.component';
+import { PoOrderItemsComponent } from './pages/PoGenarator/po-order-items/po-order-items.component';
+import { POOrderReportsComponent } from './pages/PoGenarator/poorder-reports/poorder-reports.component';
+import { ApprovesPosComponent } from './pages/approves-pos/approves-pos.component';
+import { CancelledPosComponent } from './pages/cancelled-pos/cancelled-pos.component';
+import { SupplierAcceptedOrdersComponent } from './pages/supplier-accepted-orders/supplier-accepted-orders.component';
+import { SupplierCancelledOrdersComponent } from './pages/supplier-cancelled-orders/supplier-cancelled-orders.component';
+import { DeliveredPosComponent } from './pages/delivered-pos/delivered-pos.component';
+import { AdminTotalReportsComponent } from './pages/admin-total-reports/admin-total-reports.component';
+import { TotalPORevenueComponent } from './pages/total-porevenue/total-porevenue.component';
+
+
+
+const routes: Routes = [
+  { path: '', redirectTo: '/Login', pathMatch: 'full' },
+  { path: 'Login', component: LoginComponent },
+  { path: 'Home', component: HomeComponent },
+  { path: 'ItemMaster', component: ItemMasterComponent },
+  { path: 'ItemMaster/:id', component: ItemMasterComponent },
+  { path: 'ItemMasterDashboard', component: ItemMasterDashboardComponent },
+  { path: 'SupplierMaster', component: SupplierMasterComponent },
+  { path: 'SupplierMaster/:id', component: SupplierMasterComponent },
+  { path: 'SupplierMasterDashboard', component: SupplierMasterDashboardComponent },
+  { path: 'BillToMaster', component: BillToMasterComponent },
+  { path: 'BillToMaster/:id', component: BillToMasterComponent },
+  { path: 'BillToMasterDashboard', component: BillToMasterDashboardComponent },
+  { path: 'ShipToMaster', component: ShipToMasterComponent },
+  { path: 'ShipToMaster/:id', component: ShipToMasterComponent },
+  { path: 'ShipToMasterDashboard', component: ShipToMasterDashboardComponent },
+  { path: 'BuyerMaster', component: BuyerMasterComponent },
+  { path: 'BuyerMaster/:id', component: BuyerMasterComponent },
+  { path: 'BuyerMasterDashboard', component: BuyerMasterDashboardComponent },
+  { path: 'AuthorizationMaster', component: AuthorizationMasterComponent },
+  { path: 'AuthorizationMaster/:id', component: AuthorizationMasterComponent },
+  { path: 'AuthorizationMasterDashboard', component: AuthorizationMasterDashboardComponent },
+  { path: 'InstructionMaster', component: InstructionMasterComponent },
+  { path: 'InstructionMaster/:id', component: InstructionMasterComponent },
+  { path: 'InstructionMasterDashboard', component: InstructionMasterDashboardComponent },
+  { path: 'AccountingCodeMaster', component: AccountingCodeMasterComponent },
+  { path: 'AccountingCodeMaster/:id', component: AccountingCodeMasterComponent },
+  { path: 'AccountingCodeMasterDashboard', component: AccountingCodeMasterDashboardComponent },
+  { path: 'BuyingCompanyMaster', component: BuyingCompanyMasterComponent },
+  { path: 'BuyingCompanyMaster/:id', component: BuyingCompanyMasterComponent },
+  { path: 'BuyingCompanyMasterDashboard', component: BuyingCompanyMasterDashboardComponent },
+  { path: 'ShipViaMaster', component: ShipViaMasterComponent },
+  { path: 'ShipViaMaster/:id', component: ShipViaMasterComponent },
+  { path: 'ShipViaMasterDashboard', component: ShipViaMasterDashboardComponent },
+  { path: 'FobMaster', component: FobMasterComponent },
+  { path: 'FobMaster/:id', component: FobMasterComponent },
+  { path: 'FobMasterDashboard', component: FobMasterDashboardComponent },
+  { path: 'TaxAdditions', component: TaxAdditionsComponent },
+  { path: 'TaxAdditions/:id', component: TaxAdditionsComponent },
+  { path: 'TaxAdditionsDashboard', component: TaxAdditionsDashboardComponent },
+  { path: 'TextMaster', component: TextMasterComponent },
+  { path: 'TextMasterDashboard', component: TextMasterDashboardComponent },
+  { path: 'PurchaseOrder', component: PurchaseOrderComponent },
+  { path: 'PurchaseOrder/:id', component: PurchaseOrderComponent },
+  { path: 'PurchaseOrderDetails', component: PurchaseOrderDetailsComponent },
+  { path: 'PurchaseOrderDashboard', component: PurchaseOrderDashboardComponent },
+  { path: 'ApprovePo', component: ApprovePoComponent },
+  { path: 'Outputs', component: OutputsComponent },
+  { path: 'ItemCategory', component: ItemCategoryComponent },
+  { path: 'ItemCategory/:id', component: ItemCategoryComponent },
+  { path: 'ItemCategoryDashboard', component: ItemCategoryDashboardComponent },
+  { path: 'ItemSubCategory', component: ItemSubCategoryComponent },
+  { path: 'ItemSubCategory/:id', component: ItemSubCategoryComponent },
+  { path: 'ItemSubCategoryDashboard', component: ItemSubCategoryDashboardComponent },
+  { path: 'MyPo', component: MyPoComponent },
+  { path: 'Messages', component: MessagesComponent },
+  { path: 'EditProductOrderdetails/:id', component: EditProductOrderdetailsComponent },
+  { path: 'RegisterLogins', component: RegisterLoginsComponent },
+  { path: 'RegisterDash', component: RegisterDashComponent },
+  { path: 'SupplierLogin', component: SupplierLoginComponent },
+  { path: 'SupplierLoginDash', component: SupplierLoginDashComponent },
+  { path: 'Authorizarionlogin', component: AuthorizarionloginComponent },
+  { path: 'Authologindash', component: AuthologindashComponent },
+  { path: 'PoGenaratorLogin', component: PoGenaratorLoginComponent },
+  { path: 'PoGenaratorLoginDash', component: PoGenaratorLoginDashComponent },
+  { path: 'PurchaseOrderDash', component: PurchaseOrderDashComponent },
+  { path: 'PoGenaratorReports', component: PoGenaratorReportsComponent },
+  { path: 'ApprovePODash', component: ApprovePODashComponent },
+  { path: 'ApprovePoReports', component: ApprovePoReportsComponent },
+  { path: 'AdminDashboard', component: AdminDashboardComponent },
+  { path: 'AdminDashReports', component: AdminDashReportsComponent },
+  { path: 'SupplierDash', component: SupplierDashComponent },
+  { path: 'SupplierReports', component: SupplierReportsComponent },
+  { path: 'Footer', component: FooterComponent },
+  { path: 'SupplierItems', component: SupplierItemsComponent },
+  { path: 'SupplierItemsDash', component: SupplierItemsDashComponent },
+  { path: 'MyProfile', component: MyProfileComponent },
+  { path: 'EditSupplierItemMaster/:id', component: EditSupplierItemMasterComponent },
+  { path: 'TenderAuthDashboard', component: TenderAuthDashboardComponent },
+  { path: 'AmazeDash', component: AmazeDashComponent },
+  { path: 'PoOrderItems/:id', component: PoOrderItemsComponent },
+  { path: 'POOrderReports', component: POOrderReportsComponent },
+  { path: 'ApprovesPos', component: ApprovesPosComponent },
+  { path: 'CancelledPos', component: CancelledPosComponent },
+  { path: 'SupplierAcceptedOrders', component: SupplierAcceptedOrdersComponent },
+  { path: 'SupplierCancelledOrders', component: SupplierCancelledOrdersComponent },
+  { path: 'DeliveredPos', component: DeliveredPosComponent },
+  { path: 'AdminTotalReports', component: AdminTotalReportsComponent },
+  { path: 'TotalPORevenue', component: TotalPORevenueComponent },
+];
+
+@NgModule({
+  imports: [RouterModule.forRoot(routes, { useHash: true })],
+  exports: [RouterModule],
+
+})
+
+export class AppRoutingModule { }

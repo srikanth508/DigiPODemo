@@ -1,0 +1,105 @@
+import { Component, OnInit } from '@angular/core';
+import { PomsService } from '../../poms.service';
+import Swal from 'sweetalert2';
+import { ActivatedRoute } from '@angular/router';
+@Component({
+  selector: 'app-authologindash',
+  templateUrl: './authologindash.component.html',
+  styleUrls: ['./authologindash.component.css']
+})
+export class AuthologindashComponent implements OnInit {
+
+  constructor(private PomsService: PomsService) { }
+
+  public authologin:any;
+  public departmentlist: any;
+  public departmentname: any;
+  public term:any;
+
+  
+  ngOnInit() {
+    this.GetAuthologin()
+    this.GetDepartment();
+  }
+  public GetAuthologin() {
+    this.PomsService.GetAuthorizationLogins().subscribe(data => {
+      debugger;
+      this.authologin = data;
+    })
+  }
+
+  public GetDepartment() {
+    this.PomsService.GetDepartmentMaster().subscribe(data => {
+      this.departmentlist = data;
+    });
+  }
+
+  public GetDepartmentName(even) {
+    this.departmentname = even.target.value;
+  }
+
+
+  public DisabeleAuthorizationLogins(id) {
+    debugger;
+    Swal.fire({
+      title: 'Are you sure?',
+      text: 'You Want To Disable This Person!',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Yes, Disable it!',
+      cancelButtonText: 'No, keep it'
+    }).then((result) => {
+      if (result.value) {
+        this.PomsService.DisabeleAuthorizationLogins(id).subscribe(res => {
+          let test = res;
+          this.GetAuthologin();
+        })
+        Swal.fire(
+          'Disabled!',
+          'Person has Disabled.',
+          'success'
+        )
+      } else if (result.dismiss === Swal.DismissReason.cancel) {
+        Swal.fire(
+          'Cancelled',
+          'Person  is safe :)',
+          'error'
+        )
+        this.GetAuthologin();
+      }
+    })
+  }
+
+
+
+  public EnableAuthorizationLogins(id) {
+    debugger;
+    Swal.fire({
+      title: 'Are you sure?',
+      text: 'You Want To Enable This Person!',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Yes, Disable it!',
+      cancelButtonText: 'No, keep it'
+    }).then((result) => {
+      if (result.value) {
+        this.PomsService.EnableAuthorizationLogins(id).subscribe(res => {
+          let test = res;
+          this.GetAuthologin();
+        })
+        Swal.fire(
+          'Disabled!',
+          'Person has Enabled.',
+          'success'
+        )
+      } else if (result.dismiss === Swal.DismissReason.cancel) {
+        Swal.fire(
+          'Cancelled',
+          'Person  is safe :)',
+          'error'
+        )
+        this.GetAuthologin();
+      }
+    })
+  }
+}

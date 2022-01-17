@@ -1,0 +1,37 @@
+<br>
+<div class="container-fluid maindiv">
+    <div class="row headdiv">
+        <div class="col-lg-12">
+            <h4 style="float: left;">Register Login Dashboard</h4>
+            <button type="button" style="float: right;" routerLink="/RegisterLogins" class="addnewbtns">Add</button>
+        </div>
+    </div>
+    <br>
+    <div class="row">
+        <div class="col-lg-12">
+            <table>
+                <tr>
+                    <!-- <th>Role</th> -->
+                    <th>User Name</th>
+                    <th>Password</th>
+                    <th>Actions</th>
+                </tr>
+                <tr *ngFor="let details of loginslist">
+                    <!-- <td>{{details.short}}</td> -->
+                    <td>{{details.userName}}</td>
+                    <!-- <td>{{details.password}}</td> -->
+                    <td style="color: black;">********</td>
+                    <td>
+                        <img src="assets/images/activate.png" *ngIf="details.hidden=='0'" style="width: 40px;"
+                            (click)="DisableRegisterLogins(details.id)">
+                        &nbsp;
+                        <img src="assets/images/deactivate.png" *ngIf="details.hidden=='1'" style="width: 40px;"
+                            (click)="EnableRegisterLogins(details.id)">
+                    </td>
+
+                </tr>
+
+            </table>
+        </div>
+    </div>
+</div>

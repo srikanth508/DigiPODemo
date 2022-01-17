@@ -1,0 +1,108 @@
+<div class="row">
+       <div class="col-md-2 sidenav" style="overflow-y: auto;height: 90vh;">
+              <h6 style="float: left;color: aliceblue;margin-top: 3px;">
+                     Welcome, {{user}}
+              </h6>
+              <br />
+              <hr style="color: aliceblue;border: solid 1px;" />
+
+              <a routerLink="/AdminDashboard"  *ngIf="roleid=='1'">
+                     <img src="assets/images/category.png" style="width: 15px;" />&nbsp; PO Reports
+              </a>
+              <a data-toggle="collapse" class="togglebtn button" data-target="#master" *ngIf="roleid=='1'">
+                     <img src="assets/images/master.png" style="width: 20px;overflow: scroll;" />&nbsp; Masters
+              </a>
+              <div id="master" class="collapse" style="padding-left: 7%;">
+                     <a routerLink="/ItemCategoryDashboard">
+                            <img src="assets/images/category.png" style="width: 15px;" />&nbsp; Category
+                     </a>
+                     <a routerLink="/ItemSubCategoryDashboard">
+                            <img src="assets/images/subca.png" style="width: 15px;" />&nbsp; Sub Category
+                     </a>
+                     <a routerLink="/ItemMasterDashboard">
+                            <img src="assets/images/Item.png" style="width: 15px;" />&nbsp; Item
+                     </a>
+                     <a routerLink="/SupplierMasterDashboard">
+                            <img src="assets/images/supplier.png" style="width: 15px;" />&nbsp; Supplier
+                     </a>
+                     <a routerLink="/BillToMasterDashboard">
+                            <img src="assets/images/billto.png" style="width: 15px;" />&nbsp; Bill To
+                     </a>
+                     <a routerLink="/ShipToMasterDashboard">
+                            <img src="assets/images/shipto.png" style="width: 15px;" />&nbsp; Ship To
+                     </a>
+                     <a routerLink="/BuyerMasterDashboard">
+                            <img src="assets/images/buyer.png" style="width: 15px;" />&nbsp; Buyer
+                     </a>
+                     <a routerLink="/AuthorizationMasterDashboard">
+                            <img src="assets/images/accounting.png" style="width: 15px;" />&nbsp; Authorization
+                     </a>
+                     <!-- <a routerLink="/InstructionMasterDashboard">
+                            <img src="assets/images/common.png" style="width: 15px;" />&nbsp; Instruction
+                     </a> -->
+                     <a routerLink="/AccountingCodeMasterDashboard">
+                            <img src="assets/images/accountinglogon.png" style="width: 15px;" />&nbsp; Accounting Code
+                     </a>
+                     <a routerLink="/BuyingCompanyMasterDashboard">
+                            <img src="assets/images/buyingcompany.png" style="width: 15px;" />&nbsp; Buying Company
+                     </a>
+                     <a routerLink="/ShipViaMasterDashboard">
+                            <img src="assets/images/shipvia.png" style="width: 15px;" />&nbsp; Ship Via
+                     </a>
+                     <!-- <a routerLink="/FobMasterDashboard">
+                            <img src="assets/images/common.png" style="width: 15px;" />&nbsp; FOB
+                     </a> -->
+                     <a routerLink="/TaxAdditionsDashboard">
+                            <img src="assets/images/Tax.png" style="width: 15px;" />&nbsp; Tax
+                     </a>
+                     <a routerLink="/SupplierItemsDash">
+                            <img src="assets/images/Tax.png" style="width: 15px;" />&nbsp; Supplier Items
+                     </a>
+
+                     <!-- <a routerLink="/TextMasterDashboard">
+                            <img src="assets/images/common.png" style="width: 15px;" />&nbsp; Text
+                     </a> -->
+              </div>
+              <a data-toggle="collapse" class="togglebtn button" data-target="#register" *ngIf="roleid=='1'">
+                     <img src="assets/images/registerlogin.png" style="width: 20px;overflow: scroll;" />&nbsp; Register
+                     Logins
+              </a>
+              <div id="register" class="collapse" style="padding-left: 7%;">
+                     <a routerLink="/RegisterDash">
+                            <img src="assets/images/Item.png" style="width: 15px;" />&nbsp; Admin
+                     </a>
+                     <a routerLink="/PoGenaratorLoginDash">
+                            <img src="assets/images/pogenarator.png" style="width: 15px;" />&nbsp; PO Genarator
+                     </a>
+                     <a routerLink="/SupplierLoginDash">
+                            <img src="assets/images/supplierlogin.png" style="width: 15px;" />&nbsp; Supplier
+                     </a>
+                     <a routerLink="/Authologindash">
+                            <img src="assets/images/Authorization.png" style="width: 15px;" />&nbsp; Authorization
+                     </a>
+              </div>
+              <a routerLink="/PurchaseOrderDash" *ngIf="roleid=='2'">
+                     <img src="assets/images/pogenarator.png" style="width: 15px;" />&nbsp; Dashboard
+              </a>
+              <a routerLink="/PurchaseOrderDashboard" *ngIf="roleid=='2'">
+                     <img src="assets/images/pogenarator.png" style="width: 15px;" />&nbsp; Purchase Order
+              </a>
+              <a routerLink="/MyProfile" *ngIf="roleid=='4'">
+                     <img src="assets/images/pogenarator.png" style="width: 15px;" />&nbsp;My Profile
+              </a>
+              <a routerLink="/ApprovePODash" *ngIf="roleid=='3'">
+                     <img src="assets/images/accounting.png" style="width: 15px;" />&nbsp; My Reports
+              </a>
+              <a routerLink="/ApprovePo" *ngIf="roleid=='3'">
+                     <img src="assets/images/supplierlogin.png" style="width: 15px;" />&nbsp; Approve PO
+              </a>
+              <a routerLink="/SupplierDash" *ngIf="roleid=='4'">
+                     <img src="assets/images/Item.png" style="width: 15px;" />&nbsp; My Reports
+              </a>
+              <a routerLink="/MyPo" *ngIf="roleid=='4'">
+                     <img src="assets/images/supplierlogin.png" style="width: 15px;" />&nbsp; My PO
+              </a>
+              <br />
+              <br />
+       </div>
+</div>

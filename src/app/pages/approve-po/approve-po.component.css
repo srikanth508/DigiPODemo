@@ -1,0 +1,21 @@
+.accptbtn{
+       background-color: #2ba22b;
+       color: aliceblue;
+       border: none;
+}
+
+.rejbtn{
+       background-color: red;
+       color: aliceblue;
+       border: none;
+}
+
+.viewbtn{
+       background-color: gray;
+       color: aliceblue;
+       border: none;
+}
+#content{
+       margin-top: 10px;
+       margin-bottom: 10px;
+}

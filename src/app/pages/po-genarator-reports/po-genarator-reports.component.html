@@ -1,0 +1,1182 @@
+<br>
+<ngx-spinner></ngx-spinner>
+<div class="container-fluid">
+       <div class="row">
+              <div class="col-lg-12">
+                     <h4 style="float: left;">PURCHASE ORDER DASHBOARD</h4>
+
+                     <button (click)="getglmasterexcel()" style="float: right;" class="addnewbtns">Export Excel</button>
+                     <!-- <button type="button" style="float: right;" routerLink="/PurchaseOrder"
+                            class="addnewbtns">Add</button> -->
+              </div>
+       </div>
+</div>
+<br>
+<br>
+<div class="container-fluid maindiv">
+       <div class="row">
+              <div class="col-lg-3">
+                     <input type="text" class="form-control" placeholder="Search"  [(ngModel)]="term" name="term">
+              </div> 
+              <div class="col-lg-4">
+              </div>
+              <div class="col-lg-3">
+                     <label style="margin-left:67px"><b>Grand Total : {{grandtotal| number:'1.2-2'}}</b></label>
+              </div>
+              <div class="col-lg-2">
+                     <label style="margin-left:67px"><b>Count : {{count}}</b></label>
+              </div>
+       </div><br>
+       <div class="row">
+              <div class="col-lg-12" style="overflow: auto;">
+                     <table id="POREPORTS">
+                            <tr>
+                                   <th>Actions</th>
+                                   <th>PO No</th>
+                                   <th>PO Type</th>
+                                   <th>Order Type</th>
+                                   <th>Amendment Count</th>
+                                   <th>Requistioner</th>
+                                   <th>Buying Company</th>
+                                   <th>PO Date</th>
+                                   <!-- <th>Order Type</th> -->
+                                   <th>Authorizer</th>
+                                   <!-- <th>Second Level Authorized</th>
+                                   <th>Third Level Authorized</th> -->
+                                   <th>Department</th>
+                                   <!-- <th>PO Description</th> -->
+                                   <th>Vendor</th>
+                                   <th>Vendor Email</th>
+                                   <!-- <th>Date</th> -->
+
+                                   <th>Ship Via</th>
+                                   <th>Ship To</th>
+                                   <th>Bill To</th>
+                                   <th>Instruction</th>
+                                   <th>Fob</th>
+                                   <th>Accounting Code</th>
+                            
+
+                                   <th>Net Total</th>
+                                   <th>Tax Percentage</th>
+                                   <th>Tax Amount</th>
+                                   <th>Total PO Amount</th>
+                                   <th>Status</th>
+                            </tr>
+                            <tr
+                                   *ngFor="let details of statuslist|filter:term| paginate: { id: 'foo', itemsPerPage: 5, currentPage: p}">
+                                   <td>
+                                          <img src="assets/images/view.png" data-toggle="modal" data-target="#myModal"
+                                                 style="width: 25px;" title="View Details"
+                                                 (click)="GetOrderID(details.id)">
+                                          &nbsp;
+
+                                          <img src="assets/images/pdf.png" data-toggle="modal"
+                                                 data-target="#inventoryModal" (click)="getpodetails(details)"
+                                                 style="width: 25px;">
+                                   </td>
+                                   <td>{{details.poNo}}</td>
+                                   <td>{{details.poType}}</td>
+                                   <td [style.color]="details.ordertypecolor">{{details.orderType}}
+                                          <label style="color:coral">{{details.amendementpo}}</label>
+
+                                   </td>
+                                   <td>{{details.amendmentcount}}</td>
+                                   <td>{{details.userName}}</td>
+                                   <td>{{details.companyName}}</td>
+                                   <td>{{details.date}}</td>
+                                   <!-- <td>{{details.orderType}}</td> -->
+                                   <td>{{details.firstlevel}}</td>
+                                   <!-- <td>{{details.secondlevel}}</td>
+                                   <td>{{details.thirdlevel}}</td> -->
+                                   <td>{{details.short}}</td>
+                                   <!-- <td innerHTML="{{details.poDescription}}"></td> -->
+                                   <td>{{details.supplierName}}</td>
+                                   <td>{{details.emailAddress}}</td>
+                                   <!-- <td>{{details.date}}</td> -->
+                                   <td>{{details.shipViaDescription}}</td>
+                                   <td>{{details.shiptoname}}</td>
+                                   <td>{{details.billtoname}}</td>
+                                   <td>{{details.instruction}}</td>
+                                   <td>{{details.fobDescription}}</td>
+                                   <td>{{details.accountNo}}</td>
+                                   <td>{{details.total| number:'1.2-2'}}</td>
+                                   <!-- <td>{{details.totaltaxamount|number}}</td> -->
+                                   <td>{{details.taxPercentage| number:'1.2-2'}}</td>
+                                   <td>{{details.totaltaxamount| number:'1.2-2'}}</td>
+                                   <td>{{details.totalAmountwithtax| number:'1.2-2'}}</td>
+                                   <td style="color:#a1bf36">{{details.status}}</td>
+
+                            </tr>
+                     </table>
+              </div>
+       </div>
+       <div class="col-lg-12" style="text-align: center">
+              <br>
+              <pagination-controls id="foo" (pageChange)="pageChanged($event)" maxSize="15" directionLinks="true"
+                     autoHide="true" responsive="true" previousLabel="Previous" nextLabel="Next"
+                     screenReaderPaginationLabel="Pagination" screenReaderPageLabel="page"
+                     screenReaderCurrentLabel="You're on page">
+              </pagination-controls>
+       </div><br><br>
+</div>
+
+
+
+<div id="myModal" class="modal fade" role="dialog">
+       <div class="modal-dialog modal-lg">
+              <!-- Modal content-->
+              <div class="modal-content" style="width:125%">
+                     <div class="modal-header">
+                            <h4 class="modal-title">PO Item Details</h4>
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                     </div>
+                     <div class="modal-body" style="overflow: auto;">
+                            <table>
+                                   <tr>
+                                          <th>PO</th>
+                                          <th>Item No</th>
+                                          <th>Category</th>
+                                          <!-- <th>Sub Category</th> -->
+                                          <!-- <th>Item Name</th> -->
+                                          <!-- <th>Due Date</th> -->
+                                          <th>Description</th>
+                                          <!-- <th>Extended Description</th> -->
+                                          <th>Unit</th>
+                                          <th>Quantity</th>
+                                          <th>Net Total</th>
+                                          <!-- <th>Tax Percentage</th>
+                                          <th>Tax Amount</th> -->
+                                          <th>Grand Total</th>
+                                          <!-- <th>Actions</th> -->
+                                   </tr>
+                                   <tr *ngFor="let item of itemslist">
+                                          <td>{{item.poNo}}</td>
+                                          <td>{{item.itemCode}}</td>
+                                          <td>{{item.categoryName}}</td>
+                                          <!-- <td>{{item.subCategoryName}}</td> -->
+                                          <!-- <td>{{item.itemName}}</td> -->
+                                          <!-- <td>{{item.duedate}}</td> -->
+                                          <td>{{item.description}}</td>
+                                          <!-- <td>{{item.descr2}}</td> -->
+                                          <td>{{item.unit}}</td>
+                                          <td>{{item.quantity}}</td>
+                                          <td>{{item.price| number:'1.2-2'}}</td>
+                                          <!-- <td>{{item.taxPercentage}}</td>
+                                          <td>{{item.taxAmount|number}}</td> -->
+                                          <td>{{item.totalPrice| number:'1.2-2'}}</td>
+                                          <!-- <td>
+                                                 <img src="assets/images/edit.png" title="Edit" data-dismiss="modal"
+                                                        [routerLink]="['/EditProductOrderdetails',item.id]"
+                                                        style="width: 20px;"> &nbsp;
+                                                 <img src="assets/images/dell.png" title="Delete" style="width: 20px;"
+                                                        (click)="DeletePurchaseOrderDetails(item.id)">
+
+                                          </td> -->
+                                   </tr>
+
+                            </table>
+                     </div>
+                     <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                     </div>
+              </div>
+
+       </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="modal fade" id="inventoryModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+       aria-hidden="true">
+       <div class="modal-dialog modal-lg" role="document">
+              <div class="modal-content" style=" width: 126%;">
+                     <div class="modal-header">
+                            <!-- <h5 class="modal-title" id="exampleModalLabel">Client Invoice</h5> -->
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                   <span aria-hidden="true">&times;</span>
+                            </button>
+                     </div>
+                     <div class="modal-body">
+                            <div class="container-fluid" id="content">
+                                   <br>
+                                   <div class="row">
+                                          <div class="col-lg-2">
+                                                 <h6><b>Purchase Order</b></h6>
+                                          </div>
+                                          <div class="col-lg-2">
+
+                                          </div>
+                                          <div class="col-lg-6">
+                                                 <h4>TOPS MARKETS, LLC</h4>
+                                          </div>
+                                   </div>
+                                   <div class="row">
+                                          <div class="col-lg-4">
+                                          </div>
+                                          <!-- <div class="col-lg-1">
+                                          </div> -->
+                                          <div class="col-lg-2">
+                                                 <span style="font-size: 13px;">P.O BOX 1027</span><br>
+                                                 <span style="font-size: 13px;"> PHONE(716)635-5000</span>
+                                          </div>
+                                          <div class="col-lg-3">
+                                                 <span style="font-size: 13px;"> BUFFALO,NY 14240-1027</span>
+                                          </div>
+                                          <div class="col-lg-1">
+
+                                          </div>
+                                          <div class="col-lg-2">
+                                                 <!-- <h6>Purchase Order</h6> -->
+                                          </div>
+                                   </div><br>
+                                   <div class="row">
+                                          <div class="col-lg-8">
+                                                 <label style="font-size:12px"><b>BILL TO ADDRESS</b> </label><br>
+                                                 <span style="font-size: 14px;">{{billtoname}}</span><br>
+                                                 <span style="font-size: 14px;">EMAIL:{{billtoemail}}</span><br>
+                                                 <span style="font-size: 14px;">{{billtoaddress}}</span><br>
+                                                 <span
+                                                        style="font-size: 14px;">{{billtocity}}{{billtostate}}{{billtozipcode}}</span><br>
+                                          </div>
+                                          <!-- <div class="col-lg-7">
+                                               
+                                          </div> -->
+                                          <div class="col-lg-3">
+                                                 <label style="font-size: 13px;"><b>P.O. NO.</b></label> :
+                                                 {{PoNumber}}<br>
+                                                 <label style="font-size: 13px;"><b>Order Type</b></label> :
+                                                 {{ordertype}}  {{Amendementpo}}<br>
+                                          </div>
+                                   </div>
+                                   <div class="row">
+                                          <!-- <div class="col-lg-1">
+
+                                          </div> -->
+                                          <div class="col-lg-12">
+                                                 <span style="font-size: 14px;">
+                                                        <b>Prepay transportation charges and list on
+                                                               Invoice as separate
+                                                               Item. Attach Prepaid freight bill. Packing list must
+                                                               accompany
+                                                               all shipments</b> </span>
+                                          </div>
+                                   </div><br>
+                                   <div class="row">
+                                          <div class="col-lg-6">
+                                                 <div class="row">
+                                                        <!-- <div class="col-lg-1">
+                                                        </div> -->
+                                                        <div class="col-lg-8">
+                                                               <label style="font-size: 13px;"><b>VENDOR ADDRESS
+                                                                      </b></label><br>
+                                                               <span>{{suppliercode}}</span><br>
+                                                               <span>{{suppliernme}}</span><br>
+                                                               <!-- <span>{{supplieraddress}}</span> -->
+                                                               <span>{{supplierstreet}} <br> {{suppliercity}}
+                                                                      {{supplierstate}} {{supplierzipcode}}</span>
+
+                                                        </div>
+                                                        <!-- <div class="col-lg-7">
+
+                                                        </div> -->
+
+                                                 </div>
+                                          </div>
+                                          <div class="col-lg-6">
+                                                 <div class="row">
+                                                        <div class="col-lg-4"></div>
+                                                        <div class="col-lg-8">
+                                                               <label style="font-size: 13px;"><b>SHIP TO ADDRESS
+                                                                      </b></label><br>
+
+                                                               <span>{{shiptoname}}</span><br>
+                                                               <span>{{shiptostrret}},</span><br>
+                                                               <span>
+                                                                      <!-- {{shiptoaddress}} -->
+                                                                      {{shiptocity}} {{shiptostate}} {{shiptozipcode}}</span>
+                                                        </div>
+                                                        <!-- <div class="col-lg-7">
+
+                                                        </div> -->
+                                                 </div>
+
+                                          </div>
+                                   </div><br>
+                                   <div class="row">
+                                          <div class="row">
+                                                 <div class="col-lg-12">
+                                                        <span style="font-size: 14px;margin-left: 15px;">
+                                                               <b> THIS ORDER IS SUBJECT TO ALL TERMS AND CONDITIONS
+                                                                      STATED
+                                                                      ON ATTACHED BELOW</b>
+                                                        </span>
+
+                                                 </div>
+                                          </div>
+                                   </div>
+                                   <div class="row">
+                                          <div class="col-lg-12" style="overflow: auto;">
+                                                 <table>
+                                                        <tr>
+                                                               <th  style="font-size: 10px;">DATE OF ARRIVE
+                                                                      AT
+                                                                      DESTINATION<br>
+                                                                      <span
+                                                                             style="font-size: 12px;"><b>{{duedate}}</b></span>
+
+                                                               </th>
+                                                               <th  colspan="2" style="font-size: 10px;">TERMS<br>
+                                                                      <b>
+                                                                             <p style="font-size: 10px;"
+                                                                                    innerHTML="{{terms}}"></p>
+                                                                      </b>
+                                                               </th>
+                                                               <th style="font-size: 10px;">F.O.B<br>
+                                                                      <span
+                                                                             style="font-size: 10px;"><b>{{fobcode}}</b></span>
+
+                                                               </th>
+                                                               <th style="font-size: 10px;">SHIP VIA<br>
+                                                                      <span
+                                                                             style="font-size: 10px;"><b>{{shipvia}}</b></span>
+                                                               </th>
+                                                               <th style="font-size: 10px;width: 9%;">DATE<br>
+                                                                      <!-- <span
+                                                                             style="font-size: 12px;"></span> -->
+                                                                             <b>{{date}}</b>
+                                                               </th>
+
+                                                        </tr>
+                                                        <tr style="height:15px">
+                                                               <th style="font-size: 12px;">ITEM NO</th>
+                                                               <!-- <th style="font-size: 12px;"> ITEM NAME</th> -->
+                                                               <th style="font-size: 12px;" colspan="2">DESCRIPTION</th>
+                                                               <!-- <th style="font-size: 12px;">EXTENDED DESCRIPTION</th> -->
+                                                               <th style="font-size: 12px;">QUANTITY ORDERED</th>
+                                                               <th style="font-size: 12px;">UNIT COST</th>
+                                                               <th style="font-size: 12px;">TOTAL COST</th>
+                                                        </tr>
+                                                        <tr style="height:auto;" *ngFor="let item of itemslist">
+                                                               <td>{{item.itemCode}}</td>
+                                                               <!-- <td>{{item.itemName}}</td> -->
+                                                               <td colspan="2">{{item.description}}</td>
+                                                               <!-- <td>{{item.descr2}}</td> -->
+                                                               <td>{{item.quantity}}</td>
+
+                                                               <!-- <td >
+                                                                      {{item.itemCode}} &nbsp;&nbsp;
+
+                                                                      {{item.itemName}}
+                                                               </td> -->
+                                                               <td>${{item.price| number:'1.2-2'}}</td>
+                                                               <td>${{item.totalPrice| number:'1.2-2'}}</td>
+                                                        </tr>
+                                                        <tr>
+                                                               <td colspan="3" style="font-size: 10px;">
+                                                                      CHARGE ACCOUNT NO / APPROPRIATION NO.<br>
+                                                                      <span><b>{{accountno}}</b></span>
+                                                               </td>
+                                                               <td colspan="2" style="font-size: 10px;">
+                                                                      <!-- CONFIRMATION -->
+                                                               </td>
+                                                               <td colspan="2">TOTAL &nbsp;&nbsp; ${{totalamount|
+                                                                      number:'1.2-2'}}</td>
+                                                        </tr>
+                                                 </table>
+                                          </div>
+                                   </div>
+                                   <div class="row">
+                                          <div class="col-lg-2">
+                                                 <span style="font-size: 10px;"><b>SPECIAL INSTRUCTIONS:</b> </span>
+                                          </div>
+                                          <div class="col-lg-7">
+                                                 <span style="font-size: 13px;">
+                                                        <b>{{instruction}}</b> </span>
+                                          </div>
+                                          <div class="col-lg-3">
+                                                 <!-- <table style="width:107%;margin-left: -13px;">
+                                                        <tr>
+                                                               <td style=" width: 56%;">Adjustment</td>
+                                                               <td></td>
+                                                        </tr>
+                                                 </table> -->
+                                                 <table style="width:97%;margin-left: 8px;">
+                                                        <tr>
+                                                               <td style=" width: 56%;">TAX Amount</td>
+                                                               <td>${{totaltaxamount| number:'1.2-2'}}</td>
+                                                        </tr>
+                                                 </table>
+
+                                          </div>
+                                   </div>
+                                   <div class="row">
+                                          <div class="col-lg-9">
+                                                 <label style="font-size: 10px;"><b>NOTE : </b>  <label style="font-size: 13px;"> <b>{{note}}</b> </label></label>
+                                                 <h6 style="font-size:12px"><b>NOTIFY BUYER UP FRONT OF ANY CLERICAL
+                                                               ERRORS IN THIS ORDER</b></h6>
+                                          </div>
+                                          <div class="col-lg-3">
+                                                 <table style="width:97%;margin-left: 8px;">
+                                                        <tr>
+                                                               <td colspan="2">Grand Total &nbsp;&nbsp;&nbsp;&nbsp;
+                                                                      ${{totalAmountwithtax| number:'1.2-2'}}</td>
+
+                                                        </tr>
+                                                 </table>
+
+                                          </div>
+                                          <div class="col-lg-9">
+                                                 <p style="font-size:12px;color:black">
+                                                        This Purchase Order Constitutes the entire agreement between the
+                                                        parties hereto, and no obligation of Buyer to Seller beyond the
+                                                        terms and quantities of this Purchase Order , except under any
+                                                        outstanding written Purchase Orders previously issued by Buyer ,
+                                                        exists or shall be binding upon Buyer unless contained in a
+                                                        writing signed by a corporate officer (identified as such) of
+                                                        Tops Markets, LLC
+                                                 </p>
+                                          </div>
+                                          <div class="col-lg-3">
+
+
+                                          </div>
+                                   </div><br><br>
+                                   <div class="row">
+                                          <div class="col-lg-6">
+                                                 <span><b>Dept</b> : {{dept}}</span><br>
+                                                 <span><b>P.O. Type</b> : {{potype}}</span><br>
+                                          </div>
+                                          <div class="col-lg-1">
+
+                                          </div>
+                                          <div class="col-lg-5">
+                                                 <div class="row">
+                                                        <div class="col-lg-1">BY </div>
+                                                        <div class="col-lg-10">
+                                                               <span style="font-size: 13px;"><b>{{buyername}} </b>
+                                                                      (PURCHASING AGENT)</span>&nbsp;
+                                                               <hr
+                                                                      style="height:1px;border-width:0;color:gray;background-color:gray;margin-top: 4px;">
+                                                               <label style="font-size: 9px;"></label>
+                                                        </div>
+
+                                                 </div>
+                                          </div>
+                                   </div>
+                                   <div>
+                                          <br>
+                                         
+                                          <div class="row">
+                                                 <div class="col-lg-4">
+                                                 </div>
+                                                 <div class="col-lg-8">
+                                                        <h2>TOPS MARKETS, LLC</h2><br>
+                                                 </div>
+                                                 <div class="col-lg-2">
+
+                                                 </div>
+                                                 <div class="col-lg-10">
+                                                        <h4>GENERAL TERMS AND CONDITIONS OF PURCHASE</h4><br>
+                                                 </div>
+                                                 <div class="col-lg-12">
+
+                                                        <p>
+                                                               <span><b>1. Order Acceptance.</b></span> Seller’s
+                                                               complete or
+                                                               partial shipment or provision
+                                                               of the goods and/or services described in an Order or
+                                                               Seller’s
+                                                               acknowledgment of the Order (electronic, written or
+                                                               verbal)
+                                                               shall
+                                                               constitute acceptance of the Order and shall be
+                                                               considered a
+                                                               binding
+                                                               contract pursuant to the General Terms. Buyer does not
+                                                               and will
+                                                               not
+                                                               agree to any terms and conditions stated by Seller that
+                                                               conflict
+                                                               with
+                                                               or are in addition to those contained in these General
+                                                               Terms and
+                                                               the
+                                                               Order. The General Terms and the Order constitute the
+                                                               final,
+                                                               complete
+                                                               and exclusive statement of the agreement between Seller
+                                                               and
+                                                               Buyer
+                                                               concerning the Order.
+
+
+                                                        </p>
+
+                                                 </div><br>
+                                                 <div class="col-lg-12">
+                                                        <p>
+                                                               <span><b>2. Delivery.</b> </span> Time of delivery is of
+                                                               the
+                                                               essence for each Order.
+                                                               Buyer reserves the right to refuse any goods and/or
+                                                               services and
+                                                               to cancel all or any part of an Order if Seller fails to
+                                                               deliver
+                                                               all or any part of the goods and/or services in
+                                                               accordance with
+                                                               the terms of that Order. Delivery is not complete until
+                                                               all
+                                                               goods and/or services have been received and accepted by
+                                                               Buyer.
+                                                               Acceptance of any part of an Order shall not bind Buyer
+                                                               to
+                                                               accept future shipments, nor deprive Buyer of the right
+                                                               to
+                                                               return goods and/or services already accepted. Seller
+                                                               shall be
+                                                               responsible for payment of any segregation, detention or
+                                                               related
+                                                               charges that result from Seller’s failure to tender the
+                                                               freight
+                                                               as specified in the Order.
+
+                                                        </p>
+
+                                                 </div><br>
+
+
+                                                 <div class="col-lg-12">
+                                                        <p>
+                                                               <span><b>3. Prices.</b></span> Prices and specifications
+                                                               for the
+                                                               goods and/or
+                                                               services shall be as specified in the Order. Seller must
+                                                               itemize
+                                                               all applicable sales and/or use taxes separately on the
+                                                               invoice
+                                                               for the goods and/or services. Prices for goods and/or
+                                                               services
+                                                               shall be specified on this Order and shall be no less
+                                                               favorable
+                                                               than the lowest price extended by Seller to any other
+                                                               customer
+                                                               for the same or equivalent articles in equal or lower
+                                                               quantities, provided that such pricing shall only be
+                                                               adjusted
+                                                               downward to reflect such lower pricing.
+
+
+                                                        </p>
+
+                                                 </div><br>
+
+                                                 <div class="col-lg-12">
+                                                        <p>
+                                                               <span><b>4. Payment.</b></span> Payment terms shall be as
+                                                               specified in the Order and
+                                                               shall be determined from the later to occur of: (i)
+                                                               Buyer’s
+                                                               receipt and acceptance of the goods and/or services or
+                                                               (ii)
+                                                               Buyer’s receipt of Seller’s invoice for the goods and/or
+                                                               services. Buyer at its option may pay invoices in advance
+                                                               of
+                                                               inspection and acceptance without prejudice to Buyer’s
+                                                               rights
+                                                               under law or under any provision in the General Terms.
+                                                               Buyer
+                                                               reserves the right to offset against Seller’s invoices
+                                                               any
+                                                               amounts remaining due from Seller to Buyer or Buyer’s
+                                                               affiliates.
+
+
+                                                        </p>
+
+                                                 </div><br>
+                                                 <div class="col-lg-12">
+                                                        <p>
+                                                               <span><b>5. Shipment and Risk of Loss.</b></span>
+                                                               Notwithstanding any “FOB” terms
+                                                               stated on an Order, property, title and risk of loss
+                                                               and/or
+                                                               damage for the goods and/or services shall remain the
+                                                               responsibility of Seller until Seller has delivered the
+                                                               goods
+                                                               and/or services to the Buyer’s delivery location, or made
+                                                               the
+                                                               goods and/or services available for pick- up at a
+                                                               location
+                                                               specified in the Order and the goods and/or services have
+                                                               been
+                                                               accepted by an authorized Buyer representative at such
+                                                               designated location.
+
+                                                        </p>
+
+                                                 </div><br>
+                                                 <div class="col-lg-12">
+                                                        <p>
+                                                               <span><b>6. Quality, Warranty and Legal
+                                                                             Compliance.</b></span>
+                                                               Quality Control, Warranty, and Legal Compliance. Buyer
+                                                               may audit
+                                                               Seller’s production site equipment, methods and products
+                                                               and/or
+                                                               services provided under an Order at Buyer’s reasonable
+                                                               request.
+                                                               Seller agrees to provide Buyer with the results of any
+                                                               quality
+                                                               tests conducted on the goods and/or services ordered,
+                                                               upon
+                                                               Buyer’s request. Seller represents and warrants to Buyer
+                                                               that
+                                                               all goods and services provided under the Order (i) are
+                                                               free
+                                                               from defects in materials or workmanship; (ii) conform
+                                                               strictly
+                                                               to any applicable specifications in the Order, (iii)
+                                                               satisfy
+                                                               Seller’s brand quality standards (if the goods and/or
+                                                               services
+                                                               are branded products); (iv) are of merchantable quality
+                                                               and are
+                                                               fit, safe and sufficient for the purpose intended; (v)
+                                                               comply
+                                                               with all applicable laws and regulations; (vi) do not
+                                                               infringe
+                                                               the intellectual property rights of any third-party; and
+                                                               (vii)
+                                                               are not and will not be adulterated or misbranded within
+                                                               the
+                                                               meaning of the Food, Drug and Cosmetic Act of 1938, as
+                                                               amended,
+                                                               the Meat and Poultry Inspection Act of 1906, as amended,
+                                                               and any
+                                                               related laws or regulations pertaining to the goods
+                                                               and/or
+                                                               services and that such good and/or service is not an
+                                                               article
+                                                               that may not be introduced into interstate commerce.
+                                                               These
+                                                               warranties are in addition to any warranty otherwise
+                                                               offered by
+                                                               the Seller or implied by law and survive Buyer’s
+                                                               inspection,
+                                                               acceptance and payment for the goods and/or services.
+
+
+
+                                                        </p>
+
+                                                 </div><br>
+
+                                                 <div class="col-lg-12">
+                                                        <p>
+                                                               <span><b> Product Recalls/Market Withdrawals.</b></span>
+                                                               Seller
+                                                               immediately shall
+                                                               notify Buyer in the event that goods and/or services must
+                                                               be
+                                                               withdrawn or recalled due to food safety or quality or
+                                                               for any
+                                                               other reason. Seller shall provide Buyer with an
+                                                               emergency
+                                                               contact list with the name, title and contact information
+                                                               for
+                                                               Seller’s employees responsible for handling food safety
+                                                               and
+                                                               quality issues. Buyer may initiate, if necessary, a local
+                                                               recall
+                                                               or market withdrawal when Buyer reasonably deems it
+                                                               necessary
+                                                               for safety or quality reasons, and Seller agrees, in such
+                                                               case,
+                                                               to reimburse Buyer for any expenditures reasonably made
+                                                               in
+                                                               connection with any such withdrawal from sale and/or
+                                                               recall of
+                                                               the goods and/or services from customers, including
+                                                               related
+                                                               consultation and laboratory fees.
+                                                        </p>
+
+                                                 </div><br> <br> <br><br><br> <br> <br><br><br> <br><br>
+                                                 <div class="col-lg-12">
+                                                        <p>
+                                                               <span><b> Country of Origin Requirements.</b></span>
+                                                               Seller
+                                                               shall provide Buyer with
+                                                               complete and accurate information concerning the country
+                                                               of
+                                                               origin for any perishable food products supplied under an
+                                                               Order
+                                                               if and as required under the Agricultural Marketing Act
+                                                               of 1946,
+                                                               as
+
+
+                                                               amended, and any related rules and regulations
+                                                               (collectively,
+                                                               the “CO Requirements”). Seller shall also provide country
+                                                               of
+                                                               origin information for any floral products ordered.
+                                                        </p>
+
+                                                 </div><br>
+                                                 <div class="col-lg-12">
+                                                        <p>
+                                                               <span><b>Importation/Exportation
+                                                                             Documentation.</b></span>
+                                                               Seller
+                                                               shall ensure that
+                                                               all goods and/or services shipped pursuant to an Order
+                                                               from a
+                                                               foreign country are shipped in accordance with all
+                                                               applicable
+                                                               laws and regulations of the United States and such
+                                                               foreign
+                                                               country (including, but not limited to, the Food Safety
+                                                               Modernization Act (P.L. 111-353). Buyer shall not serve
+                                                               as the
+                                                               Foreign Supplier Verification Program (FSVP) importer
+                                                               pursuant
+                                                               to 21 CFR § 1.500, nor shall Buyer be declared by Seller
+                                                               or
+                                                               others as the FSVP importer in any entry documentation,
+                                                               under
+                                                               any circumstances, unless Buyer has expressly and
+                                                               explicitly
+                                                               agreed to assume such responsibilities in writing. Seller
+                                                               is
+                                                               responsible for providing all necessary documentation for
+                                                               the
+                                                               goods and/or services to the applicable customs or other
+                                                               governmental departments or agencies and shall inform
+                                                               Buyer if
+                                                               Buyer needs to obtain or provide any permits, licenses or
+                                                               other
+                                                               documentation in connection with the purchasing of the
+                                                               goods
+                                                               and/or services. Seller shall indemnify Buyer for any
+                                                               failure on
+                                                               Seller’s behalf to comply with this paragraph except to
+                                                               the
+                                                               extent that such noncompliance is due to Buyer’s gross
+                                                               negligence.
+                                                        </p>
+
+                                                 </div><br>
+
+
+
+                                                 <div class="col-lg-12">
+                                                        <p>
+                                                               <span>
+                                                                      <b>
+                                                                             7. Inspection, Acceptance and Rejection of
+                                                                             Goods
+                                                                             and/or
+                                                                             Services.
+                                                                      </b>
+                                                               </span> All goods and/or services shipped pursuant to an
+                                                               Order
+                                                               are subject to Buyer’s inspection and acceptance on
+                                                               Buyer’s
+                                                               premises within a reasonable period of time after
+                                                               delivery,
+
+                                                               completion of performance, and/or Buyer’s normal
+                                                               warehousing
+                                                               period. Goods and/or services rejected as defective or
+                                                               nonconforming to an Order may, at Buyer’s option, be
+                                                               returned to
+                                                               Seller at Seller’s expense, including transportation and
+                                                               handling costs. Payment of invoice shall not constitute
+                                                               acceptance of goods and/or services covered by an Order
+                                                               and
+                                                               shall be without prejudice to any claims of Buyer against
+                                                               Seller.
+
+                                                        </p>
+
+                                                 </div><br>
+
+
+                                                 <div class="col-lg-12">
+                                                        <p>
+                                                               <span><b> 8. Confidentiality. </b></span> Seller shall
+                                                               not
+                                                               disclose any confidential
+                                                               information of Buyer or Buyer’s affiliates (including but
+                                                               not
+                                                               limited to the existence or contents of any Order) to
+                                                               anyone
+                                                               except its employees or agents that need to know in order
+                                                               to
+                                                               satisfy Seller’s obligations hereunder and under an
+                                                               Order. In
+                                                               the event that Seller is compelled to disclose any such
+                                                               confidential information by law or government authority
+                                                               or
+                                                               order, Seller shall promptly notify Buyer so that Buyer
+                                                               may seek
+                                                               an appropriate protective order.
+
+
+                                                        </p>
+
+                                                 </div><br>
+
+                                                 <div class="col-lg-12">
+                                                        <p>
+                                                               <span><b>9. Indemnification.</b></span> Seller shall
+                                                               defend,
+                                                               indemnify and hold
+                                                               harmless Buyer and Buyer’s members, managers, parents,
+                                                               affiliates, subsidiaries, employees, officers, directors,
+                                                               and
+                                                               agents (collectively, the “Buyer’s Indemnitees”), from
+                                                               and
+                                                               against any and all claims, liabilities, losses, damages,
+                                                               fines,
+                                                               penalties, or expenses (including court costs and
+                                                               reasonable
+                                                               attorney’s fees), sustained by Buyer or Buyer’s
+                                                               Indemnitees, from or arising out of the Seller’s and/or
+                                                               Seller’s
+                                                               employees’ or agents’ (collectively, “Seller’s Agents”)
+                                                               negligence, wrongful acts or omissions, willful
+                                                               misconduct or
+                                                               breach of Seller’s obligations, representations, or
+                                                               warranties
+                                                               hereunder or any defect or failure in the goods and/or
+                                                               services
+                                                               provided by Seller under an Order or any infringement of
+                                                               the
+                                                               patent, trademark, copyright or similar right of any
+                                                               third party
+                                                               in connection with the goods and/or services provided
+                                                               hereunder.
+                                                               If Seller and/or Seller’s Agents enter Buyer’s premises
+                                                               in the
+                                                               performance of Seller’s obligations hereunder or under an
+                                                               Order,
+                                                               Seller will indemnify, defend and hold harmless Buyer and
+                                                               the
+                                                               Buyer’s Indemnitees from and against any and all loss,
+                                                               cost, or
+                                                               damage to property and/or injury to person (including
+                                                               death) to
+                                                               the extent caused by Seller and/or Seller’s Agents.
+
+                                                        </p>
+
+                                                 </div><br>
+
+                                                 <div class="col-lg-12">
+                                                        <p>
+                                                               <span><b> 10. Packaging/Labeling.</b></span> At its
+                                                               expense,
+                                                               Seller shall pack the
+                                                               goods and/or services ordered as specified in the Order.
+                                                               Seller
+                                                               shall use identification codes on all packaging of the
+                                                               goods
+                                                               and/or services from which the production date,
+                                                               production
+                                                               batch, and other relevant data can be identified, and
+                                                               shall
+                                                               maintain proper records of all goods and/or services
+                                                               produced
+                                                               and packed. If appropriate, the product packaging for the
+                                                               goods
+                                                               and/or services must be scan-able, must contain
+                                                               open-dated “sell
+                                                               by” or “use by” identifications, must comply with EAN/UPC
+                                                               standards regarding barcodes, and/or must contain
+                                                               Seller’s
+                                                               product look-up numbers (“PLU’s”). Packaging for goods
+                                                               and/or
+                                                               services in general shall also be of sufficient quality
+                                                               and
+                                                               durability to withstand normal wear and tear in
+                                                               connection with
+                                                               shipping and handling.
+                                                        </p>
+
+                                                 </div><br>
+
+
+
+
+                                                 <div class="col-lg-12">
+                                                        <p>
+                                                               <span><b>11. Subcontracting and Assignment.</b></span>
+                                                               Seller
+                                                               may not subcontract or
+                                                               assign any of its duties or obligations hereunder or
+                                                               under any
+                                                               Order without the prior written consent of Buyer. Buyer
+                                                               may
+                                                               freely assign or apportion any of its rights or
+                                                               obligations
+                                                               under this Order.
+
+
+                                                        </p>
+
+                                                 </div><br>
+
+                                                 <div class="col-lg-12">
+                                                        <p>
+                                                               <span><b>12. Waiver of Liens.</b> </span> Seller waives
+                                                               and
+                                                               relinquishes all liens
+                                                               and claims that Seller has or later may have as a result
+                                                               of
+                                                               labor done and materials provided by Seller in
+                                                               performance of
+                                                               any Order.
+
+                                                        </p>
+
+                                                 </div><br>
+
+
+
+                                                 <div class="col-lg-12">
+                                                        <p>
+                                                               <span><b>13. Insurance.</b></span> Seller must maintain
+                                                               and
+                                                               provide a current
+                                                               certificate of insurance evidencing that Seller has in
+                                                               effect
+                                                               the following insurance coverages from carriers that have
+                                                               an
+                                                               A.M. Best Rating of A- VII or better: (i) general
+                                                               liability
+                                                               insurance (comprehensive form) to include products
+                                                               liability,
+                                                               products/completed operations, claims resulting from acts
+                                                               of
+                                                               terrorism, contractual liability coverage, personal
+                                                               injury and
+                                                               broad form vendors insurance with per occurrence limits
+                                                               of
+                                                               $3,000,000 per occurrence and in the <br><br><br>
+                                                               aggregate, with coverage
+                                                               for bodily injury (including death)
+
+                                                               and property damage, and any Seller that is a service
+                                                               vendor
+                                                               must show coverage for premises/operations, independent
+                                                               contractors, and broad form property damage insurance
+                                                               coverage;
+                                                               (ii) automobile liability insurance with a per accident
+                                                               combined
+                                                               single limit of not less than $3,000,000, with coverage
+                                                               for the
+                                                               Seller as owner or lessee of any owned, hired or
+                                                               non-owned
+                                                               vehicles that enter any premises owned or utilized by
+                                                               Buyer; and
+                                                               (iii) employer’s liability insurance with a per
+                                                               accident/per
+                                                               disease/per employee limit of no less than $3,000,000;
+                                                               (iv) such
+                                                               worker’scompensation coverage as is required by
+                                                               applicable law;
+                                                               and (v) any additional insurance not specially listed
+                                                               above but
+                                                               required by applicable , rule or regulation as same
+                                                               pertain to
+                                                               the goods and/or services to be supplied hereunder.
+                                                               Seller shall
+                                                               add “Tops Markets, LLC, and its subsidiaries and
+                                                               affiliates” as
+                                                               an additional insured on all such policies and Seller
+                                                               must send
+                                                               its Certificate of Insurance directly to the following:
+                                                               Tops
+                                                               Markets, LLC, c/o Lawley Insurance, 361 Delaware Avenue,
+                                                               Buffalo, NY 14202. The policies to be obtained hereunder
+                                                               by
+                                                               Seller shall be primary and noncontributory over any
+                                                               other
+                                                               existing insurance and Seller hereby waives (and shall
+                                                               cause its
+                                                               insurance carriers to waive) all rights of recovery it
+                                                               may have
+                                                               against Buyer for any and all damages that are covered by
+                                                               any of
+                                                               the insurance policies that Seller is required to obtain
+                                                               hereunder.
+
+                                                               SELLER ACKNOWLEDGES THAT PAYMENT OF INVOICE IS CONTINGENT
+                                                               UPON
+                                                               SELLER SUPPLYING BUYER WITH EVIDENCE OF COMPLIANCE WITH
+                                                               THESE
+                                                               INSURANCE REQUIREMENTS. SELLER AGREES THAT BUYER SHALL
+                                                               CONTINUE
+                                                               TO BE ENTITLED TO ANY AND ALL DISCOUNTS AND SHALL NOT BE
+                                                               PENALIZED DUE TO ANY DELAY IN PAYMENT WHICH STEMS FROM
+                                                               SELLER’S
+                                                               FAILURE TO COMPLY WITH THESE INSURANCE REQUIREMENTS.
+
+                                                        </p>
+
+                                                 </div><br>
+                                                 <div class="col-lg-12">
+                                                        <p>
+                                                               <span><b>14. Amendments, Modifications,
+                                                                             Termination/Cancellation
+                                                                             and
+                                                                             Force Majeure.</b></span> These General
+                                                               Terms may
+                                                               be modified, amended or
+                                                               terminated by Buyer at any time. Buyer will notify Seller
+                                                               of any
+                                                               material modification to the General Terms. If Seller
+                                                               accepts
+                                                               any Order from Buyer after such change, Seller shall
+                                                               conclusively be deemed to have accepted such change.
+                                                               Buyer may
+                                                               revoke or cancel an Order at any time prior to Seller’s
+                                                               shipment
+                                                               of goods and/or services upon notice to Seller without
+                                                               incurring
+                                                               any penalty. If Seller becomes insolvent or bankrupt or
+                                                               files a
+                                                               petition for bankruptcy or is subject to an assignment
+                                                               for the
+                                                               benefit of creditors, Buyer shall be entitled to cancel
+                                                               any
+                                                               unfilled part of an Order without any liability
+                                                               whatsoever.
+                                                               Either party, upon prior notice to the other party, may
+                                                               reasonably delay performance under an Order in the event
+                                                               of
+                                                               circumstances or events beyond its reasonable control,
+                                                               including
+                                                               without limitation, acts of God, war, riot, strike,
+                                                               terrorism,
+                                                               government action, destruction or loss of premises or
+                                                               markets or
+                                                               consumer boycott, provided performance by the delaying
+                                                               party is
+                                                               thereafter resumed as soon as possible.
+                                                        </p>
+
+                                                 </div><br>
+
+
+
+                                                 <div class="col-lg-12">
+                                                        <p><span><b>15. Miscellaneous.</b></span> The remedies herein
+                                                               specifically reserved shall
+                                                               be cumulative and in addition to any other remedies
+                                                               provided by
+                                                               law or equity. No waiver of a breach of any provision of
+                                                               the
+                                                               General Terms or an Order or failure or delay of either
+                                                               party to
+                                                               exercise any right or remedy hereunder is effective
+                                                               unless in
+                                                               writing and signed by the waiving party. Any such waiver
+                                                               does
+                                                               not constitute a waiver of any other breach, right or
+                                                               remedy
+                                                               available to such party, and does not establish a course
+                                                               of
+                                                               conduct that will operate as a waiver of such right or
+                                                               provision. The General Terms and the Order shall be
+                                                               governed by
+                                                               and construed in accordance with the laws of New York,
+                                                               without
+                                                               regard to its conflicts of laws provisions. If any
+                                                               portion of
+                                                               these General Terms is held invalid or unenforceable,
+                                                               that
+                                                               portion shall be construed in accordance with applicable
+                                                               law as
+                                                               nearly as possible to reflect the original intention of
+                                                               the
+                                                               parties,
+
+
+                                                               and the remainder of these General Terms shall remain in
+                                                               full
+                                                               force and effect. Nothing in this Agreement shall be
+                                                               construed
+                                                               as creating a partnership or joint venture between Buyer
+                                                               and
+                                                               Seller. Seller is an independent contractor and not an
+                                                               employee
+                                                               of Buyer, and Buyer shall not be responsible for any
+                                                               salary,
+                                                               benefits or other employee-related expenses for Seller’s
+                                                               Agents.
+
+                                                        </p>
+                                                 </div><br>
+                                                 <div class="col-lg-12">
+                                                        <p><span><b>16. Buyer Policies.</b></span> Vendor
+                                                               agrees to adhere to Buyer’s policies with respect to
+                                                               gifts to
+                                                               Buyer’s associates, as communicated to Vendor in writing
+                                                               from
+                                                               time to time. Vendor acknowledges that in connection with
+                                                               its
+                                                               relationship with Buyer it may become aware of material
+                                                               non-public information of the Buyer (“Information”).
+                                                               Vendor will
+                                                               not use Information except in connection with providing
+                                                               goods
+                                                               and/or services to Buyer, will not disclose to anyone
+                                                               except to
+                                                               persons within its organization whose positions require
+                                                               them to
+                                                               know it, and will not buy or sell Buyer’s securities or
+                                                               recommend that others buy or sell Buyer’s securities
+                                                               while in
+                                                               possession of such
+
+                                                               Information.
+
+
+
+                                                        </p>
+
+                                                 </div><br>
+
+
+                                          </div>
+
+                                   </div>
+
+                            </div>
+
+                            <div class="modal-footer">
+                                   <button type="button" class="btn btn-secondary" id="Close" data-dismiss="modal">Close</button>
+                                   <button (click)="SavePDF()" class="btn btn-primary">Download</button>
+                            </div>
+                     </div>
+              </div>
+
+       </div>

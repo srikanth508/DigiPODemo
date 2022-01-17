@@ -1,0 +1,159 @@
+import { Component, OnInit } from '@angular/core';
+import { PomsService } from '../../../poms.service';
+import Swal from 'sweetalert2';
+import { ActivatedRoute } from '@angular/router';
+import * as XLSX from 'xlsx';
+const EXCEL_TYPE = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8';
+const EXCEL_EXTENSION = '.xlsx';
+import * as FileSaver from 'file-saver';
+import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
+@Component({
+  selector: 'app-add-tender',
+  templateUrl: './add-tender.component.html',
+  styleUrls: ['./add-tender.component.css']
+})
+export class AddTenderComponent implements OnInit {
+ public Editor = ClassicEditor;
+  constructor(public pomservice: PomsService) { }
+
+  public CategoryID: any;
+  public categoryList: any;
+  public tenderno:any;
+
+  public tendername: any;
+  public description: any;
+  public approxmatequantity:any;
+  public TenderFromDate: any;
+  public tendertodate: any;
+  public tenderlocation:any;
+  public tenderdoccost: any;
+  public tenderdepositamount: any;
+  public tenderissuedate:any;
+  public lastdateofqueary: any;
+  public prebidcoferencevenue: any;
+  public prebidconferencedate:any;
+  public tenderopeningdate: any;
+  public tenderclosingdate:any;
+  public tenderopeningplace: any;
+  public tendersubmissionplace: any;
+  public estimatedcost:any;
+  public jobcompletiontime: any;
+  public sitelocation: any;
+  public prequalificationcriteria:any;
+  public otherdetails:any;
+  public contactpersonname: any;
+  public contactpersonphno: any;
+  public contactpersonemail:any;
+
+  public tendertypelist:any;
+  public tendertypeid:any;
+public autholist:any;
+public authorizationid:any;
+public genaratorid:any;
+  public attachments = [];
+  public attachmentsurl = [];
+  public showphoto:any;
+
+  ngOnInit() {
+    this.genaratorid = localStorage.getItem('genaratorid');
+    this.CategoryID = 0;
+    this.pomservice.GetCategoryMaster().subscribe(data => {
+      debugger;
+      this.categoryList = data;
+    })
+
+    this.pomservice.GetTenderTypeMaster().subscribe(data => {
+      debugger;
+      this.tendertypelist = data;
+    })
+
+    this.pomservice.GetAuthorizationMaster().subscribe(data => {
+      this.autholist = data;
+    }, error => {
+
+    })
+    this.otherdetails=""
+    this.prequalificationcriteria=""
+  }
+  public GetCategoryID(even) {
+    debugger
+    this.CategoryID = even.target.value;
+  }
+
+  public GetTenderTypeID(even)
+  {
+    this.tendertypeid=even.target.value;
+  }
+  public GetAuthorizationID(even)
+  {
+    debugger
+    this.authorizationid=even.target.value;
+  }
+
+
+
+  public insertdetails()
+  {
+    debugger
+    var entity={
+      'TenderNo':this.tenderno,
+      'TenderName':this.tendername,
+      'Description':this.description,
+      'CategoryID':this.CategoryID,
+      'ApproximateQuantity':this.approxmatequantity,
+      'TenderContactFromDate':this.TenderFromDate,
+      'TenderContactToDate':this.tendertodate,
+      'TenderLocation':this.tenderlocation,
+      'TenderTypeID':this.tendertypeid,
+      'TenderDocumentCost':this.tenderdoccost, 
+      'TenderDepositAmount':this.tenderdepositamount,
+      'TenderIssueDate' :this.tenderissuedate,
+      'LastDateofTenderQueary' :this.lastdateofqueary,
+      'PreBidConferenceVenue' :this.prebidcoferencevenue,
+      'PreBidConferenceDate' :this.prebidconferencedate,
+      'TenderOpeningDate': this.tenderopeningdate,
+      'TenderClosingDate':this.tenderclosingdate,
+      'TenderOpeningPlace' :this.tenderopeningplace,
+      'TenderSubmissionPlace':this.tendersubmissionplace,
+      'EstimatedCost' :this.estimatedcost,
+      'JobCompletionTime':this.jobcompletiontime, 
+      'SiteLocation' :this.sitelocation,
+      'PreQualificationCriteria':this.prequalificationcriteria,
+      'OtherDetails' :this.otherdetails,
+      'TenderContactPersonName' :this.contactpersonname,
+      'TenderContactPersonPhNo' :this.contactpersonphno,
+      'TenderContactPersonEmail':this.contactpersonemail,
+      'AuthorizationID' :this.authorizationid,
+      'TenderGenaratorID' :this.genaratorid,
+      'AttachmentUrl':this.attachmentsurl[0]
+    }
+    this.pomservice.InsertTender(entity).subscribe(data => {
+      if (data != 0) {
+        debugger
+        Swal.fire('Completed', 'Data Added Successfully');
+
+        location.href = "#/Tenderdashboard"
+      }
+    })
+  }
+
+
+
+
+    public onattachmentUpload(abcd) {
+    debugger;
+    this.attachments.push(abcd.addedFiles[0]);
+    this.uploadattachments();
+    abcd.length = 0;
+  }
+  public uploadattachments() {
+    this.pomservice.UploadTenderAttachments(this.attachments).subscribe(res => {
+      debugger;
+      this.attachmentsurl.push(res);
+      this.attachments.length = 0;
+      Swal.fire("Added Successfully");
+      debugger;
+    });
+  }
+
+}

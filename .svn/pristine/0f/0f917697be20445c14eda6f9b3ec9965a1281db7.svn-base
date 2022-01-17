@@ -1,0 +1,115 @@
+import { Component, OnInit } from '@angular/core';
+import Swal from 'sweetalert2';
+import { PomsService } from '../../../poms.service';
+import { NgDateRangePickerOptions } from 'ng-daterangepicker';
+import { formatDate } from "@angular/common";
+@Component({
+  selector: 'app-tender-auth-dashboard',
+  templateUrl: './tender-auth-dashboard.component.html',
+  styleUrls: ['./tender-auth-dashboard.component.css']
+})
+export class TenderAuthDashboardComponent implements OnInit {
+  options: NgDateRangePickerOptions;
+  constructor(public pomservice: PomsService) { }
+
+  SDate = new Date();
+  EDate = new Date();
+  value: any;
+  public startdate: any;
+  public enddate: any;
+  public todaydate: any;
+  public tenderslist: any;
+  public authorizationid:any;
+  public approveid:any;
+  public remarks:any;
+  public rejectid:any;
+  ngOnInit() {
+    this.options = {
+      theme: 'default',
+      range: 'tm',
+      dayNames: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+      presetNames: ['This Month', 'Last Month', 'This Week', 'Last Week', 'This Year', 'Last Year', 'Start', 'End'],
+      dateFormat: 'yyyy/MM/dd',
+      outputFormat: 'YYYY/MM/DD',
+      startOfWeek: 1
+    };
+
+    let date = new Date();
+    let hours = date.getHours();
+    let minutes = date.getMinutes();
+    let newformat = hours >= 12 ? 'PM' : 'AM';
+    // Find current hour in AM-PM Format 
+    hours = hours % 12;
+    // To display "0" as "12" 
+    hours = hours ? hours : 12;
+    minutes = minutes < 10 ? 0 + minutes : minutes;
+
+    var kkk = this.SDate.setDate(this.SDate.getDate() - 10);
+    var lll = this.EDate.setDate(this.EDate.getDate() + 10);
+
+    const format = 'yyyy-MM-dd';
+    const myDate = new Date();
+    const locale = 'en-US';
+    this.todaydate = formatDate(myDate, format, locale);
+    this.startdate = formatDate(kkk, format, locale);
+    this.enddate = formatDate(lll, format, locale);
+    this.authorizationid = localStorage.getItem('authorizatioid');
+    this.GettenderList();
+  }
+
+  public GettenderList() {
+    this.pomservice.GetTenderByAuthorizationID(this.authorizationid,this.startdate, this.enddate).subscribe(data => {
+      this.tenderslist = data;
+    }, error => {
+
+    })
+  }
+  selectedDate(data) {
+    
+    var sdate = data.split('-')
+    this.startdate = sdate[0]
+    this.enddate = sdate[1]
+    this.GettenderList()
+  }
+  public ApproveTender(id)
+  {
+    
+    this.approveid=id;
+  }
+
+  public GetRejectID(id)
+  {
+    
+    this.rejectid=id
+  }
+
+
+  public Accepttender() {
+    var entity = {
+      'ID': this.approveid,
+      'Remarks': this.remarks
+    }
+    this.pomservice.AcceptTenderByAuthorization(entity).subscribe(res => {
+      let data = res;
+      Swal.fire('Success', 'Tender Approved Successfully');
+      this.remarks = "";
+      this.GettenderList()
+    })
+  }
+
+
+  public CancelTenders() {
+    var entity = {
+      'ID': this.rejectid,
+      'Remarks': this.remarks
+    }
+    this.pomservice.CancelTenderByAuthorization(entity).subscribe(res => {
+      let data = res;
+      Swal.fire('Success', 'Tender Cancelled Successfully');
+      this.remarks = "";
+      this.GettenderList()
+    })
+  }
+
+
+}

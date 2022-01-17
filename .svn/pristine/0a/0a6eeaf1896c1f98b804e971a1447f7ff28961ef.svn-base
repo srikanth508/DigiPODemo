@@ -1,0 +1,57 @@
+import { Component, OnInit } from '@angular/core';
+import { PomsService } from '../../../poms.service';
+import Swal from 'sweetalert2';
+import { ActivatedRoute } from '@angular/router';
+@Component({
+  selector: 'app-vendors-reg',
+  templateUrl: './vendors-reg.component.html',
+  styleUrls: ['./vendors-reg.component.css']
+})
+export class VendorsRegComponent implements OnInit {
+
+  constructor(public pomservice: PomsService) { }
+
+  public companyname: any;
+  public contactpersonname: any;
+  public phoneno:any;
+   public email: any;
+  public address: any;
+  public description:any;
+  public companyid:any;
+  public companylist:any;
+  ngOnInit() {
+     this.pomservice.GetVendorCompanyRegistration().subscribe(data => {
+        debugger
+      this.companylist = data;
+    }, error => {
+
+    })
+  }
+
+
+  public GetCompanyID(even)
+  {
+    debugger
+    this.companyid=even.target.value;
+  }
+
+
+public insertdetails()
+{
+  var entity={
+    'CompanyID':this.companyid,
+    'VendorName':this.contactpersonname,
+    'PhoneNo':this.phoneno,
+    'Email':this.email,
+    'Description':this.description,
+    'Address':this.address
+  }
+    this.pomservice.InsertVendorsRegistration(entity).subscribe(data => {
+      if (data != 0) {
+        debugger
+        Swal.fire('Completed', 'Data Added Successfully');
+        location.href="#/VendorsRegDash"
+      }
+    })
+}
+}

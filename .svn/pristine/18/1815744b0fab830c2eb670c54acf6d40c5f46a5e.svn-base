@@ -1,0 +1,54 @@
+import { Component, OnInit } from "@angular/core";
+import { PomsService } from "../../poms.service";
+import Swal from "sweetalert2";
+import { from } from "rxjs";
+import { THIS_EXPR } from "@angular/compiler/src/output/output_ast";
+@Component({
+  selector: "app-item-master-dashboard",
+  templateUrl: "./item-master-dashboard.component.html",
+  styleUrls: ["./item-master-dashboard.component.css"]
+})
+export class ItemMasterDashboardComponent implements OnInit {
+  ItemList: any;
+  public CategoryList: any;
+  public subCategoryList: any;
+  public term: any;
+  public categoryname: any;
+  public subcategoryname: any;
+
+  constructor(private PomsService: PomsService) {}
+
+  ngOnInit() {
+    this.GetItemMaster();
+    this.PomsService.GetCategoryMaster().subscribe(data => {
+      debugger;
+      this.CategoryList = data;
+    });
+    this.PomsService.GetSubCategoryMaster().subscribe(data => {
+      debugger;
+      this.subCategoryList = data;
+    });
+  }
+  public GetItemMaster() {
+    this.PomsService.GetItemMaster().subscribe(data => {
+      this.ItemList = data;
+    });
+  }
+  public Delete(ID) {
+    debugger;
+    this.PomsService.DeleteItemMaster(ID).subscribe(res => {
+      debugger;
+
+      this.GetItemMaster();
+      Swal.fire("success", " Item Deleted Successfully", "success");
+    });
+  }
+
+  public GetCategoryName(even) {
+    debugger
+    this.categoryname = even.target.value;
+  }
+  public GetSubCategoryName(even){
+    this.subcategoryname= even.target.value;
+  }
+}

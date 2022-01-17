@@ -1,0 +1,86 @@
+import { Component, OnInit } from '@angular/core';
+import { PomsService } from '../../../poms.service';
+import Swal from 'sweetalert2';
+import { ActivatedRoute } from '@angular/router';
+@Component({
+  selector: 'app-add-work-schedule',
+  templateUrl: './add-work-schedule.component.html',
+  styleUrls: ['./add-work-schedule.component.css']
+})
+export class AddWorkScheduleComponent implements OnInit {
+
+  constructor(public pomservice: PomsService) { }
+
+public projectlist:any;
+public projectid:any;
+public startdate:any;
+public enddate:any;
+public workitem:any;
+public workdesc:any;
+public owner:any;
+public status:any;
+  public attachments = [];
+  public attachmentsurl = [];
+  public showphoto:any;
+  public vendorid:any;
+
+
+  ngOnInit() {
+        this.pomservice.GetTenderLiveProjectsNames().subscribe(data => {
+        debugger
+      this.projectlist = data;
+    }, error => {
+
+    })
+    this.status="Open"
+  }
+
+public GetProjectID(even)
+{
+  debugger
+  this.projectid=even.target.value;
+var list=this.projectlist.filter(x=>x.tenderID==this.projectid)
+debugger
+this.vendorid=list[0].vendorID
+
+}
+
+ public onattachmentUpload(abcd) {
+    debugger;
+    this.attachments.push(abcd.addedFiles[0]);
+    this.uploadattachments();
+    abcd.length = 0;
+  }
+  public uploadattachments() {
+    this.pomservice.UploadTenderAttachments(this.attachments).subscribe(res => {
+      debugger;
+      this.attachmentsurl.push(res);
+      this.attachments.length = 0;
+      Swal.fire("Added Successfully");
+      debugger;
+    });
+  }
+
+
+public insertdetails()
+{
+  var entity={
+    'StartDate':this.startdate,
+    'EndDate':this.enddate,
+    'WorkItem':this.workitem,
+    'WorkDescription':this.workdesc,
+    'Owner':this.owner,
+    'Attachments':this.attachmentsurl[0],
+    'TenderID':this.projectid,
+    'Status':this.status,
+    'VendorID':this.vendorid
+  }
+    this.pomservice.InsertWorkSchedule(entity).subscribe(data => {
+      if (data != 0) {
+        debugger
+        Swal.fire('Completed', 'Data Added Successfully');
+        location.href="#/LiveProjects"
+      }
+    })
+}
+}

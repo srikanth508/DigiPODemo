@@ -1,0 +1,25 @@
+import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+
+import { MyWorkSchedulesComponent } from './my-work-schedules.component';
+
+describe('MyWorkSchedulesComponent', () => {
+  let component: MyWorkSchedulesComponent;
+  let fixture: ComponentFixture<MyWorkSchedulesComponent>;
+
+  beforeEach(async(() => {
+    TestBed.configureTestingModule({
+      declarations: [ MyWorkSchedulesComponent ]
+    })
+    .compileComponents();
+  }));
+
+  beforeEach(() => {
+    fixture = TestBed.createComponent(MyWorkSchedulesComponent);
+    component = fixture.componentInstance;
+    fixture.detectChanges();
+  });
+
+  it('should create', () => {
+    expect(component).toBeTruthy();
+  });
+});

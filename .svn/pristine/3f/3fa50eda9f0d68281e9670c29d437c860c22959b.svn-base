@@ -1,0 +1,135 @@
+<br>
+<div class="container-fluid">
+    <div class="row ">
+        <div class="col-lg-12">
+            <h4 style="float: left;">SUPPLIER ITEM MASTER</h4>
+        </div>
+    </div>
+
+</div>
+<br>
+<div class="container-fluid maindiv">
+    <form #buyForm="ngForm">
+
+        <div class="row">
+            <div class="col-lg-2">
+                <label>Supplier Name</label>
+            </div>
+            <div class="col-lg-4">
+                <select class="form-control" [disabled]="tablecount=='1'" (change)="GetSupplierID($event)">
+                <option value="0">Select</option>
+                <option *ngFor="let sup of supplierlist" value="{{sup.id}}">{{sup.supplierName}}</option>
+            </select>
+            </div>
+        </div>
+        <br>
+        <div class="row">
+            <div class="col-lg-2">
+                <label>Category</label>
+            </div>
+            <div class="col-lg-4">
+                <select class="form-control" [(ngModel)]="Categoryid" required name="Categoryid" (change)="getCategoryID($event)">
+                <option value="0">Select</option>
+                <option *ngFor="let item of CategoryList" value="{{item.id}}">{{item.categoryName}}</option>
+            </select>
+            </div>
+        </div>
+        <br>
+        <div class="row">
+            <div class="col-lg-2">
+                <label>Sub Category</label>
+            </div>
+            <div class="col-lg-4">
+                <select class="form-control" (change)="GetsubcategoryID($event)" required [(ngModel)]="subcategoryid" name="subcategoryid">
+                <option value="0">Select</option>
+                <option *ngFor="let List of SubcategoryList" value="{{List.id}}">{{List.subCategoryName}}
+                </option>
+            </select>
+            </div>
+        </div>
+        <br>
+        <div class="row">
+            <div class="col-lg-2">
+                <label>Items</label>
+            </div>
+            <div class="col-lg-4">
+                <select class="form-control" (change)="GetItemID($event)" [(ngModel)]="itemid" name="itemid">
+                <option  value="0">Select</option>
+                <option *ngFor="let item of itemfiltelist" value="{{item.id}}">{{item.itemName}}</option>
+            </select>
+            </div>
+        </div>
+        <br>
+        <div class="row">
+            <div class="col-lg-2">
+                <label>Net Total</label>
+            </div>
+            <div class="col-lg-4">
+                <input type="text" class="form-control" disabled [(ngModel)]="cost" name="cost" placeholder="Net Total" required>
+            </div>
+        </div>
+        <br>
+        <div class="row">
+            <div class="col-lg-2">
+                <label>Tax</label>
+            </div>
+            <div class="col-lg-4">
+                <input type="text" class="form-control" disabled required [(ngModel)]="taxPercentage" name="taxPercentage" placeholder="Tax">
+            </div>
+        </div>
+        <br>
+        <div class="row">
+            <div class="col-lg-2">
+                <label>Grand Total</label>
+            </div>
+            <div class="col-lg-4">
+                <input type="text" disabled class="form-control" required [(ngModel)]="grandtotal" name="grandtotal" placeholder="Grand Total">
+            </div>
+        </div><br>
+
+        <div class="row">
+            <div class="col-lg-4"></div>
+            <div class="col-lg-2">
+                <button type="button" class="addnewbtns" style="width: 100%;" [disabled]="buyForm.form.invalid" (click)="adddetails()">ADD</button>
+            </div>
+            <div class="col-lg-5"></div>
+        </div><br>
+
+        <div class="row" *ngIf="tablecount=='1'">
+            <div class="col-lg-12">
+                <table>
+                    <tr>
+                        <th>Supplier Name</th>
+                        <th>Category</th>
+                        <th>Sub Category</th>
+                        <th>Item</th>
+                        <th>Net Total</th>
+                        <th>Tax</th>
+                        <th>Grand Total</th>
+                        <th>Actions</th>
+                    </tr>
+                    <tr *ngFor="let details of qwerty">
+                        <td>{{details.SupplerName}}</td>
+                        <td>{{details.CategoryName}}</td>
+                        <td>{{details.SubCategoryName}}</td>
+                        <td>{{details.ItemName}}</td>
+                        <td>{{details.NetTotal}}</td>
+                        <td>{{details.TaxPercentage}}</td>
+                        <td>{{details.GrandTotal}}</td>
+
+                        <td>
+                            <img src="assets/images/dell.png" style="width: 25px;" title="Delete" (click)="delete(details.Sno)">
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div><br>
+        <div class="row" *ngIf="tablecount=='1'">
+            <div class="col-lg-4"></div>
+            <div class="col-lg-2">
+                <button type="button" class="addnewbtns" style="width: 100%;" (click)="insertdetails()">Save</button>
+            </div>
+            <div class="col-lg-5"></div>
+        </div><br>
+    </form>
+</div>

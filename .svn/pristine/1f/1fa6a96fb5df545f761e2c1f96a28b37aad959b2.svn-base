@@ -1,0 +1,102 @@
+<br>
+<div class="container-fluid maindiv">
+       <div class="row headdiv">
+              <div class="col-lg-12">
+                     <h4 style="float: left;">Supplier Master Dashboard</h4>
+                     <button type="button" style="float: right;" routerLink="/SupplierMaster"
+                            class="addnewbtns">Add</button>
+              </div>
+       </div>
+       <br>
+       <div class="row">
+              <div class="col-lg-3">
+                     <input type="text" placeholder="Search" [(ngModel)]="term" class="form-control">
+              </div>
+              <div class="col-lg-3">
+                     <select class="form-control" (change)="GetSupplierName($event)">
+                            <option value="0">Select Supplier</option>
+                            <option *ngFor="let sup of supplierlist" value="{{sup.supplierName}}">{{sup.supplierName}}
+                            </option>
+                     </select>
+              </div>
+              <div class="col-lg-3">
+                     <select class="form-control" (change)="GetCountryName($event)">
+                            <option value="0">Select Country</option>
+                            <option *ngFor="let list of countrylist" value="{{list.short}},{{list.id}}">{{list.short}}
+                            </option>
+                     </select>
+              </div>
+              <div class="col-lg-3">
+                     <select class="form-control" (change)="GetStateName($event)">
+                            <option value="0">Select State</option>
+                            <option *ngFor="let list of statelist" value="{{list.short}},{{list.id}}">{{list.short}}
+                            </option>
+                     </select>
+              </div>
+       </div><br>
+       <div class="row">              
+              <div class="col-lg-3">
+                     <select class="form-control" (change)="GetCityName($event)">
+                            <option value="0">Select City</option>
+                            <option *ngFor="let list of citylist" value="{{list.short}},{{list.id}}">{{list.short}}
+                            </option>
+                     </select>
+              </div>            
+       </div>
+       <br>
+       <div class="row">
+              <div class="col-lg-12">
+                     <table>
+                            <tr>
+                                   <th>Supplier No</th>
+                                   <th>Supplier Name</th>
+                                   <th>Supplies</th>
+                                   <th>Country</th>
+                                   <th>State</th>
+                                   <th>City</th>
+                                   <th>Address</th>
+                                   <th>Contact Person</th>
+                                   <th>Phone No</th>
+                                   <th>Status</th>
+                                   <th>Actions</th>
+                            </tr>
+                            <tr *ngFor="let details of supplierlist|filter:term|filter:suppliername|filter:cityname|filter:statename|filter:countryname">
+                                   <td>{{details.supplierCode}}</td>
+                                   <td>{{details.supplierName}}</td>
+                                   <td>{{details.supplies}}</td>
+                                   <td>{{details.country}}</td>
+                                   <td>{{details.state}}</td>
+                                   <td>{{details.city}}</td>
+                                   <td>{{details.address}}</td>
+                                   <td>{{details.contactName}}</td>
+                                   <td>{{details.phoneNo}}</td>
+                                   <td>
+                                          <label *ngIf="details.supplierStatus=='0'" style="color: green;">Active</label>
+                                          <label *ngIf="details.supplierStatus=='1'" style="color: red;">In Active</label>
+                                   </td>
+                                   <td>
+                                          <a style="color:black">
+                                                 <img src="assets/images/edit.png" title="Edit" style="width: 20px"
+                                                        [routerLink]="['/SupplierMaster',details.id]">
+                                          </a>&nbsp;
+                                          <a>
+                                                 <img src="assets/images/dell.png" title="Delete"
+                                                        style="width: 20px;margin-left: 10px;"
+                                                        (click)="DeleteSupplierMaster(details.id)">
+                                          </a>&nbsp;&nbsp;
+
+                                          <a style="margin-top: 5px;"> 
+                                                 <img src="assets/images/deactivate.png" title="De Activate"
+                                                        *ngIf="details.supplierStatus=='0'" style="width:40px;margin-top: 7px;"
+                                                        (click)="DeactiveSupplier(details.id)">&nbsp;
+
+                                                 <img src="assets/images/activate.png" title="Activate"
+                                                        *ngIf="details.supplierStatus=='1'" style="width:40px;margin-top: 7px;"
+                                                        (click)="ActiveSupplier(details.id)">
+                                          </a>
+                                   </td>
+                            </tr>
+                     </table>
+              </div>
+       </div>
+</div>

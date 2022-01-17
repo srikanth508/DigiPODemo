@@ -1,0 +1,59 @@
+<br>
+<div class="container-fluid ">
+       <div class="row ">
+              <div class="col-lg-12">
+                     <h4 style="float: left;">FOB MASTER DASHBOARD</h4>
+                     <button type="button" style="float: right;" routerLink="/FobMaster"
+                            class="addnewbtns">Add</button>
+              </div>
+       </div>
+       <br>
+</div>
+<br>
+<div class="container-fluid maindiv">
+       <div class="row">
+              <div class="col-lg-3">
+                     <input type="text" placeholder="Search" [(ngModel)]="term" class="form-control">
+              </div>
+              <div class="col-lg-7">
+              </div>
+              <div class="col-lg-2">
+                     <label style="margin-left: 67px;"><b>Count : {{count}}</b></label>
+              </div>
+       </div><br>
+
+       <!-- <div class="row headdiv">
+              <div class="col-lg-12">
+                     <h4 style="float: left;">FOB Master Dashboard</h4>
+                     <button type="button" style="float: right;" routerLink="/FobMaster"
+                            class="addnewbtns">Add</button>
+              </div>
+       </div> -->
+       <div class="row">
+              <div class="col-lg-12">
+                     <table>
+                            <tr>
+                                   <th>FOB Code</th>
+                                   <th>FOB Description</th>
+                                   <th>Actions</th>
+                            </tr>
+                            <tr *ngFor="let details of foblist|filter:term">
+                                   <td>{{details.fobCode}}</td>
+                                   <td>{{details.fobDescription}}</td>
+                                   <td>
+                                          <a style="color:black">
+                                                 <img src="assets/images/edit.png" title="Edit" style="width: 20px"
+                                                        [routerLink]="['/FobMaster',details.id]">
+                                          </a>&nbsp;
+                                          <a>
+                                                 <img src="assets/images/dell.png" title="Delete"
+                                                        style="width: 20px;margin-left: 10px;"
+                                                        (click)="DeleteFOBMaster(details.id)">
+                                          </a>
+                                   </td>
+                            </tr>
+                          
+                     </table>
+              </div>
+       </div>
+</div>

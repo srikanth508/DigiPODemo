@@ -1,0 +1,75 @@
+<br>
+<div class="container-fluid card card-hover">
+  <br>
+  <div class="row">
+    <div class="col-lg-5" style="margin-top: -10px;">
+      <ng-daterangepicker [options]="options" [(ngModel)]="value" (ngModelChange)="selectedDate($event)">
+      </ng-daterangepicker>
+    </div>
+    <div class="col-lg-2">
+      <h4 style="text-align: center;">
+        <b>Dashboard</b>
+      </h4><br>
+    </div>
+    <div class="col-lg-5">
+    </div>
+  </div>
+</div><br>
+<div class="container-fluid card card-hover">
+  <br>
+  <div class="row">
+    <div class="col-lg-2"></div>
+    <div class="col-lg-2" *ngFor="let count of pocount">
+      <div class="optionsboxdown" style="cursor: pointer;" (click)="GetApproveReport(1)" routerLink="/ApprovePoReports">
+        <br>
+        <label style="color: white;cursor: pointer;">
+          Approved PO</label>
+        <br /> <br />
+        <label style="color: white;">{{count.approvedcount}}</label>
+      </div>
+      <br />
+      <p style="margin-left: 56px;margin-top: -16px;"></p>
+    </div>
+    <br />
+    <div class="col-lg-1"></div>
+    <div class="col-lg-2" *ngFor="let count of pocount" routerLink="/ApprovePo" >
+      <div class="optionsboxdown" style="cursor: pointer;">
+        <br>
+        <label style="color: white;">Awaiting Approval
+        </label>
+        <br /> <br />
+        <label style="color: white;">{{count.waitingforapproval}}</label>
+      </div>
+      <br />
+      <br />
+      <p style="margin-left: 56px;margin-top: -16px;"></p>
+    </div>
+    <div class="col-lg-1"></div>
+    <br />
+    <div class="col-lg-2" *ngFor="let count of pocount">
+      <div class="optionsboxdown" style="cursor: pointer;" routerLink="/ApprovePoReports" (click)="GetApproveReport(2)">
+        <br>
+        <label style="color: white;">Cancelled PO
+        </label>
+        <br /> <br />
+        <label style="color: white;">{{count.rejectedcount}}</label>
+      </div>
+      <br />
+      <br />
+      <p style="margin-left: 56px;margin-top: -16px;"></p>
+    </div>
+    <div class="col-lg-1"></div>
+    <br />
+  </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+

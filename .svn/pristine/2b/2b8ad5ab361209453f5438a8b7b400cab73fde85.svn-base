@@ -1,0 +1,47 @@
+<ngx-spinner></ngx-spinner>
+<div class="container-fluid bg" style="background-color: black;height: 100vh;">
+       <form #loginForm="ngForm">
+              <div class="row">
+                     <div class="col-lg-4"></div>
+                     <div class="col-lg-4"
+                            style="text-align: center;background-image: linear-gradient(#d7d7d7, #ffffff00);margin-top: 8%;border-radius:20px">
+                            <br>
+                            <!-- <div style="background-color: white"> -->
+                            <p><img src="assets/images/logo.png"></p>
+                            <!-- </div> -->
+
+                            <p style="font-size: 16px;font-weight: 500;"><b>LOGIN TO YOUR ACCOUNT</b></p>
+
+                            <div class="row">
+                                   <div class="col-lg-1"></div>
+                                   <div class="col-lg-10">
+                                          <select class="form-control" (change)="GetRoleID($event)">
+                                                 <option>Select Role</option>
+                                                 <option *ngFor="let role of rolelist" value="{{role.id}}">
+                                                        {{role.short}}</option>
+                                          </select><br>
+                                          <!-- <div *ngIf="roleid!=6">
+                                                 <input type="text" class="form-control" [(ngModel)]="companycode"
+                                                        name="companycode" placeholder="Company Code">
+                                                 <br>
+                                          </div> -->
+                                          <input type="text" class="form-control" [(ngModel)]="username" name="username"
+                                                 placeholder="Username">
+                                          <br>
+                                          <input type="password" class="form-control" [(ngModel)]="password"
+                                                 name="password" placeholder="Password">
+                                          <br>
+                                          <button type="submit" class="loginbtn" [disabled]="loginForm.form.invalid"
+                                                 (click)="logins()">Login</button>
+                                          <br>
+                                          <br>
+                                          <br>
+                                          <br>
+                                   </div>
+                                   <div class="col-lg-1"></div>
+                            </div>
+                     </div>
+                     <div class="col-lg-4"></div>
+              </div>
+       </form>
+</div>

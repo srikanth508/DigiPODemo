@@ -1,0 +1,37 @@
+<div *ngIf="temp!='1'">
+       <router-outlet (activate)="onActivate($event)"></router-outlet>
+</div>
+<div class="container-fluid" *ngIf="temp=='1'">
+       <div class="row" style="height: 10vh;">
+              <div class="col-lg-2" style="margin-top:10px;">
+                    
+                     <p ><img src="assets/images/logo.png" style="height:60px;width:70%"></p>
+              </div>
+              <div class="col-lg-10">
+                     <img src="assets/images/logout.png" (click)="logout()" title="Logout"
+                            style="float: right;padding-right: 1%;padding-top: 1%;width: 5%;margin-right: 2%;">
+                     <img src="assets/images/notification.png" *ngIf="userid!=undefined" routerLink="/Messages"
+                            style="float: right;padding-right: 1%;padding-top: 15px;width: 4%;margin-right: 2%;">
+
+                     <span class="badge" style="color: white;
+                            background-color: red;
+                            margin-left: 0px;
+                            margin-right: -41px;
+                            margin-top: 8px;
+                            width: 1%;
+                            height: 20%;
+                            float: right;
+                            margin-top: 36px;">{{count}}</span>
+              </div>
+       </div>
+       <div class="row">
+              <div class="col-lg-2" style="overflow-y: auto;height: 90vh;width: 30vh;">
+                     <app-sidebar></app-sidebar>
+              </div>
+              <div class="col-lg-10" style="overflow-y: auto;height: 90vh;background-color: #f3f3f3;">
+                     <router-outlet (activate)="onActivate($event)"></router-outlet><br>
+
+                     <!-- <b>CopyRight 2020 Reservered, All Rights Reservered By Amaze One LLC</b> -->
+              </div>
+       </div>
+</div>

@@ -1,0 +1,143 @@
+<br>
+
+<div class="container-fluid">
+       <div class="row ">
+              <div class="col-lg-12">
+                     <h4 style="float: left;">Buyer Master</h4>
+              </div>
+       </div>
+</div>
+<br>
+<div class="container-fluid maindiv">
+       <form #buyerForm="ngForm">
+
+              <div class="row">
+                     <div class="col-lg-2">
+                            <label>Buying Company</label>
+                            <span style="color:red;">*</span>
+                     </div>
+                     <div class="col-lg-4">
+                            <select class="form-control" required (change)="GetBuyingCompanyID($event)"
+                                   [(ngModel)]="buyingcompanyid" name="buyingcompanyid">
+                                   <option value="">Select</option>
+                                   <option *ngFor="let com of companylist" value={{com.id}}>{{com.companyName}}</option>
+                            </select>
+                     </div>
+              </div>
+              <br>
+              <div class="row">
+                     <div class="col-lg-2">
+                            <label>Buyer Code</label>
+                            <span style="color:red;">*</span>
+                     </div>
+                     <div class="col-lg-4">
+                            <input type="text" class="form-control" required [(ngModel)]="buyercode" name="buyercode"
+                                   placeholder="Buyer Code">
+                     </div>
+              </div>
+              <br>
+              <div class="row">
+                     <div class="col-lg-2">
+                            <label>Buyer Name</label>
+                            <span style="color:red;">*</span>
+                     </div>
+                     <div class="col-lg-4">
+                            <input type="text" class="form-control" required [(ngModel)]="buyername" name="buyername"
+                                   placeholder="Buyer Name">
+                     </div>
+              </div>
+              <br>
+              <!-- <div class="row">
+                     <div class="col-lg-2">
+                            <label>Country</label>
+                            <span style="color:red;">*</span>
+                     </div>
+                     <div class="col-lg-4">
+                     <select class="form-control" required (change)="GetCountryID($event)" [(ngModel)]="countryid" name="countryid">
+                            <option value="0" selected>Select</option>
+                            <option *ngFor="let cou of countrylist" value="{{cou.id}}">{{cou.short}}</option>
+                     </select>
+              </div>
+       </div>
+              <br>
+              <div class="row">
+                     <div class="col-lg-2">
+                            <label>State</label>
+                            <span style="color:red;">*</span>
+                     </div>
+                     <div class="col-lg-4">
+                            <select class="form-control"  required (change)="GetStateID($event)" [(ngModel)]="stateid" name="stateid">
+                                   <option value="0" selected>Select</option>
+                                   <option *ngFor="let sta of statelist" value="{{sta.id}}">{{sta.short}}</option>
+                            </select>
+                     </div>
+              </div>
+              <br>
+              <div class="row">
+                     <div class="col-lg-2">
+                            <label>City</label>
+                            <span style="color:red;">*</span>
+                     </div>
+                     <div class="col-lg-4">
+                     <select class="form-control" required (change)="GetCityID($event)" [(ngModel)]="cityid" name="cityid">
+                            <option value="0" selected>Select</option>
+                            <option *ngFor="let city of citylist" value="{{city.id}}">{{city.short}}</option>
+                     </select>
+              </div>
+       </div>
+              <br>
+              <div class="row">
+                     <div class="col-lg-2">
+                            <label>Primary Phone No</label>
+                            <span style="color:red;">*</span>
+                     </div>
+                     <div class="col-lg-4">
+                            <input type="text" class="form-control" required minlength="10" maxlength="10"
+                                   onkeypress='return(event.charCode>=48&&event.charCode<=57)'
+                                   [(ngModel)]="primaryphoneno" name="primaryphoneno" name="primaryphoneno"
+                                   placeholder="Primary Phone No">
+                     </div>
+              </div>
+              <br>
+              <div class="row">
+                     <div class="col-lg-2">
+                            <label>Secondary Phone No</label>
+                            <span style="color:red;">*</span>
+                     </div>
+                     <div class="col-lg-4">
+                            <input type="text" class="form-control" required minlength="10" maxlength="10"
+                                   onkeypress='return(event.charCode>=48&&event.charCode<=57)'
+                                   [(ngModel)]="secondaryhoneno" name="secondaryhoneno"
+                                   placeholder="Secondary Phone No">
+                     </div>
+              </div>
+              <br>
+              <div class="row">
+                     <div class="col-lg-2">
+                            <label>Fax Telephone</label>
+                            <span style="color:red;">*</span>
+                     </div>
+                     <div class="col-lg-4">
+                            <input type="text" class="form-control" required maxlength="10" [(ngModel)]="faxtelephone"
+                                   name="faxtelephone" placeholder="Fax Telephone">
+                     </div>
+              </div>
+              <br> -->
+              <div class="row" *ngIf="showbit=='1'">
+                     <div class="col-lg-4"></div>
+                     <div class="col-lg-2">
+                            <button type="button" class="addnewbtns" style="width: 100%;"
+                                   [disabled]="buyerForm.form.invalid" (click)="insertdetails()">Save</button>
+                     </div>
+                     <div class="col-lg-5"></div>
+              </div>
+              <div class="row" *ngIf="showbit=='0'">
+                     <div class="col-lg-4"></div>
+                     <div class="col-lg-2">
+                            <button type="button" class="addnewbtns" style="width: 100%;"
+                                   [disabled]="buyerForm.form.invalid" (click)="updatedetails()">Update</button>
+                     </div>
+                     <div class="col-lg-5"></div>
+              </div>
+       </form>
+</div>

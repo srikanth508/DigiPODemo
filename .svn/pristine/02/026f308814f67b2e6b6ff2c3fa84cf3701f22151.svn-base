@@ -1,0 +1,270 @@
+import { Component, OnInit } from '@angular/core';
+import Swal from 'sweetalert2';
+import { NgxSpinnerService } from "ngx-spinner";
+import { PomsService } from '../../poms.service';
+import { identifierModuleUrl } from '@angular/compiler';
+@Component({
+  selector: 'app-login',
+  templateUrl: './login.component.html',
+  styleUrls: ['./login.component.css']
+})
+export class LoginComponent implements OnInit {
+
+  constructor(private spinner: NgxSpinnerService, private PomsService: PomsService) { }
+
+  public username: any;
+  public password: any;
+  public result: any;
+  public roleid: any;
+  public rolelist: any;
+  public companycode: any;
+  public companyurl: any;
+  public companyurllist; any;
+
+
+  ngOnInit() {
+    this.spinner.show();
+
+    setTimeout(() => {
+      /** spinner ends after 5 seconds */
+      this.spinner.hide();
+    }, 5000);
+    this.getrolemaster()
+  }
+
+  public getrolemaster() {
+    this.PomsService.GetRoleMasters().subscribe(data => {
+      this.rolelist = data;
+    }, error => {
+
+    })
+  }
+
+  public GetRoleID(even) {
+    debugger
+    this.roleid = even.target.value;
+  }
+  // public login(){
+  //   localStorage.setItem('temp', '1');
+  //   location.href = '#/Home';
+  //   location.reload();
+  //   Swal.fire('Login Successful')
+  // }
+
+  public logins() {
+    if (this.roleid == undefined) {
+      Swal.fire("Please Select Role");
+    }
+    if (this.username == null || this.password == undefined) {
+      Swal.fire('Error', 'Please Enter UserName and Password!');
+    }
+    else {
+      if (this.roleid == '1') {
+        this.PomsService.GetRegisterLoginsBaseUrl().subscribe(
+          data => {
+            debugger
+            this.companyurllist = data;
+            var list = this.companyurllist.filter(x => x.companyCode == this.companycode)
+            this.companyurl = list[0].baseUrl
+            localStorage.setItem('CompanyUrl', this.companyurl)
+            debugger
+            this.PomsService.GetRegisterLoginsByUsername(this.companyurl, this.username, this.password).subscribe(
+              data => {
+                debugger
+                this.result = data;
+                debugger
+                if (this.result != null && this.result.length != 0) {
+
+                  localStorage.setItem('temp', '1');
+                  localStorage.setItem('user', this.result[0].companyName);
+                  localStorage.setItem('roleid', '1')
+                  location.href = '#/AdminDashboard';
+                  location.reload();
+                }
+                else {
+                  Swal.fire('Error', 'User Name and Password Not valid');
+                  this.username = "";
+                  this.password = "";
+                }
+
+              }, error => {
+              }
+            )
+
+
+
+          }, error => {
+          }
+        )
+
+
+      }
+      else if (this.roleid == '2') {
+
+        this.PomsService.GetRegisterLoginsBaseUrl().subscribe(
+          data => {
+            debugger
+            this.companyurllist = data;
+            var list = this.companyurllist.filter(x => x.companyCode == this.companycode)
+            this.companyurl = list[0].baseUrl
+            localStorage.setItem('CompanyUrl', this.companyurl)
+
+            this.PomsService.GetPoGenaratorLoginsByUnameAndPwd(this.companyurl, this.username, this.password).subscribe(
+              data => {
+                debugger
+                this.result = data;
+                debugger
+                if (this.result != null && this.result.length != 0) {
+                  localStorage.setItem('temp', '1');
+                  localStorage.setItem('user', this.result[0].userName);
+                  localStorage.setItem('genaratorid', this.result[0].id);
+                  localStorage.setItem('UserID', this.result[0].id);
+                  localStorage.setItem('roleid', '2')
+                  location.href = '#/PurchaseOrderDash';
+                  location.reload();
+                }
+                else {
+                  Swal.fire('Error', 'User Name and Password Not valid');
+                  this.username = "";
+                  this.password = "";
+                }
+
+              }, error => {
+              }
+            )
+
+          })
+
+
+      }
+      else if (this.roleid == '3') {
+
+        this.PomsService.GetRegisterLoginsBaseUrl().subscribe(
+          data => {
+            debugger
+            this.companyurllist = data;
+            var list = this.companyurllist.filter(x => x.companyCode == this.companycode)
+            this.companyurl = list[0].baseUrl
+            localStorage.setItem('CompanyUrl', this.companyurl)
+
+            this.PomsService.GetAuthorizationLoginsUnameAndPwd(this.companyurl, this.username, this.password).subscribe(
+              data => {
+                debugger
+                this.result = data;
+                debugger
+                if (this.result != null && this.result.length != 0) {
+                  localStorage.setItem('temp', '1');
+                  localStorage.setItem('user', this.result[0].name);
+                  localStorage.setItem('authorizatioid', this.result[0].authorizationID);
+
+                  localStorage.setItem('roleid', '3')
+                  location.href = '#/ApprovePODash';
+                  location.reload();
+
+                }
+                else {
+                  Swal.fire('Error', 'User Name and Password Not valid');
+                  this.username = "";
+                  this.password = "";
+                }
+
+              }, error => {
+              }
+            )
+          })
+
+
+      }
+      else if (this.roleid == '4') {
+
+        this.PomsService.GetRegisterLoginsBaseUrl().subscribe(
+          data => {
+            debugger
+            this.companyurllist = data;
+            var list = this.companyurllist.filter(x => x.companyCode == this.companycode)
+            this.companyurl = list[0].baseUrl
+            localStorage.setItem('CompanyUrl', this.companyurl)
+
+            this.PomsService.GetSupplierLoginsUnameAndPwd(this.companyurl, this.username, this.password).subscribe(
+              data => {
+                debugger
+                this.result = data;
+                debugger
+                if (this.result != null && this.result.length != 0) {
+                  localStorage.setItem('temp', '1');
+                  localStorage.setItem('user', this.result[0].supplierName);
+                  localStorage.setItem('Supplierid', this.result[0].supplierID);
+                  localStorage.setItem('UserID', this.result[0].supplierID);
+                  localStorage.setItem('roleid', '4')
+                  location.href = '#/MyPo';
+                  location.reload();
+                }
+                else {
+                  Swal.fire('Error', 'User Name and Password Not valid');
+                  this.username = "";
+                  this.password = "";
+                }
+
+              }, error => {
+              }
+            )
+          })
+
+      }
+
+      
+      else if (this.roleid == '5') {
+        this.PomsService.GetRegisterLoginsBaseUrl().subscribe(
+          data => {
+            debugger
+            this.companyurllist = data;
+            var list = this.companyurllist.filter(x => x.companyCode == this.companycode)
+            this.companyurl = list[0].baseUrl
+            localStorage.setItem('CompanyUrl', this.companyurl)
+
+            this.PomsService.GetVendorLogins(this.companyurl,this.username, this.password).subscribe(
+              data => {
+                debugger
+                this.result = data;
+                debugger
+                if (this.result != null && this.result.length != 0) {
+                  localStorage.setItem('temp', '1');
+                  localStorage.setItem('user', this.result[0].vendorName);
+                  localStorage.setItem('VendorID', this.result[0].vendorID);
+                  localStorage.setItem('Companyid', this.result[0].companyid);
+                  localStorage.setItem('genaratorid', this.result[0].vendorID);
+                  localStorage.setItem('roleid', '5')
+                  location.href = '#/MyLiveProjects';
+                  location.reload();
+                }
+                else {
+                  Swal.fire('Error', 'User Name and Password Not valid');
+                  this.username = "";
+                  this.password = "";
+                }
+              }, error => {
+              }
+            )
+          })
+
+      
+      }
+
+      else if (this.roleid == '6') {
+        if (this.username == 'Amaze' && this.password == '1') {
+          localStorage.setItem('temp', '1');
+          localStorage.setItem('user', 'Amaze');
+          localStorage.setItem('roleid', '6');
+          location.href = "#/RegisterDash";
+          location.reload();
+
+        }
+        else {
+          Swal.fire('Username or password is Invalid.')
+
+        }
+      }
+    }
+  }
+
+}

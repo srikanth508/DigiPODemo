@@ -1,0 +1,92 @@
+<br>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-lg-12">
+            <h4 style="float: left;">TAX Master</h4>
+        </div>
+    </div>
+</div>
+<br>
+<div class="container-fluid maindiv">
+    <form #TaxFrom="ngForm">
+        <div class="row">
+            <div class="col-lg-2">
+                <label>Tax Code</label>
+                <span style="color:red;">*</span>
+            </div>
+            <div class="col-lg-4">
+                <input type="text" class="form-control" required [(ngModel)]="TaxCode" name="TextCode" placeholder="Tax Code">
+            </div>
+        </div>
+        <br>
+        <div class="row">
+            <div class="col-lg-2">
+                <label>Tax Percentage</label>
+                <span style="color:red;">*</span>
+            </div>
+            <div class="col-lg-4">
+                <input type="text" class="form-control" required [(ngModel)]="TaxPercentage" name="TaxPercentage"
+                onkeypress='return(event.charCode>=48&&event.charCode<=57||event.charCode==46)' placeholder="Tax Percentage">
+            </div>
+        </div>
+        <br>
+        <!-- <div class="row">
+            <div class="col-lg-2">
+                <label>Country</label>
+                <span style="color:red;">*</span>
+            </div>
+            <div class="col-lg-4">
+                <select class="form-control" required (change)="GetCountryID($event)" [(ngModel)]="countryid" name="countryid">
+                     <option value="0" selected>Select</option>
+                     <option *ngFor="let cou of countrylist" value="{{cou.id}}">{{cou.short}}</option>
+              </select>
+            </div>
+        </div>
+        <br>
+        <div class="row">
+            <div class="col-lg-2">
+                <label>State</label>
+                <span style="color:red;">*</span>
+            </div>
+            <div class="col-lg-4">
+                <select class="form-control" required (change)="GetStateID($event)" [(ngModel)]="stateid" name="stateid">
+                            <option value="0" selected>Select</option>
+                            <option *ngFor="let sta of statelist" value="{{sta.id}}">{{sta.short}}</option>
+                     </select>
+            </div>
+        </div>
+        <br>
+        <div class="row">
+            <div class="col-lg-2">
+                <label>City</label>
+                <span style="color:red;">*</span>
+            </div>
+            <div class="col-lg-4">
+                <select class="form-control" required (change)="GetCityID($event)" [(ngModel)]="cityid" name="cityid">
+                     <option value="0" selected>Select</option>
+                     <option *ngFor="let city of citylist" value="{{city.id}}">{{city.short}}</option>
+              </select>
+            </div>
+        </div>
+        <br> -->
+        <!-- <div class="row">
+            <div class="col-lg-2">
+                <label>Tax Description</label>
+                <span style="color:red;">*</span>
+            </div>
+            <div class="col-lg-4">
+                <textarea [(ngModel)]="description" class="form-control" placeholder="Description" name="description"></textarea>
+            </div>
+        </div>
+        <br> -->
+        <div class="row">
+            <div class="col-lg-4"></div>
+            <div class="col-lg-2">
+                <button type="button" *ngIf="saveupdatebtn==0" (click)="InsertTaxMaster()" class="addnewbtns" style="width: 100%;" [disabled]="TaxFrom.form.invalid">Save</button>
+                <button type="button" *ngIf="saveupdatebtn==1" (click)="UpdateTaxMaster()" class="addnewbtns" style="width: 100%;" [disabled]="TaxFrom.form.invalid">Update</button>
+            </div>
+            <div class="col-lg-5"></div>
+        </div>
+    </form>
+</div>
+<br>

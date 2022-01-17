@@ -1,0 +1,161 @@
+<br>
+<div class="container-fluid maindiv">
+       <form #ShipForm="ngForm">
+       <div class="row headdiv">
+              <div class="col-lg-12">
+                     <h4 style="float: left;">Ship To Master</h4>
+              </div>
+       </div>
+       <br>
+       <div class="row">
+              <div class="col-lg-2">
+                     <label>Ship To No</label>
+              </div>
+              <div class="col-lg-4">
+                     <input type="text" class="form-control" required [(ngModel)]="clientcode" name="clientcode"
+                            placeholder="Ship To No">
+              </div>
+       </div>
+       <br>
+       <div class="row">
+              <div class="col-lg-2">
+                     <label>Ship To Name</label>
+              </div>
+              <div class="col-lg-4">
+                     <input type="text" class="form-control" required [(ngModel)]="clientname" name="clientname"
+                            placeholder="Ship To Name">
+              </div>
+       </div>
+       <br>
+       <div class="row">
+              <div class="col-lg-2">
+                     <label>Street</label>
+              </div>
+              <div class="col-lg-4">
+                     <input type="text" class="form-control" required [(ngModel)]="street" name="street" placeholder="Street">
+              </div>
+       </div>
+       <br>
+       <div class="row">
+              <div class="col-lg-2">
+                     <label>Address</label>
+              </div>
+              <div class="col-lg-4">
+                     <input type="text" class="form-control" required [(ngModel)]="address" name="address" placeholder="Address">
+              </div>
+       </div>
+       <br>
+     
+       <div class="row">
+              <div class="col-lg-2">
+                     <label>Country</label>
+              </div>
+              <div class="col-lg-4">
+              <select class="form-control" required (change)="GetCountryID($event)" [(ngModel)]="countryid" name="countryid">
+                     <option value="0" selected>Select</option>
+                     <option *ngFor="let cou of countrylist" value="{{cou.id}}">{{cou.short}}</option>
+              </select>
+       </div>
+</div>
+       <br>
+       <div class="row">
+              <div class="col-lg-2">
+                     <label>State</label>
+              </div>
+              <div class="col-lg-4">
+                     <select class="form-control"  required (change)="GetStateID($event)" [(ngModel)]="stateid" name="stateid">
+                            <option value="0" selected>Select</option>
+                            <option *ngFor="let sta of statelist" value="{{sta.id}}">{{sta.short}}</option>
+                     </select>
+              </div>
+       </div>
+       <br>
+       <div class="row">
+              <div class="col-lg-2">
+                     <label>City</label>
+              </div>
+              <div class="col-lg-4">
+              <select class="form-control" required (change)="GetCityID($event)" [(ngModel)]="cityid" name="cityid">
+                     <option value="0" selected>Select</option>
+                     <option *ngFor="let city of citylist" value="{{city.id}}">{{city.short}}</option>
+              </select>
+       </div>
+</div>
+       <br>
+       <div class="row">
+              <div class="col-lg-2">
+                     <label>Zip Code</label>
+              </div>
+              <div class="col-lg-4">
+                     <input type="text" class="form-control" maxlength="10" required [(ngModel)]="zipcode" name="zipcode"
+                            placeholder="Zip Code" onkeypress='return(event.charCode>=48&&event.charCode<=57)'>
+              </div>
+       </div>
+       <br>
+    
+       <div class="row">
+              <div class="col-lg-2">
+                     <label>Primary Phone No</label>
+              </div>
+              <div class="col-lg-4">
+                     <input type="text" class="form-control" required [(ngModel)]="primaryphoneno" name="primaryphoneno"
+                            placeholder="Phone No">
+              </div>
+       </div>
+       <br>
+       <div class="row">
+              <div class="col-lg-2">
+                     <label>Secondary Phone No</label>
+              </div>
+              <div class="col-lg-4">
+                     <input type="text" class="form-control" required [(ngModel)]="secondaryphoneno" name="secondaryphoneno"
+                            placeholder="Phone No">
+              </div>
+       </div>
+       <br>
+       <div class="row">
+              <div class="col-lg-2">
+                     <label>Email</label>
+              </div>
+              <div class="col-lg-4" >
+                     <!-- <input type="email" class="form-control" required placeholder="Email" name="email" [(ngModel)]="email"> -->
+              
+              <input type="text" class="form-control"  placeholder="Email" required pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$" id="email"
+                       name="email" [(ngModel)]="email" #emailref="ngModel">
+                     <div *ngIf="emailref.errors &&(emailref.touched || emailref.dirty)" class="aler alert-danger">
+                       <div [hidden]="!emailref.errors?.pattern">
+                         Invalid pattern
+                       </div>
+                     </div>
+                   </div>
+       </div>
+       <br>
+       <div class="row">
+              <div class="col-lg-2">
+                     <label>Fax Telephone</label>
+              </div>
+              <div class="col-lg-4">
+                     <input type="text" class="form-control" maxlength="10" required [(ngModel)]="faxtelephone" name="faxtelephone"
+                            placeholder="Fax Telephone" onkeypress='return(event.charCode>=48&&event.charCode<=57)'>
+              </div>
+       </div>
+       <br>
+       <div class="row" *ngIf="showbit=='1'">
+              <div class="col-lg-5"></div>
+              <div class="col-lg-2">
+                     <button type="button" class="addnewbtns" style="width: 100%;"
+                            (click)="insertdetails()" [disabled]="ShipForm.form.invalid">Save</button>
+              </div>
+              <div class="col-lg-5"></div>
+       </div>
+       <div class="row" *ngIf="showbit=='0'">
+              <div class="col-lg-5"></div>
+              <div class="col-lg-2">
+                     <button type="button" class="addnewbtns" style="width: 100%;"
+                            (click)="UpdateDetails()"  [disabled]="ShipForm.form.invalid">Update</button>
+              </div>
+              <div class="col-lg-5"></div>
+       </div>
+</form>
+</div>
+<br>

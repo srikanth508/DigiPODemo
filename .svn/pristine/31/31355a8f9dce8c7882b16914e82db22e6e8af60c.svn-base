@@ -1,0 +1,66 @@
+import { Component, OnInit } from "@angular/core";
+import { PomsService } from "../../poms.service";
+import Swal from "sweetalert2";
+@Component({
+  selector: "app-authorization-master-dashboard",
+  templateUrl: "./authorization-master-dashboard.component.html",
+  styleUrls: ["./authorization-master-dashboard.component.css"]
+})
+export class AuthorizationMasterDashboardComponent implements OnInit {
+  constructor(public pomservice: PomsService) {}
+  public autholist: any;
+  public term: any;
+  ngOnInit() {
+    this.GetAuthorizationMaster();
+  }
+  public GetAuthorizationMaster() {
+    this.pomservice.GetAuthorizationMaster().subscribe(
+      data => {
+        this.autholist = data;
+      },
+      error => {}
+    );
+  }
+
+  public DisableAuthor(id) {
+    debugger;
+    this.pomservice.DisableAuthorizationMaster(id).subscribe(data => {
+      if (data != undefined || data != null) {
+        Swal.fire("Disabled Successfully");
+        this.GetAuthorizationMaster();
+      }
+    });
+  }
+  public EnableAuthor(id) {
+    debugger;
+    this.pomservice.EnableAuthorizationMaster(id).subscribe(data => {
+      if (data != undefined || data != null) {
+        Swal.fire("Enabled Successfully");
+        this.GetAuthorizationMaster();
+      }
+    });
+  }
+
+  public DeleteAuthorizationMaster(id) {
+    debugger;
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You will not be able to recover this Data!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonText: "Yes, delete it!",
+      cancelButtonText: "No, keep it"
+    }).then(result => {
+      if (result.value) {
+        this.pomservice.DeleteAuthorizationMaster(id).subscribe(res => {
+          let test = res;
+          this.GetAuthorizationMaster();
+        });
+        Swal.fire("Deleted!", "Your Data has been deleted.", "success");
+      } else if (result.dismiss === Swal.DismissReason.cancel) {
+        Swal.fire("Cancelled", "Your Data  is safe :)", "error");
+        this.GetAuthorizationMaster();
+      }
+    });
+  }
+}

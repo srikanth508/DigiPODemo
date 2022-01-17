@@ -1,0 +1,44 @@
+<br>
+<div class="container-fluid">
+       <div class="row ">
+              <div class="col-lg-12">
+                     <h4 style="float: left;">SHIP VIA MASTER</h4>
+              </div>
+       </div>
+</div>
+<br>
+
+<div class="container-fluid maindiv">
+       <form  #ShipViaForm="ngForm">
+
+       <div class="row">
+              <div class="col-lg-2">
+                     <label>Ship Via Code</label>
+              </div>
+              <div class="col-lg-4">
+                     <input type="text" class="form-control" required [(ngModel)]="ShipViaCode" name="ShipViaCode" placeholder="Ship Via Code">
+              </div>
+       </div>
+       <br>
+       <div class="row">
+              <div class="col-lg-2">
+                     <label>Ship Via Description</label>
+              </div>
+              <div class="col-lg-4">
+                     <textarea rows="3" class="form-control" required [(ngModel)]="Description" name="Description" placeholder="Ship Via Description"></textarea>
+              </div>
+       </div>
+       <br>
+       <div class="row">
+              <div class="col-lg-4"></div>
+              <div class="col-lg-2">
+                     <button type="button" *ngIf="saveupdatebtn==0" (click)="InsertShipViaMaster()"
+                            class="addnewbtns" style="width: 100%;" [disabled]="ShipViaForm.form.invalid">Save</button>
+                     <button type="button" *ngIf="saveupdatebtn==1" (click)="UpdateShipViaMaster()"
+                            class="addnewbtns" style="width: 100%;" [disabled]="ShipViaForm.form.invalid">Update</button>
+              </div>  
+              <div class="col-lg-5"></div>
+       </div>
+</form>
+</div>
+<br>

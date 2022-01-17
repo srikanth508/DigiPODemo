@@ -1,0 +1,617 @@
+<br>
+<ngx-spinner></ngx-spinner>
+<div class="container-fluid">
+       <div class="row ">
+              <div class="col-lg-12">
+                     <h4 style="float: left;">UNAPPROVED PO</h4>
+                     <!-- <button type="button" style="float: right;" routerLink="/PurchaseOrder"
+                            class="addnewbtns">Add</button> -->
+
+                     <button (click)="getglmasterexcel()" style="margin-right: 40px;" class="addnewbtns">Export
+                            Excel</button>
+              </div>
+       </div>
+</div>
+<br>
+<br>
+<div id='table_rowhtml' hidden='hidden'>test</div>
+<div class="container-fluid maindiv">
+
+       <div class="row">
+              <div class="col-lg-4">
+                     <ng-daterangepicker [(ngModel)]="value" [options]="options" (ngModelChange)="selectedDate($event)">
+                     </ng-daterangepicker>
+              </div>
+              <div class="col-lg-2">
+                     <input type="text" placeholder="Search" [(ngModel)]="term" class="form-control">
+              </div>
+              <div class="col-lg-3">
+                     <select class="form-control" (change)="GetSupplierName($event)">
+                            <option value="0">Select Vendor</option>
+                            <option *ngFor="let sup of supplierlist" value="{{sup.supplierName}}">{{sup.supplierName}}
+                            </option>
+                     </select>
+              </div>
+              <div class="col-lg-3">
+                     <select class="form-control" (change)="GetRequisoner($event)">
+                            <option value="0">Select Buying Company</option>
+                            <option *ngFor="let pur of companylist" value="{{pur.companyName}}">
+                                   {{pur.companyName}}
+                            </option>
+                     </select>
+              </div>
+       </div>
+       <div class="row">
+              <div class="col-lg-7">
+              </div>
+              <div class="col-lg-3">
+                     <label><b>Grand Total : {{grandtotal| number:'1.2-2'}}</b></label>
+              </div>
+              <div class="col-lg-2">
+                     <label style="margin-left: 10px;"><b>Count : {{count}}</b></label>
+              </div>
+       </div>
+       <div class="row">
+              <div class="col-lg-12" style="overflow: auto;">
+                     <table id="POREPORTS">
+                            <tr>
+                                   <th style="width: 120px;">Actions</th>
+
+                                   <th>PO No</th>
+                                   <th>PO Type</th>
+                                   <th>Order Type</th>
+                                   <th>Amendment Count</th>
+                                   <th>PO Date</th>
+                                   <th>Requistioner</th>
+                                   <th>Buying Company</th>
+                                   <th>Buyer Name</th>
+                                   <th>Authorizer</th>
+                                   <th>Vendor</th>
+                                   <th>Vendor Email</th>
+                                   <!-- <th>Date</th> -->
+
+                                   <th>Ship Via</th>
+                                   <th>Ship To</th>
+                                   <th>Bill To</th>
+                                   <th>Instruction</th>
+                                   <th>Fob</th>
+                                   <th>Accounting Code</th>
+
+                                   <th>Net Total</th>
+                                   <th>Tax Percentage</th>
+                                   <th>Tax Amount</th>
+                                   <th>Total PO Amount</th>
+
+                            </tr>
+                            <tr
+                                   *ngFor="let details of polist|filter:suppliername|filter:requisioner|filter:term| paginate: { id: 'foo', itemsPerPage: 5, currentPage: p}">
+                                   <td>
+                                          <img src="assets/images/view.png" style="width: 23px;" title="Items"
+                                                 [routerLink]="['/PoOrderItems',details.id]">
+                                          <img src="assets/images/complete.png" data-toggle="modal" title="Approve"
+                                                 data-target="#approve" style="width: 30px;"
+                                                 (click)="ApprovePurchseOrder(details.id,details.autho,details.novendoremail,details)">
+                                          <img src="assets/images/reject.png" data-toggle="modal" data-target="#reject"
+                                                 title="Reject" style="width: 30px;"
+                                                 (click)="GetRejectID(details.id,details.autho)">
+
+                                          <a data-toggle="modal" data-target="#inventoryModal" id="OpenPDf"
+                                                 style="width: 25px;"></a>
+
+                                          <img src="assets/images/pdf.png" data-toggle="modal"
+                                                 data-target="#inventoryModal" (click)="getpodetails(details)" style="width: 25px;">
+                                          <!-- (click)="getpodetails(details)" -->
+
+                                   </td>
+                                   <td>{{details.poNo}}</td>
+                                   <td>{{details.poType}}</td>
+                                   <td [style.color]="details.ordertypecolor">{{details.orderType}}
+                                          <label style="color:coral">{{details.amendementpo}}</label>
+                                   </td>
+                                   <td>{{details.amendmentcount}}</td>
+                                   <td>{{details.date}}</td>
+                                   <td>{{details.userName}}</td>
+                                   <td>{{details.companyName}}</td>
+                                   <td>{{details.buyerName}}</td>
+                                   <td>{{details.firstlevel}}
+                                          <table>
+                                                 <tr>
+                                                        <td style="border:none">
+                                                               <label style="color: red;margin-left: -9px;"
+                                                                      *ngIf="details.authorizationID!=0&&details.firstLevelAuthoStatus=='0'">Pending</label>
+
+                                                               <label style="color: green;margin-left: -9px;"
+                                                                      *ngIf="details.authorizationID!=0&&details.firstLevelAuthoStatus=='1'">Authorized</label>
+
+                                                               <label style="color: green;margin-left: -9px;"
+                                                                      *ngIf="details.authorizationID!=0&&details.firstLevelAuthoStatus=='2'">Cancelled</label>
+
+                                                        </td>
+
+                                                 </tr>
+                                          </table>
+
+                                   </td>
+                                   <!-- <td>{{details.firstLevelRemarks}}</td> -->
+                                   <!-- <td>{{details.secondlevel}}
+                                          <table>
+                                                 <tr>
+                                                        <td style="border:none">
+                                                               <label style="color: red;margin-left: -9px;"
+                                                                      *ngIf="details.secondAuthorizationID!=0&&details.secondLevelAuthoStatus=='0'">Pending</label>
+
+                                                               <label style="color: green;margin-left: -9px;"
+                                                                      *ngIf="details.secondAuthorizationID!=0&&details.secondLevelAuthoStatus=='1'">Authorized</label>
+
+                                                               <label style="color: green;margin-left: -9px;"
+                                                                      *ngIf="details.secondAuthorizationID!=0&&details.secondLevelAuthoStatus=='2'">Cancelled</label>
+
+                                                        </td>
+
+                                                 </tr>
+                                          </table>
+                                   </td> -->
+                                   <!-- <td>{{details.secondLevelRemarks}}</td> -->
+                                   <!-- <td>{{details.thirdlevel}}
+
+                                          <table>
+                                                 <tr>
+                                                        <td style="border:none">
+                                                               <label style="color: red;margin-left: -9px;"
+                                                                      *ngIf="details.thirdAuthorizationID!=0&&details.thirdLevelAuthoStatus=='0'">Pending</label>
+
+                                                               <label style="color: green;margin-left: -9px;"
+                                                                      *ngIf="details.thirdAuthorizationID!=0&&details.thirdLevelAuthoStatus=='1'">Authorized</label>
+
+                                                               <label style="color: green;margin-left: -9px;"
+                                                                      *ngIf="details.thirdAuthorizationID!=0&&details.thirdLevelAuthoStatus=='2'">Cancelled</label>
+
+                                                        </td>
+
+                                                 </tr>
+                                          </table>
+                                   </td> -->
+                                   <!-- <td>{{details.thirdLevelRemarks}}</td> -->
+                                   <td>{{details.supplierName}}</td>
+                                   <td>{{details.emailAddress}}</td>
+                                   <!-- <td>{{details.date}}</td> -->
+                                   <td>{{details.shipViaDescription}}</td>
+                                   <td>{{details.shiptoname}}</td>
+                                   <td>{{details.billtoname}}</td>
+                                   <td>{{details.instruction}}</td>
+                                   <td>{{details.fobDescription}}</td>
+                                   <td>{{details.accountNo}}</td>
+
+                                   <td>{{details.total| number:'1.2-2'}}</td>
+                                   <td>{{details.taxPercentage| number:'1.2-2'}}</td>
+                                   <td>{{details.totaltaxamount| number:'1.2-2'}}</td>
+                                   <td>{{details.totalAmountwithtax| number:'1.2-2'}}</td>
+
+                            </tr>
+                     </table>
+              </div>
+       </div>
+       <div class="col-lg-12" style="text-align: center">
+              <br>
+              <pagination-controls id="foo" (pageChange)="pageChanged($event)" maxSize="15" directionLinks="true"
+                     autoHide="true" responsive="true" previousLabel="Previous" nextLabel="Next"
+                     screenReaderPaginationLabel="Pagination" screenReaderPageLabel="page"
+                     screenReaderCurrentLabel="You're on page">
+              </pagination-controls>
+       </div><br><br>
+</div>
+
+
+<div id="myModal" class="modal fade" role="dialog">
+       <div class="modal-dialog modal-lg">
+              <!-- Modal content-->
+              <div class="modal-content">
+                     <div class="modal-header">
+                            <h4 class="modal-title">P.O Item Details</h4>
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                     </div>
+                     <div class="modal-body" style="overflow: auto;">
+                            <table>
+                                   <tr>
+                                          <th>P.O</th>
+                                          <th>Item No</th>
+                                          <th>Category</th>
+                                          <th>Sub Category</th>
+                                          <!-- <th>Item Name</th> -->
+                                          <th>Due Date</th>
+                                          <th>Description</th>
+                                          <th>Unit</th>
+                                          <th>Quantity</th>
+                                          <th>Net Total</th>
+                                          <th>Tax Percentage</th>
+                                          <th>Tax amOUNT</th>
+                                          <th>Grand Total</th>
+                                   </tr>
+                                   <tr *ngFor="let orders of orderslist">
+                                          <td>{{orders.poNo}}</td>
+                                          <td>{{orders.itemCode}}</td>
+                                          <td>{{orders.categoryName}}</td>
+                                          <td>{{orders.subCategoryName}}</td>
+                                          <!-- <td>{{orders.itemName}}</td> -->
+                                          <td>{{orders.duedate}}</td>
+                                          <td>{{orders.description}} </td>
+                                          <td>{{orders.unit}}</td>
+                                          <td>{{orders.quantity}}</td>
+                                          <td>{{orders.price| number:'1.2-2'}}</td>
+                                          <td>{{orders.taxPercentage| number:'1.2-2'}}</td>
+                                          <td>{{orders.taxAmount| number:'1.2-2'}}</td>
+                                          <td>{{orders.totalPrice| number:'1.2-2'}}</td>
+                                   </tr>
+
+                            </table>
+                     </div>
+                     <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                     </div>
+              </div>
+
+       </div>
+</div>
+
+
+<div id="approve" class="modal fade" role="dialog">
+       <div class="modal-dialog">
+
+              <!-- Modal content-->
+              <div class="modal-content">
+                     <div class="modal-header">
+                            <h4 class="modal-title">Approve</h4>
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                     </div>
+                     <div class="modal-body">
+                            <div class="row">
+                                   <div class="col-lg-12">
+                                          <textarea rows="3" class="form-control" [(ngModel)]="remarks" name="remarks"
+                                                 placeholder="Remarks"></textarea>
+                                          <br>
+                                          <button type="button" class="accptbtn" data-dismiss="modal"
+                                                 (click)="UpdateApproveRemarks()">Approve</button>
+                                   </div>
+                            </div>
+                     </div>
+                     <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                     </div>
+              </div>
+
+       </div>
+</div>
+
+<div id="reject" class="modal fade" role="dialog">
+       <div class="modal-dialog">
+
+              <!-- Modal content-->
+              <div class="modal-content">
+                     <div class="modal-header">
+                            <h4 class="modal-title">Reject</h4>
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                     </div>
+                     <div class="modal-body">
+                            <div class="row">
+                                   <div class="col-lg-12">
+                                          <textarea rows="3" class="form-control" [(ngModel)]="remarks" name="remarks"
+                                                 placeholder="Remarks"></textarea>
+                                          <br>
+                                          <button type="button" class="rejbtn"
+                                                 (click)="UpdateRejectRemarks()">Reject</button>
+                                   </div>
+                            </div>
+                     </div>
+                     <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                     </div>
+              </div>
+
+       </div>
+</div>
+
+
+
+
+<div class="modal fade" id="inventoryModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+       aria-hidden="true" style="overflow: auto;">
+       <div class="modal-dialog modal-lg" role="document">
+              <div class="modal-content" style=" width: 126%;">
+                     <div class="modal-header">
+                            <!-- <h5 class="modal-title" id="exampleModalLabel">Client Invoice</h5> -->
+                            <button *ngIf="nosendmailicon=='1'" (click)="SavePDF1()" style="background-color: #00b5d7;"
+                                   class="btn btn-primary">Send
+                                   Mail</button>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                   <span aria-hidden="true">&times;</span>
+                            </button>
+                     </div>
+                     <div class="modal-body">
+                            <div class="container-fluid" id="content">
+                                   <br>
+                                   <div class="row">
+                                          <div class="col-lg-2">
+                                                 <h6><b>Purchase Order</b></h6>
+                                          </div>
+                                          <div class="col-lg-2">
+
+                                          </div>
+                                          <div class="col-lg-6">
+                                                 <h4>TOPS MARKETS, LLC</h4>
+                                          </div>
+                                   </div>
+                                   <div class="row">
+                                          <div class="col-lg-4">
+                                          </div>
+                                          <!-- <div class="col-lg-1">
+                                          </div> -->
+                                          <div class="col-lg-2">
+                                                 <span style="font-size: 13px;">P.O BOX 1027</span><br>
+                                                 <span style="font-size: 13px;"> PHONE(716)635-5000</span>
+                                          </div>
+                                          <div class="col-lg-3">
+                                                 <span style="font-size: 13px;"> BUFFALO,NY 14240-1027</span>
+                                          </div>
+                                          <div class="col-lg-1">
+
+                                          </div>
+                                          <div class="col-lg-2">
+                                                 <!-- <h6>Purchase Order</h6> -->
+                                          </div>
+                                   </div><br>
+                                   <div class="row">
+                                          <div class="col-lg-8">
+                                                 <label style="font-size:12px"><b>BILL TO ADDRESS</b> </label><br>
+                                                 <span style="font-size: 14px;">{{billtoname}}</span><br>
+                                                 <span style="font-size: 14px;">EMAIL:{{billtoemail}}</span><br>
+                                                 <span style="font-size: 14px;">{{billtoaddress}}</span><br>
+                                                 <span
+                                                        style="font-size: 14px;">{{billtocity}}{{billtostate}}{{billtozipcode}}</span><br>
+                                          </div>
+                                          <!-- <div class="col-lg-7">
+                                               
+                                          </div> -->
+                                          <div class="col-lg-3">
+                                                 <label style="font-size: 13px;"><b>P.O. NO.</b></label> :
+                                                 {{PoNumber}}<br>
+                                                 <label style="font-size: 13px;"><b>Order Type</b></label> :
+                                                 {{ordertype}} {{Amendementpo}}<br>
+                                          </div>
+                                   </div>
+                                   <div class="row">
+                                          <!-- <div class="col-lg-1">
+
+                                          </div> -->
+                                          <div class="col-lg-12">
+                                                 <span style="font-size: 14px;">
+                                                        <b>Prepay transportation charges and list on
+                                                               Invoice as separate
+                                                               Item. Attach Prepaid freight bill. Packing list must
+                                                               accompany
+                                                               all shipments</b> </span>
+                                          </div>
+                                   </div><br>
+                                   <div class="row">
+                                          <div class="col-lg-6">
+                                                 <div class="row">
+                                                        <!-- <div class="col-lg-1">
+                                                        </div> -->
+                                                        <div class="col-lg-8">
+                                                               <label style="font-size: 13px;"><b>VENDOR ADDRESS
+                                                                      </b></label><br>
+                                                               <span>{{suppliercode}}</span><br>
+                                                               <span>{{suppliernme}}</span><br>
+                                                               <!-- <span>{{supplieraddress}}</span> -->
+                                                               <span>{{supplierstreet}} <br> {{suppliercity}}
+                                                                      {{supplierstate}} {{supplierzipcode}}</span>
+
+                                                        </div>
+                                                        <!-- <div class="col-lg-7">
+
+                                                        </div> -->
+
+                                                 </div>
+                                          </div>
+                                          <div class="col-lg-6">
+                                                 <div class="row">
+                                                        <div class="col-lg-4"></div>
+                                                        <div class="col-lg-8">
+                                                               <label style="font-size: 13px;"><b>SHIP TO ADDRESS
+                                                                      </b></label><br>
+
+                                                               <span>{{shiptoname}}</span><br>
+                                                               <span>{{shiptostrret}},</span><br>
+                                                               <span>
+                                                                      <!-- {{shiptoaddress}} -->
+                                                                      {{shiptocity}} {{shiptostate}} {{shiptozipcode}}
+                                                               </span>
+                                                        </div>
+                                                        <!-- <div class="col-lg-7">
+
+                                                        </div> -->
+                                                 </div>
+
+                                          </div>
+                                   </div><br>
+                                   <div class="row">
+                                          <div class="row">
+                                                 <div class="col-lg-12">
+                                                        <span style="font-size: 14px;margin-left: 15px;">
+                                                               <b> THIS ORDER IS SUBJECT TO ALL TERMS AND CONDITIONS
+                                                                      STATED
+                                                                      ON ATTACHED BELOW</b>
+                                                        </span>
+
+                                                 </div>
+                                          </div>
+                                   </div>
+                                   <div class="row">
+                                          <div class="col-lg-12" style="overflow: auto;">
+                                                 <table>
+                                                        <tr>
+                                                               <th colspan="1" style="font-size: 10px;">
+                                                                      DATE OF
+                                                                      ARRIVE
+                                                                      AT
+                                                                      DESTINATION
+                                                                      <br>
+                                                                      <span
+                                                                             style="font-size: 12px;"><b>{{duedate}}</b></span>
+
+                                                               </th>
+                                                               <th colspan="2" style="font-size: 10px;">TERMS<br>
+                                                                      <b>
+                                                                             <p style="font-size: 10px;"
+                                                                                    innerHTML="{{terms}}"></p>
+                                                                      </b>
+                                                               </th>
+                                                               <th style="font-size: 10px;">F.O.B<br>
+                                                                      <span
+                                                                             style="font-size: 10px;"><b>{{fobcode}}</b></span>
+
+                                                               </th>
+                                                               <th style="font-size: 10px;">SHIP VIA<br>
+                                                                      <span
+                                                                             style="font-size: 10px;"><b>{{shipvia}}</b></span>
+                                                               </th>
+                                                               <th style="font-size: 10px;width: 9%">DATE<br>
+                                                                      <b>{{date}}</b>
+                                                                      <!-- <span
+                                                                             style="font-size: 12px;"></span> -->
+                                                               </th>
+                                                        </tr>
+                                                        <tr style="height:15px">
+                                                               <th style="font-size: 12px;">ITEM NO</th>
+                                                               <!-- <th style="font-size: 12px;"> ITEM NAME</th> -->
+                                                               <th style="font-size: 12px;" colspan="2">DESCRIPTION</th>
+                                                               <!-- <th style="font-size: 12px;">EXTENDED DESCRIPTION</th> -->
+                                                               <th style="font-size: 12px;">QUANTITY ORDERED</th>
+                                                               <th style="font-size: 12px;">UNIT COST</th>
+                                                               <th style="font-size: 12px;">TOTAL COST</th>
+                                                        </tr>
+                                                        <tr style="height:auto;" *ngFor="let item of itemslist">
+                                                               <td>{{item.itemCode}}</td>
+                                                               <!-- <td>{{item.itemName}}</td> -->
+                                                               <td colspan="2">{{item.description}}</td>
+                                                               <!-- <td>{{item.descr2}}</td> -->
+                                                               <td>{{item.quantity}}</td>
+
+                                                               <!-- <td >
+                                                                      {{item.itemCode}} &nbsp;&nbsp;
+
+                                                                      {{item.itemName}}
+                                                               </td> -->
+                                                               <td>${{item.price| number:'1.2-2'}}</td>
+                                                               <td>${{item.totalPrice| number:'1.2-2'}}</td>
+                                                        </tr>
+                                                        <tr>
+                                                               <td colspan="3" style="font-size: 10px;">
+                                                                      CHARGE ACCOUNT NO / APPROPRIATION NO.<br>
+                                                                      <span><b>{{accountno}}</b></span>
+                                                               </td>
+                                                               <td style="font-size: 10px;">
+                                                                      <!-- CONFIRMATION -->
+                                                               </td>
+                                                               <td colspan="3">TOTAL &nbsp;&nbsp; ${{totalamount|
+                                                                      number:'1.2-2'}}</td>
+                                                        </tr>
+                                                 </table>
+                                          </div>
+                                   </div>
+                                   <div class="row">
+                                          <div class="col-lg-2">
+                                                 <span style="font-size: 10px;"><b>SPECIAL INSTRUCTIONS:</b> </span>
+                                          </div>
+                                          <div class="col-lg-7">
+                                                 <span style="font-size: 13px;">
+                                                        <b>{{instruction}}</b> </span>
+                                          </div>
+                                          <div class="col-lg-3">
+                                                 <!-- <table style="width:107%;margin-left: -13px;">
+                                                        <tr>
+                                                               <td style=" width: 56%;">Adjustment</td>
+                                                               <td></td>
+                                                        </tr>
+                                                 </table> -->
+                                                 <table style="width:97%;margin-left: 8px;">
+                                                        <tr>
+                                                               <td style=" width: 56%;">TAX Amount</td>
+                                                               <td>${{totaltaxamount| number:'1.2-2'}}</td>
+                                                        </tr>
+                                                 </table>
+
+                                          </div>
+                                   </div>
+                                   <div class="row">
+                                          <div class="col-lg-9">
+                                                 <label style="font-size: 10px;"><b>NOTE : </b> <label
+                                                               style="font-size: 13px;"> <b>{{note}}</b>
+                                                        </label></label>
+
+                                                 <h6 style="font-size:12px"><b>NOTIFY BUYER UP FRONT OF ANY CLERICAL
+                                                               ERRORS IN THIS ORDER</b></h6>
+                                          </div>
+                                          <div class="col-lg-3">
+                                                 <table style="width:97%;margin-left: 8px;">
+                                                        <tr>
+                                                               <td colspan="2">Grand Total &nbsp;&nbsp;&nbsp;&nbsp;
+                                                                      ${{totalAmountwithtax| number:'1.2-2'}}</td>
+
+                                                        </tr>
+                                                 </table>
+
+                                          </div>
+                                          <div class="col-lg-9">
+                                                 <p style="font-size:12px;color:black">
+                                                        This Purchase Order Constitutes the entire agreement between the
+                                                        parties hereto, and no obligation of Buyer to Seller beyond the
+                                                        terms and quantities of this Purchase Order , except under any
+                                                        outstanding written Purchase Orders previously issued by Buyer ,
+                                                        exists or shall be binding upon Buyer unless contained in a
+                                                        writing signed by a corporate officer (identified as such) of
+                                                        Tops Markets, LLC
+                                                 </p>
+                                          </div>
+                                          <div class="col-lg-3">
+
+
+                                          </div>
+                                   </div><br><br>
+                                   <div class="row">
+                                          <div class="col-lg-6">
+                                                 <span><b>Dept</b> : {{dept}}</span><br>
+                                                 <span><b>P.O. Type</b> : {{potype}}</span><br>
+                                          </div>
+                                          <div class="col-lg-1">
+
+                                          </div>
+                                          <div class="col-lg-5">
+                                                 <div class="row">
+                                                        <div class="col-lg-1">BY </div>
+                                                        <div class="col-lg-10">
+                                                               <span style="font-size: 13px;"><b>{{buyername}} </b>
+                                                                      (PURCHASING AGENT)</span>&nbsp;
+                                                               <hr
+                                                                      style="height:1px;border-width:0;color:gray;background-color:gray;margin-top: 4px;">
+                                                               <label style="font-size: 9px;"></label>
+                                                        </div>
+
+                                                 </div>
+                                          </div>
+                                   </div>
+                                   <div>
+                                   </div>
+                            </div><br>
+                            <div class="modal-footer">
+                                   <button type="button" class="btn btn-secondary" id="Close"
+                                          data-dismiss="modal">Close</button>
+                                   <button (click)="Downlod()" class="btn btn-primary">Download</button>
+                                   <button (click)="SavePDF1()" style="background-color: #00b5d7;"
+                                          *ngIf="nosendmailicon=='1'" class="btn btn-primary">Send Mail</button>
+
+                                   <!-- (click)="SavePDF1()" -->
+                            </div>
+                     </div>
+              </div>
+
+       </div>
