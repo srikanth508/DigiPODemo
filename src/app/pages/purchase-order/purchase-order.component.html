@@ -10,7 +10,7 @@
 <div class="container-fluid maindiv">
     <form #purchaseForm="ngForm">
         <br>
-        <div class="row">
+        <!-- <div class="row">
             <div class="col-lg-3">
                 <label>Buying Company</label>
                 <span style="color:red">*</span>
@@ -24,7 +24,7 @@
                 </select>
             </div>
         </div>
-        <br>
+        <br> -->
         <div class="row">
             <div class="col-lg-3">
                 <label>Date</label>
@@ -73,7 +73,7 @@
             </div>
         </div>
         <br>
-        <div class="row">
+        <!-- <div class="row">
             <div class="col-lg-3">
                 <label>FOB</label>
                 <span style="color:red">*</span>
@@ -88,7 +88,7 @@
                 <label>FOB Description : <b>{{fobdesc}}</b></label>
             </div>
         </div>
-        <br>
+        <br> -->
         <div *ngIf="showbit=='1'">
             <div class="row">
                 <div class="col-lg-3">
@@ -212,6 +212,21 @@
             </div>
         </div>
         <br>
+
+        <div class="row">
+            <div class="col-lg-3">
+                <label>Payment Terms</label>
+
+            </div>
+            <div class="col-lg-4">
+                <textarea rows="3" class="form-control" [(ngModel)]="note" name="note" placeholder="Payment Terms"></textarea>
+                <!-- <ckeditor [editor]="Editor" [(ngModel)]="note" name="note"  data="">
+                </ckeditor> -->
+            </div>
+        </div>
+        <br>
+
+
         <div class="row">
             <div class="col-lg-3">
                 <label>Due Date</label>
@@ -398,7 +413,7 @@
             </div>
         </div>
         <br> -->
-        <div class="row">
+        <!-- <div class="row">
             <div class="col-lg-3">
                 <label>Buyer's Name</label>
                 <span style="color:red">*</span>
@@ -411,21 +426,75 @@
                 </select>
             </div>
         </div>
-        <br>
+        <br> -->
+
+
+
         <div class="row">
             <div class="col-lg-3">
-                <label>Authorization </label>
+                <label>Vendor </label>
                 <span style="color:red">*</span>
             </div>
             <div class="col-lg-4">
-                <select class="form-control" [(ngModel)]="authorizationid" name="authorizationid" required
-                    (change)="GetAuthorizationID($event)">
+                <select class="form-control" [(ngModel)]="supplierid" name="supplierid" required
+                    (change)="GetSupplierID($event)">
                     <option value="0" selected>Select</option>
-                    <option *ngFor="let autho of autholist" value="{{autho.id}}">{{autho.name}}</option>
+                    <option *ngFor="let autho of supplierlist" value="{{autho.id}}">{{autho.supplierName}}</option>
                 </select>
             </div>
         </div>
         <br>
+
+        <div class="row">
+            <div class="col-lg-3">
+                <label>Finance Manager </label>
+                <span style="color:red">*</span>
+            </div>
+            <div class="col-lg-4">
+                <select class="form-control" disabled> 
+                    <option disabled>Kim Judd</option>
+                </select>
+               
+            </div>
+        </div>
+        <br>
+
+        <div class="row">
+            <div class="col-lg-3">
+                <label>Procurement Manager </label>
+                <span style="color:red">*</span>
+            </div>
+            <div class="col-lg-4">
+                <select class="form-control" disabled>
+                    <option disabled>Gisela Perkins</option>
+                </select>
+                <!-- <select class="form-control" [(ngModel)]="authorizationid" name="authorizationid" required
+                    (change)="GetAuthorizationID($event)">
+                    <option value="0" selected>Select</option>
+                    <option *ngFor="let autho of autholist" value="{{autho.id}}">{{autho.name}}</option>
+                </select> -->
+            </div>
+        </div>
+        <br>
+
+        <div class="row">
+            <div class="col-lg-3">
+                <label>General Manager </label>
+                <span style="color:red">*</span>
+            </div>
+            <div class="col-lg-4">
+                <!-- <select class="form-control" [(ngModel)]="authorizationid" name="authorizationid" required
+                    (change)="GetAuthorizationID($event)">
+                    <option value="0" selected>Select</option>
+                    <option *ngFor="let autho of autholist" value="{{autho.id}}">{{autho.name}}</option>
+                </select> -->
+                <select class="form-control" disabled>
+                    <option disabled>Chris Watson</option>
+                </select>
+            </div>
+        </div>
+        <br>
+      
 
 
 

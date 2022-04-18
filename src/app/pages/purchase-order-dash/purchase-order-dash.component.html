@@ -30,7 +30,7 @@
         (click)="GetActivePoslist('Raised')">
         <br>
         <label style="color: white;cursor: pointer;">
-          Raised PO</label>
+          Raised Request</label>
         <br /> <br />
         <label style="color: white;">{{cou.totalpos}}</label>
       </div>
@@ -43,7 +43,7 @@
       <div class="optionsboxdown" style="cursor: pointer;" routerLink="/PoGenaratorReports"
         (click)="GetActivePoslist('Authorized')">
         <br>
-        <label style="color: white;">Authorized PO
+        <label style="color: white;">Authorized Request
         </label>
         <br /> <br />
         <label style="color: white;">{{cou.authorizedcount}}</label>
@@ -58,7 +58,7 @@
       <div class="optionsboxdown" style="cursor: pointer;" routerLink="/PoGenaratorReports"
         (click)="GetActivePoslist('Cancelled')">
         <br>
-        <label style="color: white;">Cancelled PO
+        <label style="color: white;">Cancelled Request
         </label>
         <br /> <br />
         <label style="color: white;">{{cou.cancelledcount}}</label>
@@ -92,7 +92,7 @@
       <div class="optionsboxdown" style="cursor: pointer;" routerLink="/PoGenaratorReports"
         (click)="GetActivePoslist('Delivered')">
         <br>
-        <label style="color: white;">Delivered PO
+        <label style="color: white;">Request to PO
         </label>
         <br /> <br />
         <label style="color: white;">{{cou.deliverCount}}</label>
@@ -107,6 +107,62 @@
 
 
 </div>
-
-
 <br>
+
+
+
+<!-- <div class="container-fluid card card-hover">
+  <br>
+  <div class="row">
+    <div class="col-lg-2"></div>
+    <div class="col-lg-2" *ngFor="let cou of countlist">
+      <div class="optionsboxdown" style="cursor: pointer;" routerLink="/PoGenaratorReports"
+        (click)="GetActivePoslist('Raised')">
+        <br>
+        <label style="color: white;cursor: pointer;">
+         Active Tenders</label>
+        <br /> <br />
+        <label style="color: white;">5</label>
+      </div>
+      <br />
+      <p style="margin-left: 56px;margin-top: -16px;"></p>
+    </div>
+    <br />
+    <div class="col-lg-1"></div>
+    <div class="col-lg-2" *ngFor="let cou of countlist">
+      <div class="optionsboxdown" style="cursor: pointer;" routerLink="/PoGenaratorReports"
+        (click)="GetActivePoslist('Authorized')">
+        <br>
+        <label style="color: white;">Responded Vendors
+        </label>
+        <br /> <br />
+        <label style="color: white;">10</label>
+      </div>
+      <br />
+      <br />
+      <p style="margin-left: 56px;margin-top: -16px;"></p>
+    </div>
+    <div class="col-lg-1"></div>
+    <br />
+    <div class="col-lg-2" *ngFor="let cou of countlist">
+      <div class="optionsboxdown" style="cursor: pointer;" routerLink="/PoGenaratorReports"
+        (click)="GetActivePoslist('Cancelled')">
+        <br>
+        <label style="color: white;">Shortlisted Tenders
+        </label>
+        <br /> <br />
+        <label style="color: white;">4</label>
+      </div>
+      <br />
+      <br />
+      <p style="margin-left: 56px;margin-top: -16px;"></p>
+    </div>
+    <div class="col-lg-1"></div>
+    <br />
+  </div>
+ 
+
+
+</div>
+
+<br> -->

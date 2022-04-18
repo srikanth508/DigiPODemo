@@ -127,7 +127,7 @@ export class PurchaseOrderDashboardComponent implements OnInit {
       this.purchaseorderlist = data;
       this.spinner.hide();
       this.dummlist = this.purchaseorderlist;
-      this.purchaseorderlist = this.dummlist.filter(x => x.status == this.status)
+      this.purchaseorderlist = this.dummlist.filter(x => x.status == this.status && x.amendmentcount == 0)
       this.count = this.purchaseorderlist.length;
 
       this.grandtotal = 0;
@@ -628,9 +628,9 @@ export class PurchaseOrderDashboardComponent implements OnInit {
 
       this.spinner.hide();
       pdf.save('PO.pdf');
-     
+
       document.getElementById('Close').click();
-  
+
 
     });
   }

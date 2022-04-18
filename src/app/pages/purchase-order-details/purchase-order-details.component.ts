@@ -567,7 +567,7 @@ export class PurchaseOrderDetailsComponent implements OnInit {
     }
     else if (this.Itemqwerty.length == 0 ) {
       debugger
-      if(sup.supplierCode == this.vendorid)
+      if(sup.supplierCode == sup.supplierCode)
       {
         debugger
       this.tablecountforadd = 2;
@@ -609,7 +609,7 @@ export class PurchaseOrderDetailsComponent implements OnInit {
       Swal.fire('Items Should Belong to the Same Vendor. Please Select Items Accordingly');
     }
   }
-    else if (this.Itemqwerty[0].SupplierID == sup.supplierCode && this.Itemqwerty[0].ItemID != sup.id) {
+    else if (sup.supplierCode == sup.supplierCode) {
       this.tablecountforadd = 2;
       // this.tablecount = 0;
       var entity = {
@@ -667,6 +667,7 @@ export class PurchaseOrderDetailsComponent implements OnInit {
 
 
   public InsertItemDetails() {
+    debugger
     for (let i = 0; i < this.Itemqwerty.length; i++) {
       var entity = {
         'PurchaseOrderID': this.orderid,

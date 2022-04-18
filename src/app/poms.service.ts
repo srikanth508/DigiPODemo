@@ -7,7 +7,7 @@ import { HttpClient, HttpHeaders } from "@angular/common/http";
 export class PomsService {
 
 
-  private host="HOSTNAME";
+  private host="https://digipo.amazeone.co/DigiPOAPI/";
   
   private url: string = '';
 
@@ -475,6 +475,12 @@ export class PomsService {
     
     return this.http.get<any[]>(this.host + "Master/GetPurchaseOrderByGenaratorID?POGenaratorID=" + pid + '&Sdate=' + sdate + '&Edate=' + edate);
   }
+
+  public GetTendersByPOGenaratorID(pid, sdate, edate) {
+    
+    return this.http.get<any[]>(this.host + "Master/GetTendersByPOGenaratorID?POGenaratorID=" + pid + '&Sdate=' + sdate + '&Edate=' + edate);
+  }
+
   public GetPurchaseOrderReportsByGenaratorID(id, sdate, edate) {
     
     return this.http.get<any[]>(this.host + "Master/GetPurchaseOrderReportsByGenaratorID?POGenaratorID=" + id + '&Sdate=' + sdate + '&Edate=' + edate);
@@ -628,6 +634,16 @@ export class PomsService {
     debugger
     return this.http.post(this.host + 'Master/UploadPO/', formdata);
   }
+
+
+ public UploadTenderAttachments(files) {
+    let formdata: FormData = new FormData();
+    for (let i = 0; i < files.length; i++) {
+      formdata.append('file_upload', files[i], files[i].name);
+    }
+    return this.http.post(this.host + '/Master/UploadTenderAttachments/', formdata);
+  }
+
 
 
   // public UploadPO(files) {
@@ -1037,4 +1053,58 @@ export class PomsService {
     return this.http.post(this.url, data);
   }
 
+
+  public InsertTenderOrderDetails(data) {
+    debugger
+    this.url = this.host + "Master/InsertTenderOrderDetails";
+    return this.http.post(this.url, data);
+  }
+  
+  public InsertTender_Vendors(data) {
+    debugger
+    this.url = this.host + "Master/InsertTender_Vendors";
+    return this.http.post(this.url, data);
+  }
+
+
+
+
+  public GetTenderOrderDetailsID(pogenaratorid) {
+    
+    return this.http.get<any[]>(this.host + "Master/GetTenderOrderDetailsID?PurchaseOrderID=" + pogenaratorid);
+  }
+
+
+
+  public GetTendersByVendorID(VendorID, sdate, edate) {
+    
+    return this.http.get<any[]>(this.host + "Master/GetTendersByVendorID?VendorID=" + VendorID + '&Sdate=' + sdate + '&Edate=' + edate);
+  }
+
+
+  public GetTender_Vendors(id,status) {
+    
+    return this.http.get<any[]>(this.host + "Master/GetTender_Vendors?ID=" + id+'&Status='+status);
+  }
+
+
+  public UpdateTender_Vendors(data) {
+    debugger
+    this.url = this.host + "Master/UpdateTender_Vendors";
+    return this.http.post(this.url, data);
+  }
+
+
+
+
+  public GetAppliedTendorsByPoGenaratorID(VendorID, sdate, edate) {
+    
+    return this.http.get<any[]>(this.host + "Master/GetAppliedTendorsByPoGenaratorID?POGenaratorID=" + VendorID + '&Sdate=' + sdate + '&Edate=' + edate);
+  }
+
+
+  public ApproveTender_Vendors(id,status) {
+    
+    return this.http.get<any[]>(this.host + "Master/ApproveTender_Vendors?ID=" + id+'&ApproveReject='+status);
+  }
 }

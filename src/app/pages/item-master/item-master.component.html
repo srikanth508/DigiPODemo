@@ -9,7 +9,7 @@
 <br>
 <div class="container-fluid maindiv">
        <form #ItemForm="ngForm">
-              <div *ngIf="saveupdatebtn==0">
+              <div >
                      <div class="row">
                             <div class="col-lg-2">
                                    <label>Vendor </label>
@@ -52,7 +52,7 @@
                      </div>
               </div>
               <br> -->
-              <!-- <div class="row">
+              <div class="row">
                      <div class="col-lg-2">
                             <label>Item Name</label>
                             <span style="color:red;">*</span>
@@ -62,7 +62,7 @@
                                    placeholder="Item Name">
                      </div>
               </div>
-              <br> -->
+              <br>
 
               <div class="row">
                      <div class="col-lg-2">
@@ -79,7 +79,7 @@
                      </div>
               </div>
               <br>
-              <!-- <div class="row">
+              <div class="row">
                      <div class="col-lg-2">
                             <label>Sub Category</label>
                             <span style="color:red;">*</span>
@@ -93,7 +93,7 @@
                             </select>
                      </div>
               </div>
-              <br> -->
+              <br>
               <!-- <div class="row">
                      <div class="col-lg-2">
                             <label>Tax Per Item</label>
@@ -193,6 +193,42 @@
               <br>
               <div class="row">
                      <div class="col-lg-2">
+                            <label>Quantity</label>
+                            <span style="color:red;">*</span>
+                     </div>
+                     <div class="col-lg-4">
+                            <input type="text" class="form-control" required [(ngModel)]="quantity"
+                                   name="quantity" placeholder="Quantity">
+                     </div>
+              </div>
+              <br>
+
+              <div class="row">
+                     <div class="col-lg-2">
+                            <label>Purchase Date</label>
+                            <span style="color:red;">*</span>
+                     </div>
+                     <div class="col-lg-4">
+                            <input type="date" class="form-control" required [(ngModel)]="purchasedate"
+                                   name="purchasedate" >
+                     </div>
+              </div>
+              <br>
+
+              <div class="row">
+                     <div class="col-lg-2">
+                            <label>Expire Date</label>
+                            <span style="color:red;">*</span>
+                     </div>
+                     <div class="col-lg-4">
+                            <input type="date" class="form-control" required [(ngModel)]="expiredtate"
+                                   name="expiredtate" >
+                     </div>
+              </div>
+              <br>
+
+              <!-- <div class="row">
+                     <div class="col-lg-2">
                             <label>Commodity</label>
                      </div>
                      <div class="col-lg-4">
@@ -200,8 +236,8 @@
                                    placeholder="Commodity">
                      </div>
               </div>
-              <br>
-              <div class="row">
+              <br> -->
+              <!-- <div class="row">
                      <div class="col-lg-2">
                             <label>Description</label>
                             <span style="color:red;">*</span>
@@ -209,11 +245,10 @@
                      <div class="col-lg-4">
 
                             <textarea rows="4" placeholder="Description" class="form-control" [(ngModel)]="Description" name="Description" ></textarea>
-                            <!-- <ckeditor [editor]="Editor" [(ngModel)]="Description" name="Description" required data="">
-                            </ckeditor> -->
+                           
                      </div>
               </div>
-              <br>
+              <br> -->
 
               <!-- <div class="row">
                      <div class="col-lg-2">

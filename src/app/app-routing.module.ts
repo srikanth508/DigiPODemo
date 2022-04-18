@@ -78,7 +78,29 @@ import { DeptMasterComponent } from './pages/dept-master/dept-master.component';
 import { DeptMasterDashComponent } from './pages/dept-master-dash/dept-master-dash.component';
 import { OrderTypeMasterComponent } from './pages/order-type-master/order-type-master.component';
 import { OrderTypeMasterDashComponent } from './pages/order-type-master-dash/order-type-master-dash.component';
-
+import { InventoryComponent } from './pages/inventory/inventory.component';
+import { AddTenderComponent } from './pages/Tenders/add-tender/add-tender.component';
+import { TenderDashComponent } from './pages/Tenders/add-tender/tender-dash/tender-dash.component';
+import { TederOrderItemsComponent } from './pages/Tenders/add-tender/teder-order-items/teder-order-items.component';
+import { VendorTendersComponent } from './pages/Tenders/vendor-tenders/vendor-tenders.component';
+import { AppliedTendersComponent } from './pages/Tenders/applied-tenders/applied-tenders.component';
+import { ApprovedTendorsComponent } from './pages/Tenders/approved-tendors/approved-tendors.component';
+import { AcceptedTendersComponent } from './pages/Tenders/accepted-tenders/accepted-tenders.component';
+import { RejectedTendersComponent } from './pages/Tenders/rejected-tenders/rejected-tenders.component';
+import { SubmittedTendersComponent } from './pages/Tenders/submitted-tenders/submitted-tenders.component';
+import { InvoicesDashComponent } from './pages/FinanceManager/invoices-dash/invoices-dash.component';
+import { ApproveInvoicesComponent } from './pages/FinanceManager/approve-invoices/approve-invoices.component';
+import { RejectedInvoicesComponent } from './pages/FinanceManager/rejected-invoices/rejected-invoices.component';
+import { NewrequestionerComponent } from './pages/Requestioner/newrequestioner/newrequestioner.component';
+import { RequestionerDashComponent } from './pages/Requestioner/requestioner-dash/requestioner-dash.component';
+import { ShortlistedVendorsComponent } from './pages/Tenders/shortlisted-vendors/shortlisted-vendors.component';
+import { WarehousPosComponent } from './pages/Tenders/warehous-pos/warehous-pos.component';
+import { ApprovedpossComponent } from './pages/FinanceManager/approvedposs/approvedposs.component';
+import { DeliveredPossssComponent } from './pages/Tenders/delivered-possss/delivered-possss.component';
+import { InvoicepoComponent } from './pages/invoicepo/invoicepo.component';
+import { ClosedPoComponent } from './pages/closed-po/closed-po.component';
+import { ReceivedPoComponent } from './pages/Tenders/received-po/received-po.component';
+import { FlowdiagramComponent } from './pages/flowdiagram/flowdiagram.component';
 
 
 const routes: Routes = [
@@ -177,8 +199,33 @@ const routes: Routes = [
   { path: 'OrderTypeMaster', component: OrderTypeMasterComponent },
   { path: 'OrderTypeMaster/:id', component: OrderTypeMasterComponent },
   { path: 'OrderTypeMasterDash', component: OrderTypeMasterDashComponent },
-];
+  { path: 'Inventory', component: InventoryComponent },
+  { path: 'AddTender', component: AddTenderComponent },
 
+  { path: 'AddTender/:id', component: AddTenderComponent },
+
+  { path: 'TenderDash', component: TenderDashComponent },
+  { path: 'TederOrderItems/:id', component: TederOrderItemsComponent },
+  { path: 'VendorTenders', component: VendorTendersComponent },
+  { path: 'AppliedTenders', component: AppliedTendersComponent },
+  { path: 'ApprovedTendors', component: ApprovedTendorsComponent },
+  { path: 'AcceptedTenders', component: AcceptedTendersComponent },
+  { path: 'RejectedTenders', component: RejectedTendersComponent },
+  { path: 'SubmittedTenders', component: SubmittedTendersComponent },
+  { path: 'InvoicesDash', component: InvoicesDashComponent },
+  { path: 'ApproveInvoices', component: ApproveInvoicesComponent },
+  { path: 'RejectedInvoices', component: RejectedInvoicesComponent },
+  { path: 'Newrequestioner', component: NewrequestionerComponent },
+  { path: 'RequestionerDash', component: RequestionerDashComponent },
+  { path: 'ShortlistedVendors', component: ShortlistedVendorsComponent },
+  { path: 'WarehousPos', component: WarehousPosComponent },
+  { path: 'Approvedposs', component: ApprovedpossComponent },
+  { path: 'DeliveredPossss', component: DeliveredPossssComponent },
+  { path: 'Invoicepo', component: InvoicepoComponent },
+  { path: 'ClosedPo', component: ClosedPoComponent },
+  { path: 'ReceivedPo', component: ReceivedPoComponent },
+  { path: 'Flowdiagram', component: FlowdiagramComponent },
+];
 @NgModule({
   imports: [RouterModule.forRoot(routes, { useHash: true })],
   exports: [RouterModule],

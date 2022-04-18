@@ -4,6 +4,7 @@ import Swal from 'sweetalert2'
 import { from } from 'rxjs';
 import { ActivatedRoute } from '@angular/router';
 import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
+import { AstMemoryEfficientTransformer } from '@angular/compiler';
 
 
 @Component({
@@ -33,6 +34,9 @@ export class ItemMasterComponent implements OnInit {
   public TaxList: any;
   public taxid: any;
   currencylist:any;
+  purchasedate:any;
+  quantity:any;
+  expiredtate:any;
   public Editor = ClassicEditor;
   constructor(private PomsService: PomsService, private activatedroute: ActivatedRoute) { }
 
@@ -98,6 +102,12 @@ export class ItemMasterComponent implements OnInit {
           this.Category = this.categorylist[0].categoryID;
           this.itemname = this.categorylist[0].itemName;
           this.descr2 = this.categorylist[0].descr2;
+
+
+          this.quantity = this.categorylist[0].quantity;
+          this.expiredtate = this.categorylist[0].expireDate;
+          this.purchasedate = this.categorylist[0].purchaseDate;
+
           this.PomsService.GetSubCategoryMaster().subscribe(data => {
 
             this.PomsService.GetTaxMaster().subscribe(data => {
@@ -183,13 +193,16 @@ export class ItemMasterComponent implements OnInit {
       "TaxID": this.taxid,
       "Description": this.Description,
       "descr2": this.descr2,
-      "SupplierID": this.supplierid
+      "SupplierID": this.supplierid,
+      "Quantity":this.quantity,
+      "ExpireDate":this.expiredtate,
+      "PurchaseDate":this.purchasedate
     }
     this.PomsService.InsertItemMaster(Entity).subscribe((data: any) => {
       if (data != undefined) {
 
         Swal.fire('success', 'Item Details Saved  Successfully', 'success');
-        location.href = "#/ItemMasterDashboard"
+        // location.href = "#/ItemMasterDashboard"
 
       }
     });
@@ -231,7 +244,10 @@ export class ItemMasterComponent implements OnInit {
       "SubCategoryID": this.SubCategory,
       "TaxID": this.taxid,
       "Description": this.Description,
-      "descr2": this.descr2
+      "descr2": this.descr2,
+      "Quantity":this.quantity,
+      "ExpireDate":this.expiredtate,
+      "PurchaseDate":this.purchasedate
     }
     this.PomsService.UpdateItemMaster(Entity).subscribe((data: any) => {
       if (data != undefined) {

@@ -15,6 +15,10 @@
     </div>
   </div>
 </div><br>
+
+
+
+
 <div class="container-fluid card card-hover">
   <br>
   <div class="row"> 
@@ -25,9 +29,9 @@
        >
         <br>
         <label style="color: white;cursor: pointer;">
-          Waiting To Accept</label>
+          Total PO</label>
         <br /> <br />
-        <label style="color: white;">{{cou.waitingforaccept}}</label>
+        <label style="color: white;">2</label>
       </div>
       <br />
       <p style="margin-left: 56px;margin-top: -16px;"></p>
@@ -38,7 +42,7 @@
       <div class="optionsboxdown" style="cursor: pointer;" routerLink="/SupplierReports"
         (click)="GetStatus('Accepted')">
         <br>
-        <label style="color: white;">Accepted PO
+        <label style="color: white;">Active PO
         </label>
         <br /> <br />
         <label style="color: white;">{{cou.accptedpo}}</label>
@@ -52,7 +56,7 @@
       <div class="optionsboxdown" style="cursor: pointer;" routerLink="/SupplierReports"
         (click)="GetStatus('Delivered')">
         <br>
-        <label style="color: white;">Delivered PO
+        <label style="color: white;">Invoiced PO
         </label>
         <br /> <br />
         <label style="color: white;">{{cou.delivered}}</label>
@@ -62,4 +66,24 @@
       <p style="margin-left: 56px;margin-top: -16px;"></p>
     </div>
   </div>
+  <div class="row"> 
+    <div class="col-lg-2"></div>
+    <div class="col-lg-2" *ngFor="let cou of countlist">
+      <!-- (click)="GetStatus('Authorized')" -->
+      <div class="optionsboxdown" style="cursor: pointer;" routerLink="/MyPo"
+       >
+        <br>
+        <label style="color: white;cursor: pointer;">
+         Closed PO</label>
+        <br /> <br />
+        <label style="color: white;">{{cou.waitingforaccept}}</label>
+      </div>
+      <br />
+      <p style="margin-left: 56px;margin-top: -16px;"></p>
+    </div>
+  </div>
+    <br />
 </div>
+
+
+

@@ -1,0 +1,270 @@
+<br>
+<div class="container-fluid">
+       <div class="row ">
+              <div class="col-lg-12">
+                     <h4 style="float: left;">REJECTED TENDERS DASHBORD</h4>
+                     <!-- <button type="button" style="float: right;" routerLink="/PurchaseOrder"
+                            class="addnewbtns">Add</button> -->
+
+                     <button (click)="getglmasterexcel()" style="margin-right: 40px;" class="addnewbtns">Export
+                            Excel</button>
+              </div>
+       </div>
+</div>
+<br>
+<br>
+<div id='table_rowhtml' hidden='hidden'>test</div>
+<div class="container-fluid maindiv">
+
+       <div class="row">
+              <div class="col-lg-4">
+                     <ng-daterangepicker [(ngModel)]="value" [options]="options" (ngModelChange)="selectedDate($event)">
+                     </ng-daterangepicker>
+              </div>
+              <div class="col-lg-3">
+                     <input type="text" placeholder="Search" [(ngModel)]="term" class="form-control">
+              </div>
+
+              <div class="col-lg-3">
+                     <!-- <select class="form-control" (change)="GetRequisoner($event)">
+                            <option value="0">Select Buying Company</option>
+                            <option *ngFor="let pur of companylist" value="{{pur.companyName}}">
+                                   {{pur.companyName}}
+                            </option>
+                     </select> -->
+              </div>
+       </div>
+       <div class="row">
+              <div class="col-lg-7">
+              </div>
+              <div class="col-lg-3">
+                     <!-- <label><b>Grand Total : {{grandtotal| number:'1.2-2'}}</b></label> -->
+              </div>
+              <div class="col-lg-2">
+                     <label style="margin-right: 60px;"><b>Count : {{count}}</b></label>
+              </div>
+       </div>
+       <div class="row">
+              <div class="col-lg-12" style="overflow:auto">
+                     <table id="POREPORTS">
+                            <tr>
+                                   <th style="width: 120px;">Actions</th>
+                                   <th>Tender No</th>
+                                   <th>Requistioner</th>
+                                   <!-- <th>Buying Company</th> -->
+                                   <th>Tender Date</th>
+                                   <!-- <th>Company</th> -->
+                                   <!-- <th>Buyer Name</th> -->
+                                   <!-- <th>Requestioner</th> -->
+                                   <!-- <th>Ship Via</th> -->
+                                   <th>Tender Description</th>
+                                   <th>Last Submission Date</th>
+                                   <th>Tender Type</th>
+                                   <th>Tender Conditions</th>
+                                   <!-- <th>Net Total</th>
+                                   <th>Tax Percentage</th>
+                                   <th>Tax Amount</th>
+                                   <th>Total PO Amount</th> -->
+                                   <th>Status</th>
+
+                            </tr>
+                            <tr *ngFor="let details of orderslist|filter:term|filter:requisioner">
+                                   <td>
+                                          <img src="assets/images/view.png" style="width: 25px;"
+                                                 [routerLink]="['/TederOrderItems',details.id]">
+
+                                          <!-- <img src="assets/images/complete.png"
+                                                 *ngIf="details.acceptCancel=='0'" 
+                                                 style="width: 35px;" (click)="GetAcceptOrderID(details.vendorssID)">
+
+
+                                          <img src="assets/images/reject.png" 
+                                                 *ngIf="details.acceptCancel=='0'" 
+                                                 style="width: 35px;" (click)="GetRejectID(details.vendorssID)">&nbsp;
+
+
+                                                 <img src="assets/images/plus.png" 
+                                                 *ngIf="details.acceptCancel!='0'&&details.acceptCancel!='3'"  
+                                                 style="width: 25px;" data-toggle="modal" data-target="#Tender" (click)="GetVendorid(details.vendorssID,details)"> -->
+
+
+                                          <!-- <img src="assets/images/delivery.png"
+                                                 *ngIf="details.acceptCancel=='1'&&details.delivered=='0'"
+                                                 (click)="UpdateDeliverPurchaseOrder(details.id)">
+
+
+                                          <img src="assets/images/message.png" *ngIf="details.status!='Delivered'"
+                                                 data-toggle="modal" data-target="#message" style="width: 25px;"
+                                                 (click)="GetChatMessagesID(details.id,details.userName,details.supplierName,details.poGenaratorID)"> -->
+                                   </td>
+                                   <td>{{details.poNo}}</td>
+                                   <td>{{details.userName}}</td>
+                                   <!-- <td>{{details.companyName}}</td> -->
+                                   <td>{{details.date}}</td>
+                                   <!-- <td>{{details.companyName}}</td>
+                                   <td>{{details.buyerName}}</td> -->
+                                   <!-- <td>{{details.requistioner}}</td> -->
+                                   <!-- <td>{{details.shipViaDescription}}</td> -->
+                                   <td innerHTML="{{details.poDescription}}"></td>
+                                   <td>{{details.duedate}}</td>
+                                   <td>{{details.orderType}}</td>
+                                   <td>{{details.tenderConditions}}</td>
+                                   <!-- <td>{{details.total| number:'1.2-2'}}</td>
+                                      <td>{{details.taxPercentage| number:'1.2-2'}}</td>
+                                   <td>{{details.totaltaxamount| number:'1.2-2'}}</td>
+                                   <td>{{details.totalAmountwithtax| number:'1.2-2'}}</td> -->
+                                   <td>
+                                          <label *ngIf="details.acceptCancel=='0'"
+                                                 style="color:rgb(153, 40, 40)">Pending</label>
+                                          <label *ngIf="details.acceptCancel=='2'" style="color:red">Rejected</label>
+                                          <label *ngIf="details.acceptCancel=='1'&&details.delivered=='0'"
+                                                 style="color:green">Accepted</label>
+
+                                                 <label *ngIf="details.acceptCancel=='3'&&details.delivered=='0'"
+                                                 style="color:green">Applied</label>
+
+                                          <label *ngIf="details.delivered=='1'" style="color:green">Delivered</label>
+
+                                   </td>
+
+                            </tr>
+                     </table>
+              </div>
+       </div>
+</div>
+
+
+<div id="myModal" class="modal fade" role="dialog">
+       <div class="modal-dialog modal-lg">
+
+              <!-- Modal content-->
+              <div class="modal-content">
+                     <div class="modal-header">
+                            <h4 class="modal-title">P.O Item Details</h4>
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                     </div>
+                     <div class="modal-body" style="overflow:auto">
+                            <table>
+                                   <tr>
+                                          <th>PO No</th>
+                                          <th>Item No</th>
+                                          <th>Category</th>
+                                          <th>Sub Category</th>
+                                          <th>Due Date</th>
+                                          <th>Description</th>
+                                          <th>Unit</th>
+                                          <th>Quantity</th>
+                                          <th>Net Total</th>
+                                          <th>Tax Percentage</th>
+                                          <th>Tax Amount</th>
+                                          <th>Grand Total</th>
+                                   </tr>
+                                   <tr *ngFor="let items of itemslist">
+                                          <td>{{items.poNo}}</td>
+                                          <td>{{items.itemCode}}</td>
+                                          <td>{{items.categoryName}}</td>
+                                          <td>{{items.subCategoryName}}</td>
+                                          <td>{{items.duedate}}</td>
+                                          <td>{{items.description}} </td>
+                                          <td>{{items.unit}}</td>
+                                          <td>{{items.quantity}}</td>
+                                          <td>{{items.price}}</td>
+                                          <td>{{items.taxPercentage}}</td>
+                                          <td>{{items.taxAmount}}</td>
+                                          <td>{{items.totalPrice}}</td>
+                                   </tr>
+
+                            </table>
+                     </div>
+                     <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                     </div>
+              </div>
+
+       </div>
+</div>
+
+
+
+
+
+
+
+<div id="Tender" class="modal fade" role="dialog">
+       <div class="modal-dialog  modal-lg">
+
+              <!-- Modal content-->
+              <div class="modal-content">
+                     <div class="modal-header">
+                            <h4 class="modal-title">Tender</h4>
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                     </div>
+                     <div class="modal-body">
+                            <div class="row">
+                                   <div class="col-lg-3">
+                                         <label>Total Price : </label>
+                                   </div>
+                                   <div class="col-lg-4">
+                                         <input type="text" class="form-control" placeholder="Total Price" [(ngModel)]="price" name="price">
+                                    </div>
+                            </div><br>
+                         
+                            <div class="row">
+                                   <div class="col-lg-3">
+                                         <label>Bid Attachments : </label>
+                                   </div>
+                                   <div class="col-lg-4">
+                                          <ngx-dropzone [multiple]="false" style="height: 40px;" (change)="onSignaturUpload($event)" class="dropzone_vendorinvoice">
+                                                 <ngx-dropzone-label>Drop Your Files</ngx-dropzone-label>
+                                               </ngx-dropzone>
+                                    </div>
+                            </div><br>
+                            <div class="row">
+                                   <div class="col-lg-3">
+                                         <label>Notes : </label>
+                                   </div>
+                                   <div class="col-lg-8">
+                                       
+                                         <textarea class="form-control" rows="10" placeholder="Notes" [(ngModel)]="notes" name="notes"></textarea>
+                                    </div>
+                            </div><br>
+
+                            <div class="row">
+                                   <div class="col-lg-4">
+                                      
+                                   </div>
+                                   <div class="col-lg-4">
+                                       <button (click)="updatedetails()" class="btn btn-primary" data-dismiss="modal">Update</button>
+                                    </div>
+                            </div><br>
+                     </div>
+              </div>
+
+       </div>
+</div>
+
+
+<div id="message" class="modal fade" role="dialog">
+       <div class="modal-dialog">
+
+              <!-- Modal content-->
+              <div class="modal-content">
+                     <div class="modal-header">
+                            <h4 class="modal-title">Message</h4>
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                     </div>
+                     <div class="modal-body">
+                            <div class="row">
+                                   <div class="col-lg-12">
+                                          <textarea rows="5" class="form-control" [(ngModel)]="message" name="message"
+                                                 placeholder="Remarks"></textarea>
+                                          <br>
+                                          <button type="button" class="viewbtn" (click)="insertmessage()"
+                                                 data-dismiss="modal">Send</button>
+                                   </div>
+                            </div>
+                     </div>
+              </div>
+
+       </div>
+</div>

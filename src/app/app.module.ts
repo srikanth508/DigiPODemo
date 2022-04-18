@@ -95,7 +95,32 @@ import { DeptMasterDashComponent } from './pages/dept-master-dash/dept-master-da
 import { OrderTypeMasterComponent } from './pages/order-type-master/order-type-master.component';
 import { OrderTypeMasterDashComponent } from './pages/order-type-master-dash/order-type-master-dash.component';
 
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations'; 
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { InventoryComponent } from './pages/inventory/inventory.component';
+import { AddTenderComponent } from './pages/Tenders/add-tender/add-tender.component';
+import { TenderDashComponent } from './pages/Tenders/add-tender/tender-dash/tender-dash.component';
+import { TederOrderItemsComponent } from './pages/Tenders/add-tender/teder-order-items/teder-order-items.component';
+import { VendorTendersComponent } from './pages/Tenders/vendor-tenders/vendor-tenders.component';
+import { AppliedTendersComponent } from './pages/Tenders/applied-tenders/applied-tenders.component';
+import { ApprovedTendorsComponent } from './pages/Tenders/approved-tendors/approved-tendors.component';
+import { AcceptedTendersComponent } from './pages/Tenders/accepted-tenders/accepted-tenders.component';
+import { RejectedTendersComponent } from './pages/Tenders/rejected-tenders/rejected-tenders.component';
+import { SubmittedTendersComponent } from './pages/Tenders/submitted-tenders/submitted-tenders.component';
+import { InvoicesDashComponent } from './pages/FinanceManager/invoices-dash/invoices-dash.component';
+import { ApproveInvoicesComponent } from './pages/FinanceManager/approve-invoices/approve-invoices.component';
+import { RejectedInvoicesComponent } from './pages/FinanceManager/rejected-invoices/rejected-invoices.component';
+import { NewrequestionerComponent } from './pages/Requestioner/newrequestioner/newrequestioner.component';
+import { RequestionerDashComponent } from './pages/Requestioner/requestioner-dash/requestioner-dash.component';
+import { ShortlistedVendorsComponent } from './pages/Tenders/shortlisted-vendors/shortlisted-vendors.component';
+import { WarehousPosComponent } from './pages/Tenders/warehous-pos/warehous-pos.component';
+import { ApprovedpossComponent } from './pages/FinanceManager/approvedposs/approvedposs.component';
+import { DeliveredPossssComponent } from './pages/Tenders/delivered-possss/delivered-possss.component';
+import { InvoicepoComponent } from './pages/invoicepo/invoicepo.component';
+import { ClosedPoComponent } from './pages/closed-po/closed-po.component';
+import { ReceivedPoComponent } from './pages/Tenders/received-po/received-po.component';
+import { FlowdiagramComponent } from './pages/flowdiagram/flowdiagram.component';
+
+
 
 @NgModule({
   declarations: [
@@ -180,6 +205,31 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     DeptMasterDashComponent,
     OrderTypeMasterComponent,
     OrderTypeMasterDashComponent,
+    InventoryComponent,
+    AddTenderComponent,
+    TenderDashComponent,
+    TederOrderItemsComponent,
+    VendorTendersComponent,
+    AppliedTendersComponent,
+    ApprovedTendorsComponent,
+    AcceptedTendersComponent,
+    RejectedTendersComponent,
+    SubmittedTendersComponent,
+    InvoicesDashComponent,
+    ApproveInvoicesComponent,
+    RejectedInvoicesComponent,
+    NewrequestionerComponent,
+    RequestionerDashComponent,
+    ShortlistedVendorsComponent,
+    WarehousPosComponent,
+    ApprovedpossComponent,
+    DeliveredPossssComponent,
+    InvoicepoComponent,
+    ClosedPoComponent,
+    ReceivedPoComponent,
+    FlowdiagramComponent
+   
+    
 
   
   ],

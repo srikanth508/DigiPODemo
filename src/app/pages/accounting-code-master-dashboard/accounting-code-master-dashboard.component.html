@@ -41,14 +41,14 @@
                             <tr>
                                    <th>PO Type</th>
                                    <th>Accounting Code</th>
-                                   <th>Accounting Description</th>
+                                   <!-- <th>Accounting Description</th> -->
                                    <th>Action</th>
                             </tr>
                             <tr
                                    *ngFor="let List of AccountingList|filter:term| paginate: { id: 'foo', itemsPerPage: 50, currentPage: p}">
                                    <td>{{List.poTypeName}}</td>
                                    <td>{{List.accountingCode}}</td>
-                                   <td>{{List.accountingDescription}}</td>
+                                   <!-- <td>{{List.accountingDescription}}</td> -->
                                    <td>
                                           <img src="assets/images/dell.png" (click)="Delete(List.id)"
                                                  style="width: 20px;">

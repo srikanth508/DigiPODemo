@@ -50,13 +50,13 @@
                             <tr>
                                    <th style="width: 120px;">Actions</th>
                                    <th>PO No</th>
-                                   <th>Requistioner</th>
-                                   <th>Buying Company</th>
+                                   <!-- <th>Requistioner</th>
+                                   <th>Buying Company</th> -->
                                    <th>PO Date</th>
-                                   <th>Company</th>
-                                   <th>Buyer Name</th>
+                                   <!-- <th>Company</th>
+                                   <th>Buyer Name</th> -->
                                    <!-- <th>Requestioner</th> -->
-                                   <th>Ship Via</th>
+                                   <!-- <th>Ship Via</th> -->
                                    <th>PO Description</th>
                                    <th>Order Type</th>
                                    <th>Net Total</th>
@@ -73,13 +73,13 @@
                                                  [routerLink]="['/PoOrderItems',details.id]">
                                    </td>
                                    <td>{{details.poNo}}</td>
-                                   <td>{{details.userName}}</td>
-                                   <td>{{details.companyName}}</td>
+                                   <!-- <td>{{details.userName}}</td> -->
+                                   <!-- <td>{{details.companyName}}</td> -->
                                    <td>{{details.date}}</td>
-                                   <td>{{details.companyName}}</td>
-                                   <td>{{details.buyerName}}</td>
+                                   <!-- <td>{{details.companyName}}</td>
+                                   <td>{{details.buyerName}}</td> -->
                                    <!-- <td>{{details.requistioner}}</td> -->
-                                   <td>{{details.shipViaDescription}}</td>
+                                   <!-- <td>{{details.shipViaDescription}}</td> -->
                                    <td innerHTML="{{details.poDescription}}"></td>
                                    <td>{{details.orderType}}</td>
                                    <td>{{details.total| number:'1.2-2'}}</td>

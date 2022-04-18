@@ -47,34 +47,45 @@
       <table id="POREPORTS">
         <tr>
           <th>Item No</th>
-          <!-- <th>Item Name</th> -->
-          <th>Vendor Name</th>
-          <th>Description</th>
-          <!-- <th>Extended Description</th> -->
-          <th>Standard Cost</th>
           <th>Category</th>
-          <!-- <th>Sub Category</th> -->
-          <th>Commodity</th>
+          <th>Sub Category</th>
+          <th>Item Name</th>
+          <!-- <th>Vendor Name</th>
+          <th>Quantity</th>
+          <th>Purchase date</th>
+          <th>Expire date</th> -->
+          <!-- <th>Description</th> -->
+          <!-- <th>Extended Description</th> -->
+          <!-- <th>Standard Cost</th> -->
+        
+          <!-- <th>Commodity</th> -->
           <!-- <th>Tax Percentage</th> -->
-          <th>Currency</th>
+          <!-- <th>Currency</th> -->
           <!-- <th>Lead Time</th> -->
           <th>Action</th>
         </tr>
         <tr *ngFor="let List of ItemList|filter:term|filter:categoryname| paginate: { id: 'foo', itemsPerPage: 50, currentPage: p}">
           <td>{{ List.itemCode }}</td>
-          <!-- <td>{{ List.itemName }}</td> -->
-          <td>{{ List.supplierName }}</td>
-          <td innerHTML="{{ List.description }}"></td>
-          <!-- <td innerHTML="{{ List.descr2 }}"></td> -->
-          <td>{{ List.cost | number:'1.2-2'}}</td>
           <td>{{ List.categoryName }}</td>
+          <td>{{ List.subCategoryName }}</td>
+          <td>{{ List.itemName }}</td>
+          <!-- <td>{{ List.supplierName }}</td>
+
+
+          <td>{{ List.quantity }}</td>
+          <td>{{ List.purchaseDate }}</td>
+          <td>{{ List.expireDate }}</td> -->
+          <!-- <td innerHTML="{{ List.description }}"></td> -->
+          <!-- <td innerHTML="{{ List.descr2 }}"></td> -->
+          <!-- <td>{{ List.cost | number:'1.2-2'}}</td> -->
+         
           <!-- <td>{{ List.subCategoryName }}</td> -->
-          <td>{{List.commodity}}</td>
+          <!-- <td>{{List.commodity}}</td> -->
           <!-- <td>{{ List.taxPercentage }}%</td> -->
-          <td>{{List.currency}}</td>
-          <td *ngIf="List.currency == 1">USD</td>
+          <!-- <td>{{List.currency}}</td> -->
+          <!-- <td *ngIf="List.currency == 1">USD</td>
           <td *ngIf="List.currency == 2">INR</td>
-          <td *ngIf="List.currency == 3">SGP</td>
+          <td *ngIf="List.currency == 3">SGP</td> -->
           <!-- <td>{{ List.procurentTime }}</td> -->
           <td>
             <img src="assets/images/dell.png" (click)="Delete(List.id)" style="width: 20px;" />

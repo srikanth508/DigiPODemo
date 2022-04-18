@@ -23,7 +23,7 @@
         </div>
 
 
-        <div class="col-lg-3">
+        <!-- <div class="col-lg-3">
             <select class="form-control" (change)="GetCountryName($event)">
                 <option value="0">Select Country</option>
                 <option *ngFor="let list of countrylist" value="{{list.short}},{{list.id}}">{{list.short}}
@@ -43,7 +43,7 @@
                 <option *ngFor="let list of citylist" value="{{list.short}},{{list.id}}">{{list.short}}
                 </option>
             </select>
-        </div>
+        </div> -->
     </div>
     <div class="row">
         <div class="col-lg-10">
@@ -58,7 +58,7 @@
                 <tr>
                     <th>Ship To No</th>
                     <th>Ship To Name</th>
-                    <th>Email</th>
+                    <!-- <th>Email</th>
                     <th>Country</th>
                     <th>State</th>
                     <th>City</th>
@@ -66,14 +66,14 @@
                     <th>Zipcode</th>
                     <th>Address</th>
                     <th>Phone No</th>
-                    <th>Secondary Phone No</th>
+                    <th>Secondary Phone No</th> -->
                     <th>Actions</th>
                 </tr>
                 <tr *ngFor="let details of shiplist|filter:term
                 | paginate: { id: 'foo', itemsPerPage: 10, currentPage: p}">
                     <td>{{details.clientCode}}</td>
                     <td>{{details.clientName}}</td>
-                    <td>{{details.email}}</td>
+                    <!-- <td>{{details.email}}</td>
                     <td>{{details.country}}</td>
                     <td>{{details.state}}</td>
                     <td>{{details.city}}</td>
@@ -81,7 +81,7 @@
                     <td>{{details.zipCode}}</td>
                     <td>{{details.address}}</td>
                     <td>{{details.primaryPhoneNo}}</td>
-                    <td>{{details.secondaryPhoneNo}}</td>
+                    <td>{{details.secondaryPhoneNo}}</td> -->
                     <td>
                         <a style="color:black">
                             <img src="assets/images/edit.png" title="Edit" style="width: 20px"

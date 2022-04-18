@@ -145,6 +145,7 @@ export class PurchaseOrderComponent implements OnInit {
     this.quantity = 1;
 
     this.idcount = 1;
+    this.authorizationid = 13;
   }
 
   public shiplist: any;
@@ -395,13 +396,13 @@ export class PurchaseOrderComponent implements OnInit {
 
     this.ordertypeid = even.target.value;
   }
-  // public GetSupplierID(even) {
+  public GetSupplierID(even) {
 
-  //   this.supplierid = even.target.value;
-  //   var suppliess = this.supplierlist.filter(x => x.id == this.supplierid)
-  //   this.supplies = suppliess[0].supplies
+    this.supplierid = even.target.value;
+    var suppliess = this.supplierlist.filter(x => x.id == this.supplierid)
+    this.supplies = suppliess[0].supplies
 
-  // }
+  }
   public fobdesc: any;
 
   public GetShipViaID(even) {
@@ -495,7 +496,7 @@ export class PurchaseOrderComponent implements OnInit {
 
 
   public insertdetails() {
-    if (this.Itemqwerty.length == 0 || this.taxid == 0 || this.authorizationid == 0 || this.potypeid == 0 || this.buyersid == 0 || this.billtoid == 0 || this.shiptoid == 0 || this.fobid == 0 || this.instructionid == 0 || this.ordertypeid == 0 || this.shipviaid == 0 || this.accountid == 0 || this.departmentid == 0 || this.companyid == 0) {
+    if (this.Itemqwerty.length == 0 || this.taxid == 0 || this.authorizationid == 0 || this.potypeid == 0 || this.billtoid == 0 || this.shiptoid == 0 || this.instructionid == 0 || this.ordertypeid == 0 || this.accountid == 0 || this.departmentid == 0) {
       Swal.fire('Please fill all mandatory fields')
     }
     else {
@@ -1019,73 +1020,73 @@ export class PurchaseOrderComponent implements OnInit {
 
   public updatedetails() {
     debugger
-    if (this.taxid == 0 || this.authorizationid == 0 || this.potypeid == 0 || this.buyersid == 0 || this.billtoid == 0 || this.shiptoid == 0 || this.fobid == 0 || this.instructionid == 0 || this.ordertypeid == 0 || this.shipviaid == 0 || this.accountid == 0 || this.departmentid == 0 || this.companyid == 0) {
-      Swal.fire('Please fill all mandatory fields')
+    // if (this.taxid == 0 || this.authorizationid == 0 || this.potypeid == 0 || this.buyersid == 0 || this.billtoid == 0 || this.shiptoid == 0 || this.fobid == 0 || this.instructionid == 0 || this.ordertypeid == 0 || this.shipviaid == 0 || this.accountid == 0 || this.departmentid == 0 || this.companyid == 0) {
+    //   Swal.fire('Please fill all mandatory fields')
+    // }
+    // else {
+    // if (this.authorizationid == 0) {
+    //   this.firstlevelstatus = 1;
+    // }
+    // else {
+    //   this.firstlevelstatus = 0;
+    // }
+    if (this.secondauthoid == 0) {
+      this.secondlevelstats = 1;
     }
     else {
-      // if (this.authorizationid == 0) {
-      //   this.firstlevelstatus = 1;
-      // }
-      // else {
-      //   this.firstlevelstatus = 0;
-      // }
-      if (this.secondauthoid == 0) {
-        this.secondlevelstats = 1;
-      }
-      else {
-        this.secondlevelstats = 0;
-      }
-
-      if (this.authothirdid == 0) {
-        this.thirdelevelstatus = 1;
-      }
-      else {
-        this.thirdelevelstatus = 0;
-      }
-      debugger
-      debugger
-      var entity = {
-        'ID': this.id,
-        'BuyingCompanyID': this.companyid,
-        'PoNo': this.pono,
-        'Date': this.date,
-        'OrderType': this.ordertypeid,
-        'SupplierID': this.supplierid,
-        'ShipViaID': this.shipviaid,
-        'Note': this.note,
-        'TaxID': this.taxid,
-        'Terms': this.terms,
-        'Reference': this.ref,
-        'AccountNo': this.accountno,
-        'Dept': this.departmentid,
-        'PoType': this.Potypename,
-        'PoDescription': this.podescription,
-        'BillToID': this.billtoid,
-        'Requistioner': this.requisitioner,
-        'Requisition': this.requisition,
-        'BuyersID': this.buyersid,
-        'AuthorizationID': this.authorizationid,
-        'SecondAuthorizationID': this.secondauthoid,
-        'ThirdAuthorizationID': this.authothirdid,
-        'FirstLevelAuthoStatus': this.firstlevelstatus,
-        'SecondLevelAuthoStatus': this.secondlevelstats,
-        'ThirdLevelAuthoStatus': this.thirdelevelstatus,
-        'instcode': this.instacode,
-        'duedate': this.duedate,
-        'ShiptoID': this.shiptoid,
-        'AccountID': this.accountid,
-        'InstructID': this.instructionid,
-        'FOBID': this.fobid,
-        'PoTypeID': this.potypeid
-      }
-      this.pomservice.UpdatePurchaseOrder(entity).subscribe(res => {
-        let data = res
-        Swal.fire('Completed', 'Data Updated Successfully');
-
-        location.href = "#/PurchaseOrderDashboard"
-
-      })
+      this.secondlevelstats = 0;
     }
+
+    if (this.authothirdid == 0) {
+      this.thirdelevelstatus = 1;
+    }
+    else {
+      this.thirdelevelstatus = 0;
+    }
+    debugger
+    debugger
+    var entity = {
+      'ID': this.id,
+      'BuyingCompanyID': this.companyid,
+      'PoNo': this.pono,
+      'Date': this.date,
+      'OrderType': this.ordertypeid,
+      'SupplierID': this.supplierid,
+      'ShipViaID': this.shipviaid,
+      'Note': this.note,
+      'TaxID': this.taxid,
+      'Terms': this.terms,
+      'Reference': this.ref,
+      'AccountNo': this.accountno,
+      'Dept': this.departmentid,
+      'PoType': this.Potypename,
+      'PoDescription': this.podescription,
+      'BillToID': this.billtoid,
+      'Requistioner': this.requisitioner,
+      'Requisition': this.requisition,
+      'BuyersID': this.buyersid,
+      'AuthorizationID': this.authorizationid,
+      'SecondAuthorizationID': this.secondauthoid,
+      'ThirdAuthorizationID': this.authothirdid,
+      'FirstLevelAuthoStatus': this.firstlevelstatus,
+      'SecondLevelAuthoStatus': this.secondlevelstats,
+      'ThirdLevelAuthoStatus': this.thirdelevelstatus,
+      'instcode': this.instacode,
+      'duedate': this.duedate,
+      'ShiptoID': this.shiptoid,
+      'AccountID': this.accountid,
+      'InstructID': this.instructionid,
+      'FOBID': this.fobid,
+      'PoTypeID': this.potypeid
+    }
+    this.pomservice.UpdatePurchaseOrder(entity).subscribe(res => {
+      let data = res
+      Swal.fire('Completed', 'Data Updated Successfully');
+
+      location.href = "#/PurchaseOrderDashboard"
+
+    })
+    // }
   }
 
 

@@ -26,19 +26,19 @@
                      <input type="text" placeholder="Search" [(ngModel)]="term" class="form-control">
               </div>
               <div class="col-lg-3">
-                     <select class="form-control" (change)="GetSupplierName($event)">
+                     <!-- <select class="form-control" (change)="GetSupplierName($event)">
                             <option value="0">Select Vendor</option>
                             <option *ngFor="let sup of supplierlist" value="{{sup.supplierName}}">{{sup.supplierName}}
                             </option>
-                     </select>
+                     </select> -->
               </div>
               <div class="col-lg-3">
-                     <select class="form-control" (change)="GetRequisoner($event)">
+                     <!-- <select class="form-control" (change)="GetRequisoner($event)">
                             <option value="0">Select Buying Company</option>
                             <option *ngFor="let pur of companylist" value="{{pur.companyName}}">
                                    {{pur.companyName}}
                             </option>
-                     </select>
+                     </select> -->
               </div>
        </div>
        <div class="row">
@@ -59,14 +59,14 @@
                                    <th>PO No</th>
                                    <th>PO Type</th>
                                    <th>Order Type</th>
-                                   <th>Amendment Count</th>
+                                   <!-- <th>Amendment Count</th> -->
                                    <th>PO Date</th>
                                    <th>Requistioner</th>
-                                   <th>Buying Company</th>
+                                   <!-- <th>Buying Company</th> -->
                                    <!-- <th>Country</th>
                                    <th>State</th> -->
                                    <!-- <th>City</th> -->
-                                   <th>Buyer Name</th>
+                                   <!-- <th>Buyer Name</th> -->
                                    <th> Authorizer</th>
                                    <!-- <th>Second Level Authorizer</th>
                                    <th>Third Level Authorizer</th> -->
@@ -74,11 +74,11 @@
                                    <th>Vendor Email</th>
                                    <!-- <th>Date</th> -->
 
-                                   <th>Ship Via</th>
-                                   <th>Ship To</th>
+                                   <!-- <th>Ship Via</th>
+                                   <th>Ship To</th> -->
                                    <th>Bill To</th>
                                    <th>Instruction</th>
-                                   <th>Fob</th>
+                                   <!-- <th>Fob</th> -->
                                    <th>Accounting Code</th>
 
 
@@ -108,16 +108,16 @@
                                           <label style="color:coral">{{details.amendementpo}}</label>
 
                                    </td>
-                                   <td>{{details.amendmentcount}}
+                                   <!-- <td>{{details.amendmentcount}}
                                           
-                                   </td>
+                                   </td> -->
                                    <td>{{details.date}}</td>
                                    <td>{{details.userName}}</td>
-                                   <td>{{details.companyName}}</td>
+                                   <!-- <td>{{details.companyName}}</td> -->
                                    <!-- <td>{{details.country}}</td>
                                    <td>{{details.state}}</td> -->
                                    <!-- <td>{{details.city}}</td> -->
-                                   <td>{{details.buyerName}}</td>
+                                   <!-- <td>{{details.buyerName}}</td> -->
                                    <td>{{details.firstlevel}}
                                           <table>
                                                  <tr>
@@ -176,11 +176,11 @@
                                    <td>{{details.supplierName}}</td>
                                    <td>{{details.emailAddress}}</td>
                                    <!-- <td>{{details.date}}</td> -->
-                                   <td>{{details.shipViaDescription}}</td>
-                                   <td>{{details.shiptoname}}</td>
+                                   <!-- <td>{{details.shipViaDescription}}</td>
+                                   <td>{{details.shiptoname}}</td> -->
                                    <td>{{details.billtoname}}</td>
                                    <td>{{details.instruction}}</td>
-                                   <td>{{details.fobDescription}}</td>
+                                   <!-- <td>{{details.fobDescription}}</td> -->
                                    <td>{{details.accountNo}}</td>
 
                                    <!-- <td>{{details.date}}</td> -->
@@ -290,7 +290,7 @@
 
                                           </div>
                                           <div class="col-lg-6">
-                                                 <h4>TOPS MARKETS, LLC</h4>
+                                                 <h4>ABB</h4>
                                           </div>
                                    </div>
                                    <div class="row">
@@ -299,11 +299,11 @@
                                           <!-- <div class="col-lg-1">
                                           </div> -->
                                           <div class="col-lg-2">
-                                                 <span style="font-size: 13px;">P.O BOX 1027</span><br>
-                                                 <span style="font-size: 13px;"> PHONE(716)635-5000</span>
+                                                 <span style="font-size: 13px;">PO BOX 11070 Dubai</span><br>
+                                                 <span style="font-size: 13px;"> PHONE(971 4 314 7500)</span>
                                           </div>
                                           <div class="col-lg-3">
-                                                 <span style="font-size: 13px;"> BUFFALO,NY 14240-1027</span>
+                                                 <span style="font-size: 13px;"> Al Quoz Industrial area 3,Behind Traffic Department 4th St.</span>
                                           </div>
                                           <div class="col-lg-1">
 

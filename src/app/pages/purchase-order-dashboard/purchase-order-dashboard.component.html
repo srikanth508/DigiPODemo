@@ -2,8 +2,8 @@
 <ngx-spinner></ngx-spinner>
 <div class="container-fluid">
        <div class="col-lg-12">
-              <h4 style="float: left;">PURCHASE ORDERS</h4>
-              <button type="button" style="float: right;" routerLink="/PurchaseOrder" class="addnewbtns">Add</button>
+              <h4 style="float: left;">REQUESTION DASHBOARD</h4>
+              <!-- <button type="button" style="float: right;" routerLink="/Newrequestioner" class="addnewbtns">Add</button> -->
 
               <button (click)="getglmasterexcel()" style="margin-right: 40px;" class="addnewbtns">Export
                      Excel</button>
@@ -51,21 +51,21 @@
               </div>
               <div class="col-lg-3">
               </div>
-              <div class="col-lg-3">
+              <!-- <div class="col-lg-3">
                      <select class="form-control" style="width: 90%;float: right;" (change)="GetSupplierName($event)">
                             <option value="">Select Vendor</option>
                             <option *ngFor="let sup of supplierlist" value="{{sup.supplierName}}">{{sup.supplierName}}
                             </option>
                      </select>
-              </div>
-              <div class="col-lg-3">
+              </div> -->
+              <!-- <div class="col-lg-3">
                      <select class="form-control" (change)="GetOrderTypeFilter($event)">
                             <option value="0">Select Order Type</option>
                             <option *ngFor="let order of ordertypelist" value="{{order.orderType}}">
                                    {{order.orderType}}
                             </option>
                      </select>
-              </div>
+              </div> -->
        </div>
        <div class="row">
               <div class="col-lg-7">
@@ -83,16 +83,16 @@
                      <table id="POREPORTS">
                             <tr>
                                    <th>Actions</th>
-                                   <th>Status</th>
-                                   <th>P.O No</th>
-                                   <th>PO Type</th>
-                                   <th>Order Type</th>
-                                   <th>Amendment Count</th>
-                                   <th>Buying Company</th>
-                                   <th>Requisitioner</th>
-                                   <th>PO Date</th>
+                                   <!-- <th>Status</th> -->
+                                   <th>R No</th>
+                                   <th>R Type</th>
                                    <!-- <th>Order Type</th> -->
-                                   <th>Authorizer</th>
+                                   <!-- <th>Amendment Count</th> -->
+                                   <!-- <th>Buying Company</th> -->
+                                   <th>Requisitioner</th>
+                                   <th>R Date</th>
+                                   <!-- <th>Order Type</th> -->
+                                   <!-- <th>Authorizer</th> -->
                                    <!-- <th>First Authorizer Comments</th> -->
                                    <!-- <th>Second Level Authorizer</th> -->
                                    <!-- <th>Second Authorizer Comments</th> -->
@@ -100,20 +100,20 @@
                                    <!-- <th>Third Authorizer Comments</th> -->
                                    <th>Department</th>
                                    <!-- <th>PO Description</th> -->
-                                   <th>Vendor</th>
-                                   <th>Vendor Email</th>
+                                   <!-- <th>Vendor</th>
+                                   <th>Vendor Email</th> -->
                                    <!-- <th>Net Total</th> -->
                                    <!-- <th>Tax Percentage</th> -->
-                                   <th>Ship Via</th>
+                                   <!-- <th>Ship Via</th>
                                    <th>Ship To</th>
                                    <th>Bill To</th>
-                                   <th>Instruction</th>
-                                   <th>Fob</th>
-                                   <th>Accounting Code</th>
+                                   <th>Instruction</th> -->
+                                   <!-- <th>Fob</th> -->
+                                   <!-- <th>Accounting Code</th>
                                    <th>Net Total</th>
                                    <th>Tax percentage</th>
                                    <th>Tax Amount</th>
-                                   <th>Total PO Amount</th>
+                                   <th>Total PO Amount</th> -->
                                    <th *ngIf="id=='3'">Reason For Cancel</th>
                             </tr>
                             <tr
@@ -124,34 +124,41 @@
                                                         <td style="border:none">
                                                                <img src="assets/images/view.png" title="View Items"
                                                                       style="width: 25px;" title="View Items"
-                                                                      [routerLink]="['/PoOrderItems',details.id]">
-                                                        </td>
-                                                        <td style="border:none">
-                                                               <img src="assets/images/plus.png" title="Add Items"
+                                                                      [routerLink]="['/PoOrderItems',details.id]">&nbsp;
+
+                                                                      <img src="assets/images/plus.png" title="Add Items"
                                                                       routerLink="/PurchaseOrderDetails"
                                                                       (click)="GetItemPono(details.poNo,details.id,details.supplierCode)"
-                                                                      style="width: 25px;">
-                                                        </td>
-                                                        <td style="border:none">
-                                                               <img src="assets/images/pdf.png" title="Download PO"
+                                                                      style="width: 25px;">&nbsp;
+
+
+                                                                      <img src="assets/images/pdf.png" title="Download PO"
                                                                       data-toggle="modal" data-target="#inventoryModal"
                                                                       (click)="getpodetails(details)"
                                                                       style="width: 25px;">
                                                         </td>
+                     
                                                  </tr>
                                                  <tr style="border:none">
                                                         <td style="border:none">
-                                                               <img src="assets/images/edit.png" title="Edit"
+                                                               <!-- <img src="assets/images/edit.png" title="Edit"
                                                                       data-dismiss="modal"
-                                                                      [routerLink]="['/PurchaseOrder',details.id]"
-                                                                      style="width: 20px;">
+                                                                      
+                                                                      style="width: 20px;"> -->
+
+                                                                      <button [routerLink]="['/PurchaseOrder',details.id]" class="btn btn-primary">Convert PO</button>&nbsp;
+                                                                      <button [routerLink]="['/AddTender',details.id]" class="btn btn-primary">Convert Tender</button>
+
+                                                                     
                                                                <!-- *ngIf="details.status=='Raised'" -->
                                                         </td>
                                                         <td style="border:none">
-                                                               <img src="assets/images/dell.png" title="Delete"
+                                                               <!-- <img src="assets/images/dell.png" title="Delete"
                                                                       style="width: 20px;"
                                                                       *ngIf="details.status=='Raised'"
-                                                                      (click)="deletepurchaseoredre(details.id)">
+                                                                      (click)="deletepurchaseoredre(details.id)"> -->
+
+                                                                     
                                                         </td>
 
                                                         <td style="border:none">
@@ -166,17 +173,17 @@
                                                  </tr>
                                           </table>
                                    </td>
-                                   <td style="color:red">{{details.status}}</td>
+                                   <!-- <td style="color:red">{{details.status}}</td> -->
                                    <td>{{details.poNo}}</td>
                                    <td>{{details.poType}}</td>
-                                   <td [style.color]="details.ordertypecolor">{{details.orderType}}
+                                   <!-- <td [style.color]="details.ordertypecolor">{{details.orderType}}
                                           <label style="color:coral">{{details.amendementpo}}</label>
-                                   </td>
-                                   <td>{{details.amendmentcount}}</td>
-                                   <td>{{details.companyName}}</td>
+                                   </td> -->
+                                   <!-- <td>{{details.amendmentcount}}</td> -->
+                                   <!-- <td>{{details.companyName}}</td> -->
                                    <td>{{details.userName}}</td>
                                    <td>{{details.date}}</td>
-                                   <td>{{details.firstlevel}}
+                                   <!-- <td>{{details.firstlevel}}
                                           <table>
                                                  <tr>
                                                         <td style="border:none">
@@ -193,7 +200,7 @@
 
                                                  </tr>
                                           </table>
-                                   </td>
+                                   </td> -->
                                    <!-- <td>{{details.firstLevelRemarks}}</td> -->
                                    <!-- <td>{{details.secondlevel}}
 
@@ -238,20 +245,20 @@
                                    <!-- <td>{{details.thirdLevelRemarks}}</td> -->
                                    <td>{{details.short}}</td>
                                    <!-- <td innerHTML="{{details.poDescription}}"></td> -->
-                                   <td>{{details.supplierName}}</td>
-                                   <td>{{details.emailAddress}}</td>
-                                   <td>{{details.shipViaDescription}}</td>
+                                   <!-- <td>{{details.supplierName}}</td>
+                                   <td>{{details.emailAddress}}</td> -->
+                                   <!-- <td>{{details.shipViaDescription}}</td>
                                    <td>{{details.shiptoname}}</td>
                                    <td>{{details.billtoname}}</td>
-                                   <td>{{details.instruction}}</td>
-                                   <td>{{details.fobDescription}}</td>
-                                   <td>{{details.accountNo}}</td>
+                                   <td>{{details.instruction}}</td> -->
+                                   <!-- <td>{{details.fobDescription}}</td> -->
+                                   <!-- <td>{{details.accountNo}}</td> -->
                                    <!-- <td>{{details.totalmoney}}</td> -->
                                    <!-- <td>{{details.totaltaxpercentage}} </td> -->
-                                   <td>{{details.total| number:'1.2-2'}}</td>
+                                   <!-- <td>{{details.total| number:'1.2-2'}}</td>
                                    <td>{{details.taxPercentage| number:'1.2-2'}}</td>
                                    <td>{{details.totaltaxamount| number:'1.2-2'}} </td>
-                                   <td>{{details.totalAmountwithtax| number:'1.2-2'}}</td>
+                                   <td>{{details.totalAmountwithtax| number:'1.2-2'}}</td> -->
                                    <td *ngIf="id=='3'">
                                           <label
                                                  *ngIf="details.firstLevelAuthoStatus=='2'">{{details.firstLevelRemarks}}</label>
@@ -368,7 +375,7 @@
 
                                           </div>
                                           <div class="col-lg-6">
-                                                 <h4>TOPS MARKETS, LLC</h4>
+                                                 <h4>ABB</h4>
                                           </div>
                                    </div>
                                    <div class="row">
@@ -377,11 +384,11 @@
                                           <!-- <div class="col-lg-1">
                                           </div> -->
                                           <div class="col-lg-2">
-                                                 <span style="font-size: 13px;">P.O BOX 1027</span><br>
-                                                 <span style="font-size: 13px;"> PHONE(716)635-5000</span>
+                                                 <span style="font-size: 13px;">PO BOX 11070 Dubai</span><br>
+                                                 <span style="font-size: 13px;"> PHONE(971 4 314 7500)</span>
                                           </div>
                                           <div class="col-lg-3">
-                                                 <span style="font-size: 13px;"> BUFFALO,NY 14240-1027</span>
+                                                 <span style="font-size: 13px;"> Al Quoz Industrial area 3,Behind Traffic Department 4th St</span>
                                           </div>
                                           <div class="col-lg-1">
 
@@ -629,7 +636,7 @@
                                           <br>
                             
                                           <br>
-                                          <div class="row">
+                                          <!-- <div class="row">
                                                  <div class="col-lg-4">
                                                  </div>
                                                  <div class="col-lg-8">
@@ -1314,7 +1321,7 @@
                                                  </div><br>
 
 
-                                          </div>
+                                          </div> -->
 
                                    </div>
 

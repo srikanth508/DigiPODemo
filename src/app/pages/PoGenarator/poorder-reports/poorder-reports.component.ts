@@ -115,7 +115,7 @@ export class POOrderReportsComponent implements OnInit {
     this.pomservice.GetPurchaseOrderByGenaratorID(this.genaratorid, this.startdate, this.enddate).subscribe(data => {
       this.spinner.hide();
       this.dummlist = data;
-      this.purchaseorderlist = this.dummlist.filter(x => x.status != 'Raised' && x.status != 'Cancelled')
+      this.purchaseorderlist = this.dummlist.filter(x => x.status == 'Raised'&& x.amendmentcount == 1)
       this.count = this.purchaseorderlist.length;
 
       this.grandtotal = 0;
